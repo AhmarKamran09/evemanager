@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "186952557679",
+    "project_id": "evemanage-4418c",
+    "storage_bucket": "evemanage-4418c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186952557679:android:52e8bc291a320b8d4c199a",
+        "android_client_info": {
+          "package_name": "revodev.evemanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSdfmTc9S5uG41YLw_h6DyRagWcytezyY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
