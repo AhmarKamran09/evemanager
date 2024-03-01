@@ -2,7 +2,7 @@ import 'package:evemanager/constants.dart';
 import 'package:evemanager/domain/entities/marriage_halls/marriage_hall_entity.dart';
 import 'package:evemanager/presentation/pages/Credentials/login_screen.dart';
 import 'package:evemanager/presentation/pages/Credentials/signup_screen.dart';
-import 'package:evemanager/presentation/pages/add_payment_methid_screen/add-payment_method_screen.dart';
+import 'package:evemanager/presentation/pages/add_payment_method_screen/add-payment_method_screen.dart';
 import 'package:evemanager/presentation/pages/home/home_screen.dart';
 import 'package:evemanager/presentation/pages/loading_screen/loading_screen.dart';
 import 'package:evemanager/presentation/pages/marriage_hall_admin_home/add_marriage_halls.dart';
