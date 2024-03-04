@@ -1,6 +1,6 @@
-import 'package:evemanager/domain/entities/marriage_halls/marriage_hall_entity.dart';
+import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 
-class MarriageHallModel extends MarriageHallEntity {
+class VenueModel extends VenueEntity {
   final String? id;
   final String? owner_id;
   final String? address;
@@ -13,7 +13,7 @@ class MarriageHallModel extends MarriageHallEntity {
   final Map<String, Map<String, bool>>? availability;
   final String? description;
 
-  MarriageHallModel({
+  VenueModel({
     this.imageslink,
     this.name,
     this.capacity,

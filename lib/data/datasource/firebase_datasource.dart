@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
-import 'package:evemanager/domain/entities/marriage_halls/marriage_hall_entity.dart';
+import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/domain/entities/user/user_entity.dart';
 
 abstract class FirebaseDatasource {
@@ -19,16 +19,16 @@ abstract class FirebaseDatasource {
   Future<void> UpdateUser(UserEntity user);
   Future<void> DeleteUser(String uid);
 
-// Marriage Halls
-  Future<void> AddMarriageHall(MarriageHallEntity marriageHallEntity);
-  Future<void> DeleteMarriageHall(String id);
-  Future<void> UpdateMarriageHall(MarriageHallEntity marriageHallEntity);
-  Stream<List<MarriageHallEntity>> GetMarriageHallforClient();
-  Stream<List<MarriageHallEntity>> GetMarriageHallforOwner(String ownerid);
+// Venues
+  Future<void> AddVenue(VenueEntity venueEntity);
+  Future<void> DeleteVenue(String id);
+  Future<void> UpdateVenue(VenueEntity venueEntity);
+  Stream<List<VenueEntity>> GetVenueforClient();
+  Stream<List<VenueEntity>> GetVenueforOwner(String ownerid);
 
-  Future<void> EditAvailabilityOfHall(
+  Future<void> EditAvailabilityOfVenue(
       String hallid, Map<String, bool> availability);
-  Future<void> UpdateMarriageHallPictures(
+  Future<void> UpdateVenuePictures(
     String id,
     List<File>? images,
   );

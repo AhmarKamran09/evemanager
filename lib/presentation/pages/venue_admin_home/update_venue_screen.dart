@@ -1,20 +1,19 @@
 import 'dart:io';
 
 import 'package:evemanager/constants.dart';
-import 'package:evemanager/domain/entities/marriage_halls/marriage_hall_entity.dart';
+import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UpdateMarriageHallScreen extends StatefulWidget {
-  UpdateMarriageHallScreen({super.key, required this.marriageHallEntity});
-  final MarriageHallEntity marriageHallEntity;
+class UpdateVenueScreen extends StatefulWidget {
+  UpdateVenueScreen({super.key, required this.venueEntity});
+  final VenueEntity venueEntity;
 
   @override
-  State<UpdateMarriageHallScreen> createState() =>
-      _UpdateMarriageHallScreenState();
+  State<UpdateVenueScreen> createState() => _UpdateVenueScreenState();
 }
 
-class _UpdateMarriageHallScreenState extends State<UpdateMarriageHallScreen> {
+class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
   String? _address;
   int? _capacity;
   String? _contact;
@@ -38,7 +37,7 @@ class _UpdateMarriageHallScreenState extends State<UpdateMarriageHallScreen> {
       appBar: AppBar(
         backgroundColor: lightBlue.withOpacity(0.5),
         centerTitle: true,
-        title: Text('Update Marriage Hall'),
+        title: Text('Update Venue'),
       ),
       body: Padding(
         padding: EdgeInsets.all(16),
@@ -55,7 +54,7 @@ class _UpdateMarriageHallScreenState extends State<UpdateMarriageHallScreen> {
                   child: ListView.builder(
                     itemCount: selectedImages.isNotEmpty
                         ? selectedImages.length
-                        : widget.marriageHallEntity.images!.length,
+                        : widget.venueEntity.images!.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return Padding(
@@ -68,7 +67,7 @@ class _UpdateMarriageHallScreenState extends State<UpdateMarriageHallScreen> {
                                   fit: BoxFit.cover,
                                 )
                               : Image.file(
-                                  widget.marriageHallEntity.images![index],
+                                  widget.venueEntity.images![index],
                                   width: 200,
                                   height: 180,
                                   fit: BoxFit.cover,
@@ -77,7 +76,7 @@ class _UpdateMarriageHallScreenState extends State<UpdateMarriageHallScreen> {
                   )),
             ),
             Text(
-              widget.marriageHallEntity.name!,
+              widget.venueEntity.name!,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 26, // Set the font size
@@ -85,7 +84,7 @@ class _UpdateMarriageHallScreenState extends State<UpdateMarriageHallScreen> {
               ),
             ),
             TextFormField(
-              initialValue: widget.marriageHallEntity.description,
+              initialValue: widget.venueEntity.description,
               maxLines: null, // Allow unlimited lines
               keyboardType: TextInputType.multiline, // Enable multiline input
               decoration: InputDecoration(
@@ -96,7 +95,7 @@ class _UpdateMarriageHallScreenState extends State<UpdateMarriageHallScreen> {
               height: 5,
             ),
             TextFormField(
-              initialValue: widget.marriageHallEntity.contact,
+              initialValue: widget.venueEntity.contact,
               maxLines: 1, // Allow unlimited lines
               decoration: InputDecoration(
                 border: OutlineInputBorder(), // Box type decoration with border
@@ -106,7 +105,7 @@ class _UpdateMarriageHallScreenState extends State<UpdateMarriageHallScreen> {
               height: 5,
             ),
             TextFormField(
-              initialValue: widget.marriageHallEntity.capacity.toString(),
+              initialValue: widget.venueEntity.capacity.toString(),
               maxLines: 1, // Allow unlimited lines
               decoration: InputDecoration(
                 border: OutlineInputBorder(), // Box type decoration with border
@@ -147,7 +146,6 @@ class _UpdateMarriageHallScreenState extends State<UpdateMarriageHallScreen> {
 
   // final Map<String, dynamic>? pricingInfo;
   // final Map<String, Map<String, bool>>? availability;
-  
 
   Future<void> pickImages() async {
     final List<XFile>? result = await ImagePicker().pickMultiImage();
@@ -159,9 +157,9 @@ class _UpdateMarriageHallScreenState extends State<UpdateMarriageHallScreen> {
   }
 }
 
-  // Future<void> EditAvailabilityOfHall
+  // Future<void> EditAvailabilityOfVenue
 
-  // Future<void> UpdateMarriageHallPictures
+  // Future<void> UpdateVenuesPictures
 
-  // Future<void> UpdateMarriageHall
+  // Future<void> UpdateVenue
   

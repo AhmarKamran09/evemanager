@@ -1,13 +1,13 @@
 import 'package:evemanager/constants.dart';
-import 'package:evemanager/domain/entities/marriage_halls/marriage_hall_entity.dart';
+import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/presentation/pages/Credentials/login_screen.dart';
 import 'package:evemanager/presentation/pages/Credentials/signup_screen.dart';
 import 'package:evemanager/presentation/pages/add_payment_method_screen/add-payment_method_screen.dart';
-import 'package:evemanager/presentation/pages/client_home_page/marriage_hall_vendors_screen.dart';
-import 'package:evemanager/presentation/pages/home/home_screen.dart';
+import 'package:evemanager/presentation/pages/client_home_page/venuelist_screen/venuelist_screen.dart';
+import 'package:evemanager/presentation/pages/home/home_navigation_screen.dart';
 import 'package:evemanager/presentation/pages/loading_screen/loading_screen.dart';
-import 'package:evemanager/presentation/pages/marriage_hall_admin_home/add_marriage_halls.dart';
-import 'package:evemanager/presentation/pages/marriage_hall_admin_home/update_marriage_hall.dart';
+import 'package:evemanager/presentation/pages/venue_admin_home/add_venues.dart';
+import 'package:evemanager/presentation/pages/venue_admin_home/update_venue_screen.dart';
 import 'package:evemanager/presentation/pages/profile/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -20,19 +20,19 @@ class OnGeneralRoute {
         {
           return routeBuilder(LoginScreen());
         }
-      case PageNames.MarriageHallVendorsScreen:
+      case PageNames.VenueListScreen:
         {
-          return routeBuilder(MarriageHallVendorsScreen());
+          return routeBuilder(VenueListScreen());
         }
-      case PageNames.UpdateMarriageHallScreen:
+      case PageNames.UpdateVenueScreen:
         {
-          return routeBuilder(UpdateMarriageHallScreen(
-            marriageHallEntity: args as MarriageHallEntity,
+          return routeBuilder(UpdateVenueScreen(
+            venueEntity: args as VenueEntity,
           ));
         }
-      case PageNames.AddMarriageHallScreen:
+      case PageNames.AddVenuesScreen:
         {
-          return routeBuilder(AddMarriageHalls(uid: args as String));
+          return routeBuilder(AddVenues(uid: args as String));
         }
       case PageNames.UserProfilePage:
         {
@@ -48,7 +48,7 @@ class OnGeneralRoute {
         }
       case PageNames.HomeScreen:
         {
-          return routeBuilder(HomeScreen());
+          return routeBuilder(HomeNavigationScreen());
         }
 
       case PageNames.SignUpScreen:

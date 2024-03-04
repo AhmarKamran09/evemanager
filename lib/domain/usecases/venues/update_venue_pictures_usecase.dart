@@ -2,13 +2,12 @@ import 'dart:io';
 
 import 'package:evemanager/domain/repository/firebase_repository.dart';
 
-class UpdateMarriageHallPicturesUsecase {
+class UpdateVenuePicturesUsecase {
   final FirebaseRepository firebaseRepository;
 
-  UpdateMarriageHallPicturesUsecase({required this.firebaseRepository});
+  UpdateVenuePicturesUsecase({required this.firebaseRepository});
 
   Future<void> call(String id, List<File>? images) async {
-    return await firebaseRepository.UpdateMarriageHallPictures(
-        id, images);
+    return await firebaseRepository.UpdateVenuePictures(id, images);
   }
 }

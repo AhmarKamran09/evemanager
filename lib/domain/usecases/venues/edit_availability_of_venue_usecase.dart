@@ -1,11 +1,11 @@
 import 'package:evemanager/domain/repository/firebase_repository.dart';
 
-class EditAvailabilityOfHallUsecase {
+class EditAvailabilityOfVenueUsecase {
   final FirebaseRepository firebaseRepository;
 
-  EditAvailabilityOfHallUsecase({required this.firebaseRepository});
+  EditAvailabilityOfVenueUsecase({required this.firebaseRepository});
 
   Future<void> call(String id, Map<String, bool> availability) async {
-    return await firebaseRepository.EditAvailabilityOfHall(id, availability);
+    return await firebaseRepository.EditAvailabilityOfVenue(id, availability);
   }
 }

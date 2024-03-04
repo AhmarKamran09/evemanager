@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
-import 'package:evemanager/domain/entities/marriage_halls/marriage_hall_entity.dart';
+import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/domain/entities/user/user_entity.dart';
 
 abstract class FirebaseRepository {
@@ -16,18 +16,18 @@ abstract class FirebaseRepository {
   Future<UserEntity> GetUser(String uid);
   Future<String?> GetCurrentUid();
 
-  // Marriage Halls
-  Future<void> AddMarriageHall(MarriageHallEntity marriageHallEntity);
-  Future<void> EditAvailabilityOfHall(
+  // Venues
+  Future<void> AddVenue(VenueEntity venueEntity);
+  Future<void> EditAvailabilityOfVenue(
       String hallid, Map<String, bool> availability);
-  Future<void> DeleteMarriageHall(String id);
-  Future<void> UpdateMarriageHall(MarriageHallEntity marriageHallEntity);
-  Future<void> UpdateMarriageHallPictures(
+  Future<void> DeleteVenue(String id);
+  Future<void> UpdateVenue(VenueEntity venueEntity);
+  Future<void> UpdateVenuePictures(
     String id,
     List<File>? images,
   );
-  Stream<List<MarriageHallEntity>> GetMarriageHallforClient();
-  Stream<List<MarriageHallEntity>> GetMarriageHallforOwner(String ownerid);
+  Stream<List<VenueEntity>> GetVenueforClient();
+  Stream<List<VenueEntity>> GetVenueforOwner(String ownerid);
 
 // Catering Service
   Future<void> AddCateringService(CateringEntity cateringEntity);

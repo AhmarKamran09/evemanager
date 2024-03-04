@@ -6,9 +6,9 @@ import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evemanager/constants.dart';
 import 'package:evemanager/data/datasource/firebase_datasource.dart';
-import 'package:evemanager/data/models/marriage_hall_model/marriage_hall_model.dart';
+import 'package:evemanager/data/models/venue_model/venue_model.dart';
 import 'package:evemanager/data/models/user/user_model.dart';
-import 'package:evemanager/domain/entities/marriage_halls/marriage_hall_entity.dart';
+import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/domain/entities/user/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -169,23 +169,23 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
     }
   }
 
-// Marriage Halls
+// Venues
 
   @override
-  Future<void> AddMarriageHall(MarriageHallEntity marriageHallEntity) async {
+  Future<void> AddVenue(VenueEntity venueEntity) async {
     List<String> imagelinks = [];
 
     try {
       String autoId = FirebaseFirestore.instance
-          .collection(FirebaseCollectionConst.marriagehall)
+          .collection(FirebaseCollectionConst.venues)
           .doc()
           .id;
       Reference hallfolderref =
-          storage.ref().child(FirebaseCollectionConst.marriagehall);
+          storage.ref().child(FirebaseCollectionConst.venues);
       Reference subfolderRef = hallfolderref.child(autoId);
 
-      for (int i = 0; i < marriageHallEntity.images!.length; i++) {
-        File imageFile = marriageHallEntity.images![i];
+      for (int i = 0; i < venueEntity.images!.length; i++) {
+        File imageFile = venueEntity.images![i];
         String imageName = DateTime.now().millisecondsSinceEpoch.toString();
         Reference imageRef = subfolderRef.child('$imageName.jpg');
         await imageRef.putFile(imageFile);
@@ -194,38 +194,38 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
       }
 
       await firebaseFirestore
-          .collection(FirebaseCollectionConst.marriagehall)
+          .collection(FirebaseCollectionConst.venues)
           .doc(autoId)
-          .set(MarriageHallModel(
+          .set(VenueModel(
             imageslink: imagelinks,
             id: autoId,
-            owner_id: marriageHallEntity.owner_id,
-            address: marriageHallEntity.address,
-            name: marriageHallEntity.name,
-            capacity: marriageHallEntity.capacity,
-            contact: marriageHallEntity.contact,
-            facilities: marriageHallEntity.facilities,
-            availability: marriageHallEntity.availability,
-            pricingInfo: marriageHallEntity.pricingInfo,
-            description: marriageHallEntity.description,
+            owner_id: venueEntity.owner_id,
+            address: venueEntity.address,
+            name: venueEntity.name,
+            capacity: venueEntity.capacity,
+            contact: venueEntity.contact,
+            facilities: venueEntity.facilities,
+            availability: venueEntity.availability,
+            pricingInfo: venueEntity.pricingInfo,
+            description: venueEntity.description,
           ).toJson());
     } catch (e) {
-      DisplayToast('error in add marriage hall ${e.toString()}');
+      DisplayToast('error in add venue ${e.toString()}');
     }
   }
 
   @override
-  Future<void> DeleteMarriageHall(String id) async {
+  Future<void> DeleteVenue(String id) async {
     try {
       Reference mainFolderRef =
-          storage.ref().child(FirebaseCollectionConst.marriagehall);
+          storage.ref().child(FirebaseCollectionConst.venues);
       Reference subfolderRef = mainFolderRef.child(id);
       ListResult listResult = await subfolderRef.listAll();
       await Future.forEach(listResult.items, (Reference item) async {
         await item.delete();
       });
       await firebaseFirestore
-          .collection(FirebaseCollectionConst.marriagehall)
+          .collection(FirebaseCollectionConst.venues)
           .doc(id)
           .delete();
     } catch (e) {
@@ -234,12 +234,12 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   }
 
   @override
-  Stream<List<MarriageHallEntity>> GetMarriageHallforClient() {
+  Stream<List<VenueEntity>> GetVenueforClient() {
     return firebaseFirestore
-        .collection(FirebaseCollectionConst.marriagehall)
+        .collection(FirebaseCollectionConst.venues)
         .snapshots()
         .asyncMap((querySnapshot) async {
-      List<MarriageHallEntity> marriageHalls = [];
+      List<VenueEntity> venues = [];
 
       for (var document in querySnapshot.docs) {
         var imagesLinkdoc = document['imageslink'];
@@ -251,26 +251,25 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
 
           List<File>? pictures = await getPictures(imagelinks);
 
-          MarriageHallEntity hall =
-              MarriageHallEntity.factory(document, pictures);
+          VenueEntity hall = VenueEntity.factory(document, pictures);
 
-          marriageHalls.add(hall);
+          venues.add(hall);
         }
       }
-      return marriageHalls;
+      return venues;
     }).handleError((error) {
-      DisplayToast('Error in GetMarriageHallforClient: $error');
+      DisplayToast('Error in GetvenueforClient: $error');
     });
   }
 
   @override
-  Stream<List<MarriageHallEntity>> GetMarriageHallforOwner(String ownerid) {
+  Stream<List<VenueEntity>> GetVenueforOwner(String ownerid) {
     return firebaseFirestore
-        .collection(FirebaseCollectionConst.marriagehall)
+        .collection(FirebaseCollectionConst.venues)
         .where('owner_id', isEqualTo: ownerid)
         .snapshots()
         .asyncMap((querySnapshot) async {
-      List<MarriageHallEntity> marriageHalls = [];
+      List<VenueEntity> venues = [];
       for (var document in querySnapshot.docs) {
         var imagesLinkdoc = document['imageslink'];
         if (imagesLinkdoc != null) {
@@ -281,43 +280,42 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
 
           List<File>? pictures = await getPictures(imagelinks);
 
-          MarriageHallEntity hall =
-              MarriageHallEntity.factory(document, pictures);
+          VenueEntity hall = VenueEntity.factory(document, pictures);
 
-          marriageHalls.add(hall);
+          venues.add(hall);
         }
       }
-      return marriageHalls;
+      return venues;
     }).handleError((error) {
-      DisplayToast('Error in GetMarriageHallforOwner: $error');
+      DisplayToast('Error in GetVenueforOwner: $error');
     });
   }
 
   @override
-  Future<void> UpdateMarriageHall(MarriageHallEntity marriageHallEntity) async {
+  Future<void> UpdateVenue(VenueEntity venueEntity) async {
     try {
       await firebaseFirestore
-          .collection(FirebaseCollectionConst.marriagehall)
-          .doc(marriageHallEntity.id!)
+          .collection(FirebaseCollectionConst.venues)
+          .doc(venueEntity.id!)
           .update({
-        'name': marriageHallEntity.name,
-        'capacity': marriageHallEntity.capacity,
-        'contact': marriageHallEntity.contact,
-        'facilities': marriageHallEntity.facilities,
-        'pricingInfo': marriageHallEntity.pricingInfo,
-        'description': marriageHallEntity.description,
+        'name': venueEntity.name,
+        'capacity': venueEntity.capacity,
+        'contact': venueEntity.contact,
+        'facilities': venueEntity.facilities,
+        'pricingInfo': venueEntity.pricingInfo,
+        'description': venueEntity.description,
       });
     } catch (e) {
-      DisplayToast('Error in Update Marriage Hall: $e');
+      DisplayToast('Error in Update Venue: $e');
     }
   }
 
   @override
-  Future<void> EditAvailabilityOfHall(
+  Future<void> EditAvailabilityOfVenue(
       String hallid, Map<String, bool> availability) async {
     try {
       await firebaseFirestore
-          .collection(FirebaseCollectionConst.marriagehall)
+          .collection(FirebaseCollectionConst.venues)
           .doc(hallid)
           .update({
         'availability': availability,
@@ -328,10 +326,10 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   }
 
   @override
-  Future<void> UpdateMarriageHallPictures(String id, List<File>? images) async {
+  Future<void> UpdateVenuePictures(String id, List<File>? images) async {
     try {
       Reference mainFolderRef =
-          storage.ref().child(FirebaseCollectionConst.marriagehall);
+          storage.ref().child(FirebaseCollectionConst.venues);
       Reference subfolderRef = mainFolderRef.child(id);
       ListResult listResult = await subfolderRef.listAll();
       await Future.forEach(listResult.items, (Reference item) async {
@@ -348,13 +346,13 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
       }
 
       await firebaseFirestore
-          .collection(FirebaseCollectionConst.marriagehall)
+          .collection(FirebaseCollectionConst.venues)
           .doc(id)
           .update({
         'imageslink': imagelinks,
       });
     } catch (e) {
-      DisplayToast("Update Marriage Hall Pictures: $e.toString()");
+      DisplayToast("Update Venue Pictures: $e.toString()");
     }
   }
 
@@ -369,9 +367,9 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.catering)
           .doc()
           .id;
-      Reference hallfolderref =
+      Reference venuefolderref =
           storage.ref().child(FirebaseCollectionConst.catering);
-      Reference subfolderRef = hallfolderref.child(autoId);
+      Reference subfolderRef = venuefolderref.child(autoId);
 
       for (int i = 0; i < cateringEntity.images!.length; i++) {
         File imageFile = cateringEntity.images![i];
@@ -440,9 +438,9 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
 
           List<File>? pictures = await getPictures(imagelinks);
 
-          CateringEntity hall = CateringEntity.factory(document, pictures);
+          CateringEntity catering = CateringEntity.factory(document, pictures);
 
-          catering_entity.add(hall);
+          catering_entity.add(catering);
         }
       }
       return catering_entity;
@@ -469,9 +467,9 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
 
           List<File>? pictures = await getPictures(imagelinks);
 
-          CateringEntity hall = CateringEntity.factory(document, pictures);
+          CateringEntity catering = CateringEntity.factory(document, pictures);
 
-          catering_entity.add(hall);
+          catering_entity.add(catering);
         }
       }
       return catering_entity;

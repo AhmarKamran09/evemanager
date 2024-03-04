@@ -11,9 +11,9 @@ class PageNames {
   static const String HomeScreen = "HomeScreen";
   static const String LoadingScreen = "LoadingScreen";
   static const String AddPaymentMethodScreen = "AddPaymentMethodScreen";
-  static const String AddMarriageHallScreen = "AddMarriageHallScreen";
-  static const String UpdateMarriageHallScreen = "UpdateMarriageHallScreen";
-  static const String MarriageHallVendorsScreen = "MarriageHallVendorsScreen";
+  static const String AddVenuesScreen = "AddVenuesScreen";
+  static const String UpdateVenueScreen = "UpdateVenueScreen";
+  static const String VenueListScreen = "VenueListScreen";
 }
 
 void DisplayToast(String message) {
@@ -30,5 +30,5 @@ void DisplayToast(String message) {
 class FirebaseCollectionConst {
   static const String user = "user";
   static const String catering = "catering";
-  static const String marriagehall = "marriagehall";
+  static const String venues = "venues";
 }

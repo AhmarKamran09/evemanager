@@ -16,17 +16,17 @@ import 'package:evemanager/domain/usecases/catering/delete_catering_service_usec
 import 'package:evemanager/domain/usecases/catering/get_catering_service_for_client_usecase.dart';
 import 'package:evemanager/domain/usecases/catering/get_catering_service_for_owner_usecase.dart';
 import 'package:evemanager/domain/usecases/catering/update_catering_service_usecase.dart';
-import 'package:evemanager/domain/usecases/marriage_halls/add_marriage_hall_usecase.dart';
-import 'package:evemanager/domain/usecases/marriage_halls/delete_marriage_hall_usecase.dart';
-import 'package:evemanager/domain/usecases/marriage_halls/edit_availability_of_hall_usecase.dart';
-import 'package:evemanager/domain/usecases/marriage_halls/get_marriage_hall_for_client_usecase.dart';
-import 'package:evemanager/domain/usecases/marriage_halls/get_marriage_hall_for_owner_usecase.dart';
-import 'package:evemanager/domain/usecases/marriage_halls/update_marriage_hall_pictures_usecase.dart';
-import 'package:evemanager/domain/usecases/marriage_halls/update_marriage_hall_usecase.dart';
+import 'package:evemanager/domain/usecases/venues/add_venue_usecase.dart';
+import 'package:evemanager/domain/usecases/venues/delete_venue_usecase.dart';
+import 'package:evemanager/domain/usecases/venues/edit_availability_of_venue_usecase.dart';
+import 'package:evemanager/domain/usecases/venues/get_venue_for_client_usecase.dart';
+import 'package:evemanager/domain/usecases/venues/get_venue_for_owner_usecase.dart';
+import 'package:evemanager/domain/usecases/venues/update_venue_pictures_usecase.dart';
+import 'package:evemanager/domain/usecases/venues/update_venue_usecase.dart';
 import 'package:evemanager/presentation/cubit/auth/auth_cubit.dart';
 import 'package:evemanager/presentation/cubit/cateringservice/cateringservice_cubit.dart';
 import 'package:evemanager/presentation/cubit/credentials/credentials_cubit.dart';
-import 'package:evemanager/presentation/cubit/marriagehall/marriage_hall_cubit.dart';
+import 'package:evemanager/presentation/cubit/venue/venue_cubit.dart';
 import 'package:evemanager/presentation/cubit/userprofile/user_profile_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -50,14 +50,14 @@ Future<void> init() async {
         updateUserUsecase: sl.call(),
         getUserUsecase: sl.call(),
       ));
-  sl.registerFactory(() => MarriageHallCubit(
-        addMarriageHallUsecase: sl.call(),
-        deleteMarriageHallUsecase: sl.call(),
-        editAvailabilityOfHallUsecase: sl.call(),
-        updateMarriageHallPicturesUsecase: sl.call(),
-        updateMarriageHallUsecase: sl.call(),
-        getMarriageHallForClientUsecase: sl.call(),
-        getMarriageHallForOwnerUsecase: sl.call(),
+  sl.registerFactory(() => VenueCubit(
+        addVenueUsecase: sl.call(),
+        deleteVenueUsecase: sl.call(),
+        editAvailabilityOfVenueUsecase: sl.call(),
+        updateVenuePicturesUsecase: sl.call(),
+        updateVenueUsecase: sl.call(),
+        getVenueForClientUsecase: sl.call(),
+        getVenueForOwnerUsecase: sl.call(),
       ));
   sl.registerFactory(() => CateringserviceCubit(
         addCateringServiceUsecase: sl.call(),
@@ -84,21 +84,21 @@ Future<void> init() async {
   sl.registerLazySingleton(
       () => UpdateUserUsecase(firebaseRepository: sl.call()));
 
-  // Marrige Hall
+  // Venue
   sl.registerLazySingleton(
-      () => AddMarriageHallUsecase(firebaseRepository: sl.call()));
+      () => AddVenueUsecase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(
-      () => EditAvailabilityOfHallUsecase(firebaseRepository: sl.call()));
+      () => EditAvailabilityOfVenueUsecase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(
-      () => DeleteMarriageHallUsecase(firebaseRepository: sl.call()));
+      () => DeleteVenueUsecase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(
-      () => UpdateMarriageHallPicturesUsecase(firebaseRepository: sl.call()));
+      () => UpdateVenuePicturesUsecase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(
-      () => UpdateMarriageHallUsecase(firebaseRepository: sl.call()));
+      () => UpdateVenueUsecase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(
-      () => GetMarriageHallForClientUsecase(firebaseRepository: sl.call()));
+      () => GetVenueForClientUsecase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(
-      () => GetMarriageHallForOwnerUsecase(firebaseRepository: sl.call()));
+      () => GetVenueForOwnerUsecase(firebaseRepository: sl.call()));
 
 // Catering Service
   sl.registerLazySingleton(

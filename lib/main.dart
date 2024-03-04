@@ -1,9 +1,8 @@
-import 'package:evemanager/constants.dart';
 import 'package:evemanager/dependency_injection.dart' as di;
 import 'package:evemanager/on_general_route.dart';
 import 'package:evemanager/presentation/cubit/auth/auth_cubit.dart';
 import 'package:evemanager/presentation/cubit/credentials/credentials_cubit.dart';
-import 'package:evemanager/presentation/cubit/marriagehall/marriage_hall_cubit.dart';
+import 'package:evemanager/presentation/cubit/venue/venue_cubit.dart';
 import 'package:evemanager/presentation/cubit/userprofile/user_profile_cubit.dart';
 import 'package:evemanager/presentation/pages/splash_screen/splash_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,14 +36,15 @@ class MyApp extends StatelessWidget {
         BlocProvider<UserProfileCubit>(
           create: (_) => di.sl<UserProfileCubit>(),
         ),
-        BlocProvider<MarriageHallCubit>(
-          create: (_) => di.sl<MarriageHallCubit>(),
+        BlocProvider<VenueCubit>(
+          create: (_) => di.sl<VenueCubit>(),
         ),
       ],
       child: MaterialApp(
         title: 'Eve Manager',
+        // //////////////////////////Create a beautiful theme for the whole app in the end
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: lightBlue),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
         ),
         onGenerateRoute: OnGeneralRoute.routes,

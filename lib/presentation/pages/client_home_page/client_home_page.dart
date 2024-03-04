@@ -145,7 +145,7 @@ class VendorView extends StatelessWidget {
             ),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              Navigator.pushNamed(context, PageNames.MarriageHallVendorsScreen);
+              Navigator.pushNamed(context, PageNames.VenueListScreen);
             },
           );
         });

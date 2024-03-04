@@ -1,11 +1,11 @@
 import 'package:evemanager/domain/repository/firebase_repository.dart';
 
-class DeleteMarriageHallUsecase {
+class DeleteVenueUsecase {
   final FirebaseRepository firebaseRepository;
 
-  DeleteMarriageHallUsecase({required this.firebaseRepository});
+  DeleteVenueUsecase({required this.firebaseRepository});
 
   Future<void> call(String id) async {
-    return await firebaseRepository.DeleteMarriageHall(id);
+    return await firebaseRepository.DeleteVenue(id);
   }
 }

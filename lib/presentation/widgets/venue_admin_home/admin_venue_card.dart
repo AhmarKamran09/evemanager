@@ -1,16 +1,16 @@
 import 'package:evemanager/constants.dart';
-import 'package:evemanager/domain/entities/marriage_halls/marriage_hall_entity.dart';
-import 'package:evemanager/presentation/cubit/marriagehall/marriage_hall_cubit.dart';
+import 'package:evemanager/domain/entities/venues/venue_entity.dart';
+import 'package:evemanager/presentation/cubit/venue/venue_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BuildHallCard extends StatelessWidget {
-  BuildHallCard({super.key, required this.hallData});
-  final MarriageHallEntity hallData;
+class AdminVenueCard extends StatelessWidget {
+  AdminVenueCard({super.key, required this.venue});
+  final VenueEntity venue;
 
   @override
   Widget build(BuildContext context) {
-     return Card(
+    return Card(
       elevation: 3.0,
       margin: EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -20,16 +20,15 @@ class BuildHallCard extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child:
-                    hallData.images != null &&
-                            hallData.images!.isNotEmpty // Example of null check
-                        ? Image.file(
-                            hallData.images![0],
-                            width: 200,
-                            height: 180,
-                            fit: BoxFit.cover,
-                          )
-                        : SizedBox(),
+                child: venue.images != null &&
+                        venue.images!.isNotEmpty // Example of null check
+                    ? Image.file(
+                        venue.images![0],
+                        width: 200,
+                        height: 180,
+                        fit: BoxFit.cover,
+                      )
+                    : SizedBox(),
               ), // Other details
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -37,16 +36,15 @@ class BuildHallCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      hallData.name ?? "",
+                      venue.name ?? "",
                       style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('Capacity: ${hallData.capacity ?? ""}'),
-                    Text('Contact: ${hallData.contact ?? ""}'),
-                    (hallData.availability == null ||
-                            hallData.pricingInfo == null)
+                    Text('Capacity: ${venue.capacity ?? ""}'),
+                    Text('Contact: ${venue.contact ?? ""}'),
+                    (venue.availability == null || venue.pricingInfo == null)
                         ? Text(
                             'Not published ',
                             style: TextStyle(color: Colors.red),
@@ -61,14 +59,13 @@ class BuildHallCard extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(
-                        context, PageNames.UpdateMarriageHallScreen,
-                        arguments: hallData);
+                    Navigator.pushNamed(context, PageNames.UpdateVenueScreen,
+                        arguments: venue);
                   },
                   icon: Icon(Icons.update)),
               IconButton(
                   onPressed: () {
-                    _deletemarriagehall(context, hallData);
+                    _deletevenue(context, venue);
                   },
                   icon: Icon(Icons.delete)),
             ],
@@ -78,9 +75,8 @@ class BuildHallCard extends StatelessWidget {
     );
   }
 
-  void _deletemarriagehall(
-      BuildContext context, MarriageHallEntity hallData) async {
-    await BlocProvider.of<MarriageHallCubit>(context)
-        .DeleteMarriageHall(hallid: hallData.id!, owner_id: hallData.owner_id!);
+  void _deletevenue(BuildContext context, VenueEntity venue) async {
+    await BlocProvider.of<VenueCubit>(context)
+        .DeleteVenue(hallid: venue.id!, owner_id: venue.owner_id!);
   }
 }

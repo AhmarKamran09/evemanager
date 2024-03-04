@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:evemanager/data/datasource/firebase_datasource.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
-import 'package:evemanager/domain/entities/marriage_halls/marriage_hall_entity.dart';
+import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/domain/entities/user/user_entity.dart';
 import 'package:evemanager/domain/repository/firebase_repository.dart';
 
@@ -48,42 +48,42 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
 // Marriage Hall
 
   @override
-  Future<void> AddMarriageHall(MarriageHallEntity marriageHallEntity) {
-    return firebaseDatasource.AddMarriageHall(marriageHallEntity);
+  Future<void> AddVenue(VenueEntity venueEntity) {
+    return firebaseDatasource.AddVenue(venueEntity);
   }
 
   @override
-  Future<void> DeleteMarriageHall(String id) {
-    return firebaseDatasource.DeleteMarriageHall(id);
+  Future<void> DeleteVenue(String id) {
+    return firebaseDatasource.DeleteVenue(id);
   }
 
   @override
-  Stream<List<MarriageHallEntity>> GetMarriageHallforClient() {
-    return firebaseDatasource.GetMarriageHallforClient();
+  Stream<List<VenueEntity>> GetVenueforClient() {
+    return firebaseDatasource.GetVenueforClient();
   }
 
   @override
-  Stream<List<MarriageHallEntity>> GetMarriageHallforOwner(String ownerid) {
-    return firebaseDatasource.GetMarriageHallforOwner(ownerid);
+  Stream<List<VenueEntity>> GetVenueforOwner(String ownerid) {
+    return firebaseDatasource.GetVenueforOwner(ownerid);
   }
 
   @override
-  Future<void> UpdateMarriageHall(MarriageHallEntity marriageHallEntity) {
-    return firebaseDatasource.UpdateMarriageHall(marriageHallEntity);
+  Future<void> UpdateVenue(VenueEntity venueEntity) {
+    return firebaseDatasource.UpdateVenue(venueEntity);
   }
 
   @override
-  Future<void> EditAvailabilityOfHall(
+  Future<void> EditAvailabilityOfVenue(
       String hallid, Map<String, bool> availability) {
-    return firebaseDatasource.EditAvailabilityOfHall(hallid, availability);
+    return firebaseDatasource.EditAvailabilityOfVenue(hallid, availability);
   }
 
   @override
-  Future<void> UpdateMarriageHallPictures(
+  Future<void> UpdateVenuePictures(
     String id,
     List<File>? images,
   ) {
-    return firebaseDatasource.UpdateMarriageHallPictures(id, images);
+    return firebaseDatasource.UpdateVenuePictures(id, images);
   }
 
   @override

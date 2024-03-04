@@ -1,25 +1,25 @@
 import 'dart:io';
 
 import 'package:evemanager/constants.dart';
-import 'package:evemanager/domain/entities/marriage_halls/marriage_hall_entity.dart';
-import 'package:evemanager/presentation/cubit/marriagehall/marriage_hall_cubit.dart';
+import 'package:evemanager/domain/entities/venues/venue_entity.dart';
+import 'package:evemanager/presentation/cubit/venue/venue_cubit.dart';
 import 'package:evemanager/presentation/widgets/Credentials/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddMarriageHalls extends StatefulWidget {
-  const AddMarriageHalls({
+class AddVenues extends StatefulWidget {
+  const AddVenues({
     required this.uid,
     super.key,
   });
   final String uid;
 
   @override
-  State<AddMarriageHalls> createState() => _AddMarriageHallsState();
+  State<AddVenues> createState() => _AddVenuesState();
 }
 
-class _AddMarriageHallsState extends State<AddMarriageHalls> {
+class _AddVenuesState extends State<AddVenues> {
   List<File> selectedImages = [];
 
   final TextEditingController name = TextEditingController();
@@ -30,19 +30,17 @@ class _AddMarriageHallsState extends State<AddMarriageHalls> {
   final TextEditingController description = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MarriageHallCubit, MarriageHallState>(
-        listener: (context, state) {
+    return BlocConsumer<VenueCubit, VenueState>(listener: (context, state) {
       if (name.text.isNotEmpty) {
-        if (state is MarriageHallSuccessForOwner) {
-        // if (state is MarriageHallSuccess) {
-          DisplayToast('Marriage Hall Added Successfully');
+        if (state is VenueSuccessForOwner) {
+          DisplayToast('Venue Added Successfully');
           Navigator.pop(context);
-        } else if (state is MarriageHallFailure) {
+        } else if (state is VenueFailure) {
           DisplayToast('Some Failure Occurred');
         }
       }
-    }, builder: (BuildContext context, MarriageHallState state) {
-      if (state is MarriageHallLoading) {
+    }, builder: (BuildContext context, VenueState state) {
+      if (state is VenueLoading) {
         return Stack(
           children: [
             _body(context, widget.uid),
@@ -64,7 +62,7 @@ class _AddMarriageHallsState extends State<AddMarriageHalls> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Add Marriage Hall'),
+        title: Text('Add Venue'),
       ),
       body: ListView(
         children: [
@@ -101,34 +99,34 @@ class _AddMarriageHallsState extends State<AddMarriageHalls> {
           MyTextField(
             fieldvalue: name,
             label: "Name",
-            hint: "Enter Hall name",
+            hint: "Enter Venue name",
           ),
           MyTextField(
               fieldvalue: address,
               label: "Address",
-              hint: "Enter Hall address"),
+              hint: "Enter Venue address"),
           MyTextField(
               fieldvalue: capacity,
               label: "Capacity",
-              hint: "Enter hall capacity"),
+              hint: "Enter Venue capacity"),
           MyTextField(
               fieldvalue: contact,
               label: "contact",
-              hint: "Enter hall contact number"),
+              hint: "Enter Venue contact number"),
           MyTextField(
               fieldvalue: facilities,
               label: "Facilities",
-              hint: "Enter hall Facilities"),
+              hint: "Enter Venue Facilities"),
           MyTextField(
             fieldvalue: description,
             label: "Description",
-            hint: "Enter hall dscription",
+            hint: "Enter Venue dscription",
           ),
           TextButton(
             onPressed: () {
-              _addmarriagehall(context, uid);
+              _addvenue(context, uid);
             },
-            child: Text('Add Mariage Hall'),
+            child: Text('Add Venue'),
           ),
         ],
       ),
@@ -144,7 +142,7 @@ class _AddMarriageHallsState extends State<AddMarriageHalls> {
     }
   }
 
-  void _addmarriagehall(BuildContext context, String? uidvalue) async {
+  void _addvenue(BuildContext context, String? uidvalue) async {
     if (name.text.isNotEmpty &&
         address.text.isNotEmpty &&
         capacity.text.isNotEmpty &&
@@ -152,8 +150,7 @@ class _AddMarriageHallsState extends State<AddMarriageHalls> {
         facilities.text.isNotEmpty &&
         selectedImages.isNotEmpty &&
         description.text.isNotEmpty) {
-      await BlocProvider.of<MarriageHallCubit>(context)
-          .AddMarriageHall(MarriageHallEntity(
+      await BlocProvider.of<VenueCubit>(context).AddVenue(VenueEntity(
         owner_id: uidvalue,
         images: selectedImages,
         name: name.text,

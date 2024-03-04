@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-class MarriageHallEntity extends Equatable {
+class VenueEntity extends Equatable {
   final String? id;
   final String? owner_id;
   final String? address;
@@ -16,7 +16,7 @@ class MarriageHallEntity extends Equatable {
   final Map<String, Map<String, bool>>? availability;
   final String? description;
 
-  MarriageHallEntity({
+  VenueEntity({
     this.images,
     this.name,
     this.capacity,
@@ -30,12 +30,10 @@ class MarriageHallEntity extends Equatable {
     this.address,
   });
 
-  factory MarriageHallEntity.factory(
+  factory VenueEntity.factory(
       DocumentSnapshot snapshot, List<File>? imagesfromstorage) {
     var snap = snapshot.data() as Map<String, dynamic>;
-    // print(imagesfromstorage);
-
-    return MarriageHallEntity(
+    return VenueEntity(
       images: imagesfromstorage,
       name: snap['name'],
       capacity: snap['capacity'],
