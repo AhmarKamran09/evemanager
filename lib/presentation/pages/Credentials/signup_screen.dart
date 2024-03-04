@@ -18,8 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController role = TextEditingController();
-  final List<String> options = ["Client", "Hall Owner", "Decoration"];
-  final String selectedValue = "";
+  // final String selectedValue = "";
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             RoleField(
               fieldvalue: role,
+              
             ),
             SizedBox(
               height: 10,
@@ -95,6 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Future<void> _signup(BuildContext context) async {
     if (role.text.isNotEmpty) {
+      
       await BlocProvider.of<CredentialsCubit>(context).SignUpUser(
           user: UserEntity(
         role: role.text,

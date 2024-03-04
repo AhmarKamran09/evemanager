@@ -12,9 +12,16 @@ class _RoleFieldState extends State<RoleField> {
   List dropDownListData = [
     {"title": "Client", "value": "1"},
     {"title": "Decoration", "value": "2"},
-    {"title": "Halls", "value": "3"},
-    {"title": "Car rental", "value": "4"},
-    {"title": "Food Cattering", "value": "5"},
+    {"title": "Venue", "value": "3"},
+    {"title": "Transportation", "value": "4"},
+    {"title": "Catering", "value": "5"},
+    {"title": "Photography", "value": "6"},
+    {"title": "Entertainment (Music and Speakers)", "value": "7"},
+    {"title": "Bridal Makeup & Hair", "value": "8"},
+    {"title": "Invitation Design", "value": "9"},
+    {"title": "Clothing", "value": "10"},
+    {"title": "Sweets", "value": "11"},
+    {"title": "Videography", "value": "12"},
   ];
 
   String? selectedrole = "";

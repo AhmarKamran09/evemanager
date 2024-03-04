@@ -129,8 +129,10 @@ class VendorView extends StatelessWidget {
     'Transportation',
     'Bridal Makeup & Hair',
     'Invitation Design',
+    'Clothing',
+    'Sweets',
+    'Videography',
   ];
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
