@@ -12,8 +12,8 @@ class PageNames {
   static const String LoadingScreen = "LoadingScreen";
   static const String AddPaymentMethodScreen = "AddPaymentMethodScreen";
   static const String AddMarriageHallScreen = "AddMarriageHallScreen";
- static const String UpdateMarriageHallScreen =   "UpdateMarriageHallScreen";
- 
+  static const String UpdateMarriageHallScreen = "UpdateMarriageHallScreen";
+  static const String MarriageHallVendorsScreen = "MarriageHallVendorsScreen";
 }
 
 void DisplayToast(String message) {

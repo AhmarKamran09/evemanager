@@ -3,6 +3,7 @@ import 'package:evemanager/domain/entities/marriage_halls/marriage_hall_entity.d
 import 'package:evemanager/presentation/pages/Credentials/login_screen.dart';
 import 'package:evemanager/presentation/pages/Credentials/signup_screen.dart';
 import 'package:evemanager/presentation/pages/add_payment_method_screen/add-payment_method_screen.dart';
+import 'package:evemanager/presentation/pages/client_home_page/marriage_hall_vendors_screen.dart';
 import 'package:evemanager/presentation/pages/home/home_screen.dart';
 import 'package:evemanager/presentation/pages/loading_screen/loading_screen.dart';
 import 'package:evemanager/presentation/pages/marriage_hall_admin_home/add_marriage_halls.dart';
@@ -18,6 +19,10 @@ class OnGeneralRoute {
       case PageNames.LogInScreen:
         {
           return routeBuilder(LoginScreen());
+        }
+      case PageNames.MarriageHallVendorsScreen:
+        {
+          return routeBuilder(MarriageHallVendorsScreen());
         }
       case PageNames.UpdateMarriageHallScreen:
         {

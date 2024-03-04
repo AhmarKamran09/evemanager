@@ -1,18 +1,31 @@
 import 'package:evemanager/constants.dart';
-import 'package:evemanager/domain/entities/marriage_halls/marriage_hall_entity.dart';
-import 'package:evemanager/presentation/cubit/marriagehall/marriage_hall_cubit.dart';
 import 'package:evemanager/presentation/widgets/home/main_drawer.dart';
-import 'package:evemanager/presentation/widgets/loading_screen/loading_body.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:evemanager/dependency_injection.dart' as di;
 
-class ClientHomePage extends StatelessWidget {
-  const ClientHomePage({
-    super.key,
-    required this.uid,
-  });
+class ClientHomePage extends StatefulWidget {
   final String? uid;
+
+  ClientHomePage({super.key, required this.uid});
+  @override
+  _ClientHomePageState createState() => _ClientHomePageState();
+}
+
+class _ClientHomePageState extends State<ClientHomePage> {
+  int _selectedIndex = 0;
+
+  List<Widget> _widgetOptions = <Widget>[
+    HomeView(),
+    VendorView(),
+    PlanningView(),
+    ExploreView(),
+    MessageView(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,235 +34,129 @@ class ClientHomePage extends StatelessWidget {
         backgroundColor: lightBlue.withOpacity(0.5),
         centerTitle: true,
         title: Text(
-          'EVE MANAGER',
+          'Home Screen',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
       drawer: MainDrawer(
-        uid: uid,
+        uid: widget.uid,
       ),
-      body: DefaultTabController(
-        length: 5,
-        child: Column(
-          children: [
-            Container(
-              color: lightBlue.withOpacity(0.1),
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.all(0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      height: kToolbarHeight,
-                      child: TabBar(
-                        indicatorPadding: EdgeInsets.zero,
-                        isScrollable: true,
-                        tabs: [
-                          Tab(text: 'Wedding Halls'),
-                          Tab(text: 'Food Cattering'),
-                          Tab(text: 'Decoration'),
-                          Tab(text: 'Tab 3'),
-                          Tab(text: 'Tab 3'),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  Tab1Body(),
-                  Tab1Body(),
-                  Tab3Body(),
-                  Tab3Body(),
-                  Tab3Body(),
-                ],
-              ),
-            ),
-          ],
-        ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
-    );
-  }
-}
-
-class Tab1Body extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        await BlocProvider.of<MarriageHallCubit>(context)
-            .GetMarriageHallForClient();
-      },
-      child: FutureBuilder(
-          future: BlocProvider.of<MarriageHallCubit>(context)
-              .GetMarriageHallForClient(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return BlocConsumer<MarriageHallCubit, MarriageHallState>(
-                listener: (context, state) {
-                  if (state is MarriageHallFailure) {
-                    DisplayToast('Failed To Get Marriage Halls');
-                  }
-                },
-                builder: (context, state) {
-                  if (state is MarriageHallSuccessForClient) {
-                    //  if (state is MarriageHallSuccess) {
-                    
-                    if (state.marriageHallEntities?.isEmpty ?? false) {
-                      return Center(
-                        child: Text('No wedding halls listed'),
-                      );
-                    } else {
-                      return Container(
-                        child: ListView.builder(
-                          itemCount: state.marriageHallEntities?.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                                child: BuildHallCardForClient(
-                                    hallData:
-                                        state.marriageHallEntities![index]));
-                          },
-                        ),
-                      );
-                    }
-                  } else if (state is MarriageHallFailure) {
-                    return Center(
-                      child: Container(
-                        child: Text('Failed To Show Wedding Halls'),
-                      ),
-                    );
-                  } else {
-                    return LoadingBody();
-                  }
-                },
-              );
-            } else {
-              return LoadingBody();
-            }
-          }),
-    );
-  }
-}
-
-// class Tab2Body extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return RefreshIndicator(
-//       onRefresh: () async {
-//         await BlocProvider.of<MarriageHallCubit>(context)
-//             .GetMarriageHallForClient();
-//       },
-//       child: FutureBuilder(
-//           future: BlocProvider.of<MarriageHallCubit>(context)
-//               .GetMarriageHallForClient(),
-//           builder: (context, snapshot) {
-//             if (snapshot.connectionState == ConnectionState.done) {
-//               return BlocConsumer<MarriageHallCubit, MarriageHallState>(
-//                 listener: (context, state) {
-//                   if (state is MarriageHallFailure) {
-//                     DisplayToast('Failed To Get Marriage Halls');
-//                   }
-//                 },
-//                 builder: (context, state) {
-//                   if (state is MarriageHallSuccessForClient) {
-//                     if (state.marriageHallEntities?.isEmpty ?? false) {
-//                       return Center(
-//                         child: Text('No wedding halls listed'),
-//                       );
-//                     } else {
-//                       return Container(
-//                         child: ListView.builder(
-//                           itemCount: state.marriageHallEntities?.length,
-//                           itemBuilder: (context, index) {
-//                             return Container(
-//                                 child: BuildHallCardForClient(
-//                                     hallData:
-//                                         state.marriageHallEntities![index]));
-//                           },
-//                         ),
-//                       );
-//                     }
-//                   } else if (state is MarriageHallLoading) {
-//                     return LoadingBody();
-//                   } else {
-//                     return Center(
-//                       child: Container(
-//                         child: Text('Failed To Show Wedding Halls'),
-//                       ),
-//                     );
-//                   }
-//                 },
-//               );
-//             } else {
-//               return LoadingBody();
-//             }
-//           }),
-//     );
-//   }
-// }
-
-class Tab3Body extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Body of Tab 3'),
-    );
-  }
-}
-
-class BuildHallCardForClient extends StatelessWidget {
-  BuildHallCardForClient({super.key, required this.hallData});
-  final MarriageHallEntity hallData;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 3.0,
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image Container
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.file(
-              hallData.images![0],
-              width: 200,
-              height: 180,
-              fit: BoxFit.cover,
-            ),
-          ), // Other details
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  hallData.name!,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text('Capacity: ${hallData.capacity}'),
-                Text('Contact: ${hallData.contact}'),
-                (hallData.availability == null || hallData.pricingInfo == null)
-                    ? Text(
-                        'Not published ',
-                        style: TextStyle(color: Colors.red),
-                      )
-                    : SizedBox()
-              ],
-            ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+            // contains the track to compelte a booking
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business_center),
+            label: 'Vendors',
+            // all the vendors types
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.checklist),
+            label: 'Planning',
+            //budget  and asks the user to complete what services he need in checklist
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Explore',
+            // recommendationsfor event (any type)
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Messages',
+            // all the vendors types
           ),
         ],
+        unselectedItemColor: Colors.grey,
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
       ),
     );
+  }
+}
+
+class PlanningView extends StatelessWidget {
+  const PlanningView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text("data");
+  }
+}
+
+class MessageView extends StatelessWidget {
+  const MessageView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('Message Page');
+  }
+}
+
+class ExploreView extends StatelessWidget {
+  const ExploreView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('Profile Page');
+  }
+}
+
+class VendorView extends StatelessWidget {
+  VendorView({
+    super.key,
+  });
+  final List<String> services = [
+    'Venue Booking',
+    'Catering',
+    'Photography',
+    'Entertainment (Music)',
+    'Decorations',
+    'Transportation',
+    'Bridal Makeup & Hair',
+    'Invitation Design',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        itemCount: services.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(
+              services[index],
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.pushNamed(context, PageNames.MarriageHallVendorsScreen);
+            },
+          );
+        });
+  }
+}
+
+class HomeView extends StatelessWidget {
+  const HomeView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('home Page');
   }
 }
