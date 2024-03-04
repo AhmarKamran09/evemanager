@@ -18,8 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController role = TextEditingController();
-  // final String selectedValue = "";
-
+ 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CredentialsCubit, CredentialsState>(
@@ -46,8 +45,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           title: Center(child: Text('SignUp Screen')),
         ),
         body: ListView(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
               child: MyTextField(

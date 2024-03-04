@@ -14,6 +14,8 @@ class PageNames {
   static const String AddVenuesScreen = "AddVenuesScreen";
   static const String UpdateVenueScreen = "UpdateVenueScreen";
   static const String VenueListScreen = "VenueListScreen";
+  static const String VenueDetailsScreen = "VenueDetailsScreen";
+  
 }
 
 void DisplayToast(String message) {
