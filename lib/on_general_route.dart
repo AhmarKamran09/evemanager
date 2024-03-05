@@ -23,7 +23,7 @@ class OnGeneralRoute {
         }
       case PageNames.VenueDetailsScreen:
         {
-          return routeBuilder(VenueDetailsScreen());
+          return routeBuilder(VenueDetailsScreen( venueEntity: args as VenueEntity,));
         }
       case PageNames.VenueListScreen:
         {
