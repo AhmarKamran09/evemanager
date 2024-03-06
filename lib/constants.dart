@@ -15,6 +15,9 @@ class PageNames {
   static const String UpdateVenueScreen = "UpdateVenueScreen";
   static const String VenueListScreen = "VenueListScreen";
   static const String VenueDetailsScreen = "VenueDetailsScreen";
+  static const String CateringDetailsScreen = "CateringDetailsScreen";
+  static const String CateringListScreen = "CateringListScreen";
+  
   
 }
 

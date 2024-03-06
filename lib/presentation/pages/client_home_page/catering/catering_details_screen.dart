@@ -1,16 +1,16 @@
-import 'package:evemanager/domain/entities/venues/venue_entity.dart';
+
+
+import 'package:evemanager/domain/entities/catering/catering_entity.dart';
 import 'package:flutter/material.dart';
 
-class VenueDetailsScreen extends StatelessWidget {
-  VenueDetailsScreen({super.key, required this.venueEntity});
-  final VenueEntity venueEntity;
+class CateringDetailsScreen extends StatelessWidget {
+   CateringDetailsScreen({super.key, required this.cateringEntity});
+ final CateringEntity cateringEntity;
   @override
   Widget build(BuildContext context) {
-
-    // List<File> selectedImages = [];
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(
-        title: Text('Venue Details'),
+        title: Text('Catering Details'),
         centerTitle: true,
       ),
       body: ListView(
@@ -24,15 +24,15 @@ class VenueDetailsScreen extends StatelessWidget {
               width: 200,
               height: 200,
               color: Colors.grey[200],
-              child: venueEntity.images?.isNotEmpty ?? false
+              child: cateringEntity.images?.isNotEmpty ?? false
                   ? ListView.builder(
-                      itemCount: venueEntity.images?.length,
+                      itemCount: cateringEntity.images?.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.file(
-                            venueEntity.images![index],
+                            cateringEntity.images![index],
                             width: 200,
                             height: 180,
                             fit: BoxFit.cover,
@@ -44,10 +44,10 @@ class VenueDetailsScreen extends StatelessWidget {
                       child: Text('No images'),
                     ),
             ),
-          ),
-          
+          ),          
           ],
       ),
     );
+
   }
 }

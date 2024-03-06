@@ -1,8 +1,11 @@
 import 'package:evemanager/constants.dart';
+import 'package:evemanager/domain/entities/catering/catering_entity.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/presentation/pages/Credentials/login_screen.dart';
 import 'package:evemanager/presentation/pages/Credentials/signup_screen.dart';
 import 'package:evemanager/presentation/pages/add_payment_method_screen/add-payment_method_screen.dart';
+import 'package:evemanager/presentation/pages/client_home_page/catering/catering_details_screen.dart';
+import 'package:evemanager/presentation/pages/client_home_page/catering/cateringlist_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/venue/venue_details_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/venue/venuelist_screen.dart';
 import 'package:evemanager/presentation/pages/home/home_navigation_screen.dart';
@@ -20,6 +23,14 @@ class OnGeneralRoute {
       case PageNames.LogInScreen:
         {
           return routeBuilder(LoginScreen());
+        }
+      case PageNames.CateringDetailsScreen:
+        {
+          return routeBuilder(CateringDetailsScreen(cateringEntity: args as CateringEntity,));
+        }
+      case PageNames.CateringListScreen:
+        {
+          return routeBuilder(CateringListScreen());
         }
       case PageNames.VenueDetailsScreen:
         {

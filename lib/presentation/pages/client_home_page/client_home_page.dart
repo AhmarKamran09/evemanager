@@ -145,6 +145,7 @@ class VendorView extends StatelessWidget {
             ),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
+              //  add if else statements for different navigation
               Navigator.pushNamed(context, PageNames.VenueListScreen);
             },
           );
