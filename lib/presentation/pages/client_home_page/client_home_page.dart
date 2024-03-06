@@ -157,8 +157,57 @@ class VendorView extends StatelessWidget {
             ),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
-              //  add if else statements for different navigation
+              switch (index) {
+              case 0:
               Navigator.pushNamed(context, PageNames.VenueListScreen);
+      
+                  break;
+              case 1:
+              Navigator.pushNamed(context, PageNames.CateringListScreen);
+      
+                  break;
+              case 2:
+              Navigator.pushNamed(context, PageNames.VenueListScreen);
+      
+                  break;
+              case 3:
+              Navigator.pushNamed(context, PageNames.VenueListScreen);
+      
+                  break;
+              case 4:
+              Navigator.pushNamed(context, PageNames.VenueListScreen);
+      
+                  break;
+              case 5:
+              Navigator.pushNamed(context, PageNames.VenueListScreen);
+      
+                  break;
+              case 6:
+              Navigator.pushNamed(context, PageNames.VenueListScreen);
+      
+                  break;
+              case 7:
+              Navigator.pushNamed(context, PageNames.VenueListScreen);
+      
+                  break;
+              case 8:
+              Navigator.pushNamed(context, PageNames.VenueListScreen);
+      
+                  break;
+              case 9:
+              Navigator.pushNamed(context, PageNames.VenueListScreen);
+      
+                  break;
+              case 10:
+              Navigator.pushNamed(context, PageNames.VenueListScreen);
+      
+                  break;
+              
+                default:
+                Navigator.pushNamed(context, PageNames.PageNotFound);
+      
+              }
+            
             },
           );
         });

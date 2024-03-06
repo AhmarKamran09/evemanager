@@ -1,6 +1,7 @@
 import 'package:evemanager/dependency_injection.dart' as di;
 import 'package:evemanager/on_general_route.dart';
 import 'package:evemanager/presentation/cubit/auth/auth_cubit.dart';
+import 'package:evemanager/presentation/cubit/cateringservice/cateringservice_cubit.dart';
 import 'package:evemanager/presentation/cubit/credentials/credentials_cubit.dart';
 import 'package:evemanager/presentation/cubit/venue/venue_cubit.dart';
 import 'package:evemanager/presentation/cubit/userprofile/user_profile_cubit.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<VenueCubit>(
           create: (_) => di.sl<VenueCubit>(),
+        ),
+        BlocProvider<CateringserviceCubit>(
+          create: (_) => di.sl<CateringserviceCubit>(),
         ),
       ],
       child: MaterialApp(

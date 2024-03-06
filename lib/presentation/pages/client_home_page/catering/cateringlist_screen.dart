@@ -78,7 +78,7 @@ class ClientCateringCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, PageNames.VenueDetailsScreen,arguments: catering);
+        Navigator.pushNamed(context, PageNames.CateringDetailsScreen,arguments: catering);
       },
       child: Card(
         elevation: 30.0,

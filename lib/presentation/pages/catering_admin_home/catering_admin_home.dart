@@ -1,12 +1,14 @@
 import 'package:evemanager/constants.dart';
+import 'package:evemanager/presentation/cubit/cateringservice/cateringservice_cubit.dart';
 import 'package:evemanager/presentation/cubit/venue/venue_cubit.dart';
+import 'package:evemanager/presentation/widgets/_admin_home_page/admin_catering_service_card.dart';
 import 'package:evemanager/presentation/widgets/loading_screen/loading_body.dart';
 import 'package:evemanager/presentation/widgets/_admin_home_page/admin_venue_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class VenueAdminHome extends StatelessWidget {
-  VenueAdminHome({
+class CateringAdminHome extends StatelessWidget {
+  CateringAdminHome({
     super.key,
     required this.uid,
   });
@@ -38,47 +40,50 @@ class VenueAdminHome extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, PageNames.AddVenuesScreen,
+          Navigator.pushNamed(context, PageNames.AddCateringScreen,
               arguments: uid);
         },
         child: Icon(Icons.add),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          await BlocProvider.of<VenueCubit>(context).GetVenueForOwner(uid!);
+          await BlocProvider.of<CateringserviceCubit>(context)
+              .GetCateringServiceForOwner(uid!);
         },
         child: FutureBuilder(
-            future: BlocProvider.of<VenueCubit>(context).GetVenueForOwner(uid!),
+            future: BlocProvider.of<CateringserviceCubit>(context)
+                .GetCateringServiceForOwner(uid!),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return BlocConsumer<VenueCubit, VenueState>(
+                return BlocConsumer<CateringserviceCubit, CateringserviceState>(
                   listener: (context, state) {
-                    if (state is VenueFailure) {
-                      DisplayToast('Failed To Get Venues');
+                    if (state is CateringserviceFailure) {
+                      DisplayToast('Failed To Get Catering Services');
                     }
                   },
                   builder: (context, state) {
-                    if (state is VenueSuccessForOwner) {
-                      if (state.VenueEntities?.isEmpty ?? false) {
+                    if (state is CateringserviceSuccessForOwner) {
+                      if (state.catering_entities?.isEmpty ?? false) {
                         return Center(
-                          child: Text('No Venues listed'),
+                          child: Text('No Catering Services listed'),
                         );
                       } else {
                         return Container(
                           child: ListView.builder(
-                            itemCount: state.VenueEntities?.length,
+                            itemCount: state.catering_entities?.length,
                             itemBuilder: (context, index) {
                               return Container(
-                                  child: AdminVenueCard(
-                                      venue: state.VenueEntities![index]));
+                                  child: AdminCateringServiceCard(
+                                      cateringEntity:
+                                          state.catering_entities![index]));
                             },
                           ),
                         );
                       }
-                    } else if (state is VenueFailure) {
+                    } else if (state is CateringserviceFailure) {
                       return Center(
                         child: Container(
-                          child: Text('Failed To Show Venues'),
+                          child: Text('Failed To Show Catering Services'),
                         ),
                       );
                     } else {

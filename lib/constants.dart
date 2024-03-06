@@ -18,6 +18,9 @@ class PageNames {
   static const String VenueDetailsScreen = "VenueDetailsScreen";
   static const String CateringDetailsScreen = "CateringDetailsScreen";
   static const String CateringListScreen = "CateringListScreen";
+  static const String AddCateringScreen = "AddCateringScreen";
+  static const String UpdateCateringScreen = "UpdateCateringScreen";
+  static const String PageNotFound = "PageNotFound";
 }
 
 void DisplayToast(String message) {

@@ -4,6 +4,8 @@ import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/presentation/pages/Credentials/login_screen.dart';
 import 'package:evemanager/presentation/pages/Credentials/signup_screen.dart';
 import 'package:evemanager/presentation/pages/add_payment_method_screen/add-payment_method_screen.dart';
+import 'package:evemanager/presentation/pages/catering_admin_home/add_catering_screen.dart';
+import 'package:evemanager/presentation/pages/catering_admin_home/update_catering_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/catering/catering_details_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/catering/cateringlist_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/venue/venue_details_screen.dart';
@@ -24,40 +26,6 @@ class OnGeneralRoute {
       case PageNames.LogInScreen:
         {
           return routeBuilder(LoginScreen());
-        }
-      case PageNames.ProfileMenuPage:
-        {
-          return routeBuilder(ProfileMenuPage(uid:  args as String,));
-        }
-      case PageNames.CateringDetailsScreen:
-        {
-          return routeBuilder(CateringDetailsScreen(
-            cateringEntity: args as CateringEntity,
-          ));
-        }
-      case PageNames.CateringListScreen:
-        {
-          return routeBuilder(CateringListScreen());
-        }
-      case PageNames.VenueDetailsScreen:
-        {
-          return routeBuilder(VenueDetailsScreen(
-            venueEntity: args as VenueEntity,
-          ));
-        }
-      case PageNames.VenueListScreen:
-        {
-          return routeBuilder(VenueListScreen());
-        }
-      case PageNames.UpdateVenueScreen:
-        {
-          return routeBuilder(UpdateVenueScreen(
-            venueEntity: args as VenueEntity,
-          ));
-        }
-      case PageNames.AddVenuesScreen:
-        {
-          return routeBuilder(AddVenues(uid: args as String));
         }
       case PageNames.UserProfileDetailsPage:
         {
@@ -80,6 +48,57 @@ class OnGeneralRoute {
         {
           return routeBuilder(SignUpScreen());
         }
+      case PageNames.PageNotFound:
+        {
+          return routeBuilder(PageNotFound());
+        }
+      case PageNames.ProfileMenuPage:
+        {
+          return routeBuilder(ProfileMenuPage(
+            uid: args as String,
+          ));
+        }
+      case PageNames.VenueDetailsScreen:
+        {
+          return routeBuilder(VenueDetailsScreen(
+            venueEntity: args as VenueEntity,
+          ));
+        }
+      case PageNames.VenueListScreen:
+        {
+          return routeBuilder(VenueListScreen());
+        }
+      case PageNames.UpdateVenueScreen:
+        {
+          return routeBuilder(UpdateVenueScreen(
+            venueEntity: args as VenueEntity,
+          ));
+        }
+      case PageNames.AddVenuesScreen:
+        {
+          return routeBuilder(AddVenues(uid: args as String));
+        }
+      case PageNames.CateringDetailsScreen:
+        {
+          return routeBuilder(CateringDetailsScreen(
+            cateringEntity: args as CateringEntity,
+          ));
+        }
+      case PageNames.CateringListScreen:
+        {
+          return routeBuilder(CateringListScreen());
+        }
+      case PageNames.AddCateringScreen:
+        {
+          return routeBuilder(AddCateringScreen(
+            uid: args as String,
+          ));
+        }
+      case PageNames.UpdateCateringScreen:
+        {
+          return routeBuilder(UpdateCateringScreen());
+        }
+
       default:
         {
           return routeBuilder(PageNotFound());
