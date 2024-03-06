@@ -3,18 +3,18 @@ import 'package:evemanager/domain/entities/user/user_entity.dart';
 import 'package:evemanager/presentation/cubit/userprofile/user_profile_cubit.dart';
 import 'package:evemanager/presentation/pages/loading_screen/loading_screen.dart';
 import 'package:evemanager/presentation/widgets/Credentials/my_text_field.dart';
-import 'package:evemanager/presentation/widgets/home/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+class UserProfileDetailsScreen extends StatefulWidget {
+  const UserProfileDetailsScreen({super.key});
 
   @override
-  State<UserProfileScreen> createState() => _UserProfileScreenState();
+  State<UserProfileDetailsScreen> createState() =>
+      _UserProfileDetailsScreenState();
 }
 
-class _UserProfileScreenState extends State<UserProfileScreen> {
+class _UserProfileDetailsScreenState extends State<UserProfileDetailsScreen> {
   TextEditingController? name = TextEditingController();
   TextEditingController? contact_number = TextEditingController();
   TextEditingController? cnic = TextEditingController();
@@ -58,10 +58,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       appBar: AppBar(
         backgroundColor: lightBlue.withOpacity(0.5),
         centerTitle: true,
-        title: Text("Profile"),
-      ),
-      drawer: MainDrawer(
-        parentcontext: context,
+        title: Text("Profile Details"),
       ),
       body: Container(
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -90,9 +87,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             SizedBox(height: 20),
             Switch(
               onChanged: (e) {
-                setState(() {
-                  readonly = e;
-                });
+                // setState(() {
+                //   readonly = e;
+                // });
               },
               value: readonly,
             ),
@@ -137,6 +134,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       // cnic!.text.isNotEmpty ? int.parse(cnic!.text) : 0,
       address: address!.text,
     ));
+      //  Navigator.pushReplacementNamed(context, PageNames.);
+ 
   }
 
   Future<void> deleteaccount(BuildContext context, String? uidvalue) async {

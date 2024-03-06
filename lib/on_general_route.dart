@@ -10,9 +10,10 @@ import 'package:evemanager/presentation/pages/client_home_page/venue/venue_detai
 import 'package:evemanager/presentation/pages/client_home_page/venue/venuelist_screen.dart';
 import 'package:evemanager/presentation/pages/home/home_navigation_screen.dart';
 import 'package:evemanager/presentation/pages/loading_screen/loading_screen.dart';
+import 'package:evemanager/presentation/pages/profile/profile_menu_page.dart';
 import 'package:evemanager/presentation/pages/venue_admin_home/add_venues.dart';
 import 'package:evemanager/presentation/pages/venue_admin_home/update_venue_screen.dart';
-import 'package:evemanager/presentation/pages/profile/user_profile_screen.dart';
+import 'package:evemanager/presentation/pages/profile/user_profile_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class OnGeneralRoute {
@@ -24,9 +25,15 @@ class OnGeneralRoute {
         {
           return routeBuilder(LoginScreen());
         }
+      case PageNames.ProfileMenuPage:
+        {
+          return routeBuilder(ProfileMenuPage(uid:  args as String,));
+        }
       case PageNames.CateringDetailsScreen:
         {
-          return routeBuilder(CateringDetailsScreen(cateringEntity: args as CateringEntity,));
+          return routeBuilder(CateringDetailsScreen(
+            cateringEntity: args as CateringEntity,
+          ));
         }
       case PageNames.CateringListScreen:
         {
@@ -34,7 +41,9 @@ class OnGeneralRoute {
         }
       case PageNames.VenueDetailsScreen:
         {
-          return routeBuilder(VenueDetailsScreen( venueEntity: args as VenueEntity,));
+          return routeBuilder(VenueDetailsScreen(
+            venueEntity: args as VenueEntity,
+          ));
         }
       case PageNames.VenueListScreen:
         {
@@ -50,9 +59,9 @@ class OnGeneralRoute {
         {
           return routeBuilder(AddVenues(uid: args as String));
         }
-      case PageNames.UserProfilePage:
+      case PageNames.UserProfileDetailsPage:
         {
-          return routeBuilder(UserProfileScreen());
+          return routeBuilder(UserProfileDetailsScreen());
         }
       case PageNames.AddPaymentMethodScreen:
         {

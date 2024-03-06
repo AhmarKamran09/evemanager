@@ -3,7 +3,6 @@ import 'package:evemanager/constants.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
 import 'package:evemanager/presentation/cubit/cateringservice/cateringservice_cubit.dart';
 import 'package:evemanager/presentation/cubit/venue/venue_cubit.dart';
-import 'package:evemanager/presentation/widgets/client_home_page/client_venues_card.dart';
 import 'package:evemanager/presentation/widgets/loading_screen/loading_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

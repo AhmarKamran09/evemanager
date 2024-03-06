@@ -28,14 +28,7 @@ class UserProfileCubit extends Cubit<UserProfileState> {
       emit(UserProfileLoading());
       String? uid = await uidusecase.call();
       UserEntity user = await getUserUsecase.call(uid: uid!);
-      // print(uid);
-      // if (uid != null) {
-      // print(uid);
       emit(UserProfileSuccess(user: user));
-      // print("success");
-      // } else {
-      // emit(UserProfileFailure());
-      // }
     } on SocketException catch (_) {
       emit(UserProfileFailure());
     } catch (e) {
@@ -55,16 +48,12 @@ class UserProfileCubit extends Cubit<UserProfileState> {
     }
   }
 
-  // void UserProfileToHome() {
-  //   emit(UserProfileToMain());
-  // }
 
   Future<void> UpdateUser({required UserEntity user}) async {
     try {
       emit(UserProfileLoading());
       await updateUserUsecase.call(user);
       await GetUser();
-      emit(UserProfileSuccess(user: user));
     } on SocketException catch (_) {
       DisplayToast("Unable to Update!! Failure");
       emit(UserProfileSuccess(user: user));

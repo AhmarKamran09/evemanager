@@ -1,5 +1,4 @@
 import 'package:evemanager/constants.dart';
-import 'package:evemanager/presentation/widgets/home/main_drawer.dart';
 import 'package:flutter/material.dart';
 
 class ClientHomePage extends StatefulWidget {
@@ -31,7 +30,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: lightBlue.withOpacity(0.5),
+        // backgroundColor: lightBlue.withOpacity(0.5),
         centerTitle: true,
         title: Text(
           'Home Screen',
@@ -39,10 +38,23 @@ class _ClientHomePageState extends State<ClientHomePage> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          // IconButton(
+          //     onPressed: () {}, icon: Icon(Icons.messenger_outline_sharp)),
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, PageNames.ProfileMenuPage,
+                    arguments: widget.uid);
+              },
+              icon: Icon(size: 40, Icons.person)),
+          SizedBox(
+            width: 10,
+          )
+        ],
       ),
-      drawer: MainDrawer(
-        uid: widget.uid,
-      ),
+      // drawer: MainDrawer(
+      //   uid: widget.uid,
+      // ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -90,7 +102,7 @@ class PlanningView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("data");
+    return Text("planning");
   }
 }
 

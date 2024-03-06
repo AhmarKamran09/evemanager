@@ -17,11 +17,6 @@ final class UserProfileLoading extends UserProfileState {
   List<Object> get props => [];
 }
 
-// final class UserProfileToMain extends UserProfileState {
-//   @override
-//   List<Object> get props => [];
-// }
-
 final class UserProfileSuccess extends UserProfileState {
   final UserEntity user;
 

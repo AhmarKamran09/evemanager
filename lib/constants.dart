@@ -7,7 +7,8 @@ const Color black = Colors.black;
 class PageNames {
   static const String LogInScreen = "LogInScreen";
   static const String SignUpScreen = "SignUpScreen";
-  static const String UserProfilePage = "UserProfilePage";
+  static const String UserProfileDetailsPage = "UserProfileDetailsPage";
+  static const String ProfileMenuPage = "ProfileMenuPage";
   static const String HomeScreen = "HomeScreen";
   static const String LoadingScreen = "LoadingScreen";
   static const String AddPaymentMethodScreen = "AddPaymentMethodScreen";
@@ -17,8 +18,6 @@ class PageNames {
   static const String VenueDetailsScreen = "VenueDetailsScreen";
   static const String CateringDetailsScreen = "CateringDetailsScreen";
   static const String CateringListScreen = "CateringListScreen";
-  
-  
 }
 
 void DisplayToast(String message) {

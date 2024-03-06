@@ -1,6 +1,5 @@
 import 'package:evemanager/constants.dart';
 import 'package:evemanager/presentation/cubit/venue/venue_cubit.dart';
-import 'package:evemanager/presentation/widgets/home/main_drawer.dart';
 import 'package:evemanager/presentation/widgets/loading_screen/loading_body.dart';
 import 'package:evemanager/presentation/widgets/venue_admin_home/admin_venue_card.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +24,19 @@ class VenueAdminHome extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          // IconButton(
+          //     onPressed: () {}, icon: Icon(Icons.messenger_outline_sharp)),
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, PageNames.ProfileMenuPage,
+                    arguments: uid);
+              },
+              icon: Icon(size: 40, Icons.person)),
+          SizedBox(
+            width: 10,
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -32,9 +44,6 @@ class VenueAdminHome extends StatelessWidget {
               arguments: uid);
         },
         child: Icon(Icons.add),
-      ),
-      drawer: MainDrawer(
-        uid: uid,
       ),
       body: RefreshIndicator(
         onRefresh: () async {

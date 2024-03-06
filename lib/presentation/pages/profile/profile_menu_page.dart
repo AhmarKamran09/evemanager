@@ -1,0 +1,69 @@
+import 'package:evemanager/constants.dart';
+import 'package:evemanager/presentation/cubit/auth/auth_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class ProfileMenuPage extends StatelessWidget {
+  const ProfileMenuPage({super.key, required this.uid});
+  final String uid;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: lightBlue.withOpacity(0.5),
+        centerTitle: true,
+        title: Text("My Profile"),
+      ),
+      body: Expanded(
+        child: Column(
+          // padding: EdgeInsets.zero,
+          children: [
+            // ListTile(
+            //   iconColor: lightBlue,
+            //   splashColor: lightBlue.withOpacity(0.2),
+            //   leading: Icon(Icons.home),
+            //   title: Text("Home"),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     Navigator.pushNamed(context, PageNames.HomeScreen,
+            //         arguments: uid);
+            //   },
+            // ),
+            ListTile(
+              iconColor: lightBlue,
+              splashColor: lightBlue.withOpacity(0.2),
+              leading: Icon(Icons.person),
+              title: Text("My Profile"),
+              onTap: () {
+                Navigator.pushNamed(context, PageNames.UserProfileDetailsPage,
+                    arguments: uid);
+              },
+            ),
+            ListTile(
+              iconColor: lightBlue,
+              splashColor: lightBlue.withOpacity(0.2),
+              leading: Icon(Icons.payment),
+              title: Text("Add Payment Method"),
+              onTap: () async {
+                // Navigator.pushReplacementNamed(
+                //     context, );
+              },
+            ),
+            ListTile(
+              iconColor: lightBlue,
+              splashColor: lightBlue.withOpacity(0.2),
+              leading: Icon(Icons.logout),
+              title: Text("Logout"),
+              onTap: () async {
+                Navigator.pop(context);
+                await BlocProvider.of<AuthCubit>(context).SignOut();
+                Navigator.pushReplacementNamed(context, PageNames.LogInScreen);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
