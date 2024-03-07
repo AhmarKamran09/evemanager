@@ -3,6 +3,14 @@ import 'dart:io';
 import 'package:evemanager/data/models/catering_model/catering_model.dart';
 import 'package:evemanager/domain/entities/bridal_makeup_&_hair/bridal_makeup_&_hair_entity.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
+import 'package:evemanager/domain/entities/clothing/clothing_entity.dart';
+import 'package:evemanager/domain/entities/decorations/decorations_entity.dart';
+import 'package:evemanager/domain/entities/entertainment/entertainment_entity.dart';
+import 'package:evemanager/domain/entities/invitation_design/invitation_design_entity.dart';
+import 'package:evemanager/domain/entities/photography/photography_entity.dart';
+import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
+import 'package:evemanager/domain/entities/transportation/transportation_entity.dart';
+import 'package:evemanager/domain/entities/videography/videography_entity.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evemanager/constants.dart';
@@ -573,6 +581,246 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   Future<void> UpdateBridalMakeupAndHair(
       BridalMakeupAndHairEntity bridalMakeupAndHairEntity) {
     // TODO: implement UpdateBridalMakeupAndHair
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> AddClothing(ClothingEntity clothingEntity) {
+    // TODO: implement AddClothing
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> AddDecorations(DecorationsEntity decorationsEntity) {
+    // TODO: implement AddDecorations
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> AddEntertainment(EntertainmentEntity entertainmentEntity) {
+    // TODO: implement AddEntertainment
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> AddInvitationDesign(InvitationDesignEntity invitationDesignEntity) {
+    // TODO: implement AddInvitationDesign
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> AddPhotography(PhotographyEntity photographyEntity) {
+    // TODO: implement AddPhotography
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> AddSweets(SweetEntity sweetEntity) {
+    // TODO: implement AddSweets
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> AddTransportation(TransportationEntity transportationEntity) {
+    // TODO: implement AddTransportation
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> AddVideography(VideographyEntity videographyEntity) {
+    // TODO: implement AddVideography
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> DeleteClothing(String id) {
+    // TODO: implement DeleteClothing
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> DeleteDecorations(String id) {
+    // TODO: implement DeleteDecorations
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> DeleteEntertainment(String id) {
+    // TODO: implement DeleteEntertainment
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> DeleteInvitationDesign(String id) {
+    // TODO: implement DeleteInvitationDesign
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> DeletePhotography(String id) {
+    // TODO: implement DeletePhotography
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> DeleteSweets(String id) {
+    // TODO: implement DeleteSweets
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> DeleteTransportation(String id) {
+    // TODO: implement DeleteTransportation
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> DeleteVideography(String id) {
+    // TODO: implement DeleteVideography
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<ClothingEntity>> GetClothingforClient() {
+    // TODO: implement GetClothingforClient
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<ClothingEntity>> GetClothingforOwner(String ownerid) {
+    // TODO: implement GetClothingforOwner
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<DecorationsEntity>> GetDecorationsforClient() {
+    // TODO: implement GetDecorationsforClient
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<DecorationsEntity>> GetDecorationsforOwner(String ownerid) {
+    // TODO: implement GetDecorationsforOwner
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<EntertainmentEntity>> GetEntertainmentforClient() {
+    // TODO: implement GetEntertainmentforClient
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<EntertainmentEntity>> GetEntertainmentforOwner(String ownerid) {
+    // TODO: implement GetEntertainmentforOwner
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<InvitationDesignEntity>> GetInvitationDesignforClient() {
+    // TODO: implement GetInvitationDesignforClient
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<InvitationDesignEntity>> GetInvitationDesignforOwner(String ownerid) {
+    // TODO: implement GetInvitationDesignforOwner
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<PhotographyEntity>> GetPhotographyforClient() {
+    // TODO: implement GetPhotographyforClient
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<PhotographyEntity>> GetPhotographyforOwner(String ownerid) {
+    // TODO: implement GetPhotographyforOwner
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<SweetEntity>> GetSweetsforClient() {
+    // TODO: implement GetSweetsforClient
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<SweetEntity>> GetSweetsforOwner(String ownerid) {
+    // TODO: implement GetSweetsforOwner
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<TransportationEntity>> GetTransportationforClient() {
+    // TODO: implement GetTransportationforClient
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<TransportationEntity>> GetTransportationforOwner(String ownerid) {
+    // TODO: implement GetTransportationforOwner
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<VideographyEntity>> GetVideographyforClient() {
+    // TODO: implement GetVideographyforClient
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<VideographyEntity>> GetVideographyforOwner(String ownerid) {
+    // TODO: implement GetVideographyforOwner
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> UpdateClothing(ClothingEntity clothingEntity) {
+    // TODO: implement UpdateClothing
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> UpdateDecorations(DecorationsEntity decorationsEntity) {
+    // TODO: implement UpdateDecorations
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> UpdateEntertainment(EntertainmentEntity entertainmentEntity) {
+    // TODO: implement UpdateEntertainment
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> UpdateInvitationDesign(InvitationDesignEntity invitationDesignEntity) {
+    // TODO: implement UpdateInvitationDesign
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> UpdatePhotography(PhotographyEntity photographyEntity) {
+    // TODO: implement UpdatePhotography
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> UpdateSweets(SweetEntity sweetEntity) {
+    // TODO: implement UpdateSweets
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> UpdateTransportation(TransportationEntity transportationEntity) {
+    // TODO: implement UpdateTransportation
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> UpdateVideography(VideographyEntity videographyEntity) {
+    // TODO: implement UpdateVideography
     throw UnimplementedError();
   }
 }
