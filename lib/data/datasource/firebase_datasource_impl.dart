@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:evemanager/data/models/catering_model/catering_model.dart';
+import 'package:evemanager/domain/entities/bridal_makeup_&_hair/bridal_makeup_&_hair_entity.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evemanager/constants.dart';
 import 'package:evemanager/data/datasource/firebase_datasource.dart';
 import 'package:evemanager/data/models/venue_model/venue_model.dart';
-import 'package:evemanager/data/models/user/user_model.dart';
+import 'package:evemanager/data/models/user_model/user_model.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/domain/entities/user/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -384,6 +385,8 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.catering)
           .doc(autoId)
           .set(CateringModel(
+            cuisinetype: cateringEntity.cuisinetype,
+            menu: cateringEntity.menu,
             imageslink: imagelinks,
             id: autoId,
             owner_id: cateringEntity.owner_id,
@@ -485,6 +488,8 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.catering)
           .doc(cateringEntity.id!)
           .update({
+        'cuisinetype': cateringEntity.cuisinetype,
+        'menu': cateringEntity.menu,
         'name': cateringEntity.name,
         'capacity': cateringEntity.capacity,
         'contact': cateringEntity.contact,
@@ -495,5 +500,79 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
     } catch (e) {
       DisplayToast('Error in Update Catering Service: $e');
     }
+  }
+
+// BridalMakeupAndHair
+
+  @override
+  Future<void> AddBridalMakeupAndHair(
+      BridalMakeupAndHairEntity bridalMakeupAndHairEntity) async {
+    //  List<String> imagelinks = [];
+
+    // try {
+    //   String autoId = FirebaseFirestore.instance
+    //       .collection(FirebaseCollectionConst.bridalMakeupAndHair)
+    //       .doc()
+    //       .id;
+    //   Reference Bridalfolderref =
+    //       storage.ref().child(FirebaseCollectionConst.bridalMakeupAndHair);
+    //   Reference subfolderRef = Bridalfolderref.child(autoId);
+
+    //   for (int i = 0; i < bridalMakeupAndHairEntity.images!.length; i++) {
+    //     File imageFile = bridalMakeupAndHairEntity.images![i];
+    //     String imageName = DateTime.now().millisecondsSinceEpoch.toString();
+    //     Reference imageRef = subfolderRef.child('$imageName.jpg');
+    //     await imageRef.putFile(imageFile);
+
+    //     imagelinks.add(await imageRef.getDownloadURL());
+    //   }
+
+    //   await firebaseFirestore
+    //       .collection(FirebaseCollectionConst.bridalMakeupAndHair)
+    //       .doc(autoId)
+    //       .set(CateringModel(
+    //         cuisinetype: cateringEntity.cuisinetype,
+    //         menu:  cateringEntity.menu,
+    //         imageslink: imagelinks,
+    //         id: autoId,
+    //         owner_id: cateringEntity.owner_id,
+    //         address: cateringEntity.address,
+    //         name: cateringEntity.name,
+    //         capacity: cateringEntity.capacity,
+    //         contact: cateringEntity.contact,
+    //         facilities: cateringEntity.facilities,
+    //         availability: cateringEntity.availability,
+    //         pricingInfo: cateringEntity.pricingInfo,
+    //         description: cateringEntity.description,
+    //       ).toJson());
+    // } catch (e) {
+    //   DisplayToast('error in add Catering ${e.toString()}');
+    // }
+  }
+
+  @override
+  Future<void> DeleteBridalMakeupAndHair(String id) {
+    // TODO: implement DeleteBridalMakeupAndHair
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<BridalMakeupAndHairEntity>> GetBridalMakeupAndHairforClient() {
+    // TODO: implement GetBridalMakeupAndHairforClient
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<BridalMakeupAndHairEntity>> GetBridalMakeupAndHairforOwner(
+      String ownerid) {
+    // TODO: implement GetBridalMakeupAndHairforOwner
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> UpdateBridalMakeupAndHair(
+      BridalMakeupAndHairEntity bridalMakeupAndHairEntity) {
+    // TODO: implement UpdateBridalMakeupAndHair
+    throw UnimplementedError();
   }
 }

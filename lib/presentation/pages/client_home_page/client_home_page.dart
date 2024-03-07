@@ -30,7 +30,6 @@ class _ClientHomePageState extends State<ClientHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: lightBlue.withOpacity(0.5),
         centerTitle: true,
         title: Text(
           'Home Screen',
@@ -39,8 +38,6 @@ class _ClientHomePageState extends State<ClientHomePage> {
           ),
         ),
         actions: [
-          // IconButton(
-          //     onPressed: () {}, icon: Icon(Icons.messenger_outline_sharp)),
           IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, PageNames.ProfileMenuPage,
@@ -52,9 +49,6 @@ class _ClientHomePageState extends State<ClientHomePage> {
           )
         ],
       ),
-      // drawer: MainDrawer(
-      //   uid: widget.uid,
-      // ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -135,15 +129,15 @@ class VendorView extends StatelessWidget {
   final List<String> services = [
     'Venue Booking',
     'Catering',
-    'Photography',
-    'Entertainment (Music)',
-    'Decorations',
-    'Transportation',
+    'Sweets',
     'Bridal Makeup & Hair',
+    'Transportation',
     'Invitation Design',
     'Clothing',
-    'Sweets',
+    'Decorations',
+    'Photography',
     'Videography',
+    'Entertainment (Music)',
   ];
   @override
   Widget build(BuildContext context) {
@@ -158,56 +152,54 @@ class VendorView extends StatelessWidget {
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
               switch (index) {
-              case 0:
-              Navigator.pushNamed(context, PageNames.VenueListScreen);
-      
+                case 0:
+                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+
                   break;
-              case 1:
-              Navigator.pushNamed(context, PageNames.CateringListScreen);
-      
+                case 1:
+                  Navigator.pushNamed(context, PageNames.CateringListScreen);
+
                   break;
-              case 2:
-              Navigator.pushNamed(context, PageNames.VenueListScreen);
-      
+                case 2:
+                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+
                   break;
-              case 3:
-              Navigator.pushNamed(context, PageNames.VenueListScreen);
-      
+                case 3:
+                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+
                   break;
-              case 4:
-              Navigator.pushNamed(context, PageNames.VenueListScreen);
-      
+                case 4:
+                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+
                   break;
-              case 5:
-              Navigator.pushNamed(context, PageNames.VenueListScreen);
-      
+                case 5:
+                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+
                   break;
-              case 6:
-              Navigator.pushNamed(context, PageNames.VenueListScreen);
-      
+                case 6:
+                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+
                   break;
-              case 7:
-              Navigator.pushNamed(context, PageNames.VenueListScreen);
-      
+                case 7:
+                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+
                   break;
-              case 8:
-              Navigator.pushNamed(context, PageNames.VenueListScreen);
-      
+                case 8:
+                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+
                   break;
-              case 9:
-              Navigator.pushNamed(context, PageNames.VenueListScreen);
-      
+                case 9:
+                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+
                   break;
-              case 10:
-              Navigator.pushNamed(context, PageNames.VenueListScreen);
-      
+                case 10:
+                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+
                   break;
-              
+
                 default:
-                Navigator.pushNamed(context, PageNames.PageNotFound);
-      
+                  Navigator.pushNamed(context, PageNames.PageNotFound);
               }
-            
             },
           );
         });

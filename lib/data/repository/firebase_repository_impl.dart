@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:evemanager/data/datasource/firebase_datasource.dart';
+import 'package:evemanager/domain/entities/bridal_makeup_&_hair/bridal_makeup_&_hair_entity.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/domain/entities/user/user_entity.dart';
@@ -109,5 +110,30 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   @override
   Future<void> UpdateCateringService(CateringEntity cateringEntity) {
     return firebaseDatasource.UpdateCateringService(cateringEntity);
+  }
+
+  @override
+  Future<void> AddBridalMakeupAndHair(BridalMakeupAndHairEntity bridalMakeupAndHairEntity) {
+ return firebaseDatasource.AddBridalMakeupAndHair(bridalMakeupAndHairEntity);
+  }
+
+  @override
+  Future<void> DeleteBridalMakeupAndHair(String id) {
+ return firebaseDatasource.DeleteBridalMakeupAndHair(id);
+  }
+
+  @override
+  Stream<List<BridalMakeupAndHairEntity>> GetBridalMakeupAndHairforClient() {
+ return firebaseDatasource.GetBridalMakeupAndHairforClient();
+  }
+
+  @override
+  Stream<List<BridalMakeupAndHairEntity>> GetBridalMakeupAndHairforOwner(String ownerid) {
+ return firebaseDatasource.GetBridalMakeupAndHairforOwner(ownerid);
+  }
+
+  @override
+  Future<void> UpdateBridalMakeupAndHair(BridalMakeupAndHairEntity bridalMakeupAndHairEntity) {
+ return firebaseDatasource.UpdateBridalMakeupAndHair(bridalMakeupAndHairEntity);
   }
 }

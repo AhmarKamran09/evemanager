@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:evemanager/domain/entities/bridal_makeup_&_hair/bridal_makeup_&_hair_entity.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/domain/entities/user/user_entity.dart';
@@ -39,4 +40,11 @@ abstract class FirebaseDatasource {
   Future<void> UpdateCateringService(CateringEntity cateringEntity);
   Stream<List<CateringEntity>> GetCateringServiceforClient();
   Stream<List<CateringEntity>> GetCateringServiceforOwner(String ownerid);
+
+// Bridal Makeup and hair
+  Future<void> AddBridalMakeupAndHair(BridalMakeupAndHairEntity bridalMakeupAndHairEntity);
+  Future<void> DeleteBridalMakeupAndHair(String id);
+  Stream<List<BridalMakeupAndHairEntity>> GetBridalMakeupAndHairforClient();
+  Stream<List<BridalMakeupAndHairEntity>> GetBridalMakeupAndHairforOwner(String ownerid);
+  Future<void> UpdateBridalMakeupAndHair(BridalMakeupAndHairEntity bridalMakeupAndHairEntity);
 }

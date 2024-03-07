@@ -1,0 +1,12 @@
+import 'package:evemanager/domain/entities/videography/videography_entity.dart';
+import 'package:evemanager/domain/repository/firebase_repository.dart';
+
+class AddVideographyUsecase {
+  final FirebaseRepository firebaseRepository;
+
+  AddVideographyUsecase({required this.firebaseRepository});
+
+  Future<void> call(VideographyEntity videographyEntity) async {
+    return await firebaseRepository.AddVideography(videographyEntity);
+  }
+}

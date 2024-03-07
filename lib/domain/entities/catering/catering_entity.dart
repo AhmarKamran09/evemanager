@@ -15,8 +15,12 @@ class CateringEntity extends Equatable {
   final Map<String, dynamic>? pricingInfo;
   final Map<String, Map<String, bool>>? availability;
   final String? description;
+  final List<String>? cuisinetype;
+  final List<MenuItem>? menu;
 
   CateringEntity({
+    this.menu,
+    this.cuisinetype,
     this.images,
     this.name,
     this.capacity,
@@ -33,12 +37,14 @@ class CateringEntity extends Equatable {
   factory CateringEntity.factory(
       DocumentSnapshot snapshot, List<File>? imagesfromstorage) {
     var snap = snapshot.data() as Map<String, dynamic>;
-   
+
     return CateringEntity(
       images: imagesfromstorage,
       name: snap['name'],
       capacity: snap['capacity'],
       contact: snap['contact'],
+      cuisinetype: snap['cuisinetype'],
+      menu: snap['menu'],
       // facilities: snap['facilities'],
       pricingInfo: snap['pricingInfo'],
       availability: snap['availability'],
@@ -51,6 +57,8 @@ class CateringEntity extends Equatable {
 
   @override
   List<Object?> get props => [
+        cuisinetype,
+        menu,
         images,
         name,
         capacity,
@@ -63,4 +71,20 @@ class CateringEntity extends Equatable {
         owner_id,
         address,
       ];
+}
+
+class MenuItem {
+  final String name;
+  final String description;
+  final double price;
+  final List<String> dietaryInfo;
+  final String serving;
+
+  MenuItem({
+    required this.serving,
+    required this.name,
+    required this.description,
+    required this.price,
+    required this.dietaryInfo,
+  });
 }

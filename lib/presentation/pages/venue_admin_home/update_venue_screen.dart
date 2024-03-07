@@ -14,10 +14,10 @@ class UpdateVenueScreen extends StatefulWidget {
 }
 
 class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
-  String? _address;
-  int? _capacity;
-  String? _contact;
-  String? _description;
+  // String? _address;
+  // int? _capacity;
+  // String? _contact;
+  // String? _description;
   List<String>? _facilities;
 
   // List of available facilities

@@ -38,4 +38,6 @@ class FirebaseCollectionConst {
   static const String user = "user";
   static const String catering = "catering";
   static const String venues = "venues";
+  static const String bridalMakeupAndHair = "bridalMakeupAndHair";
+  
 }
