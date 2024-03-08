@@ -39,5 +39,13 @@ class FirebaseCollectionConst {
   static const String catering = "catering";
   static const String venues = "venues";
   static const String bridalMakeupAndHair = "bridalMakeupAndHair";
+  static const String clothing = "clothing";
+  static const String decorations= "decorations";
+  static const String entertainment = "entertainment";
+  static const String invitation_design= "invitation_design";
+  static const String photography = "photography";
+  static const String sweets = "sweets";
+  static const String transportation = "transportation";
+  static const String videography = "videography";
   
 }
