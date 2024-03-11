@@ -2,10 +2,10 @@ import 'package:evemanager/constants.dart';
 import 'package:evemanager/presentation/cubit/auth/auth_cubit.dart';
 import 'package:evemanager/presentation/cubit/userprofile/user_profile_cubit.dart';
 import 'package:evemanager/presentation/pages/Credentials/login_screen.dart';
-import 'package:evemanager/presentation/pages/catering_admin_home/catering_admin_home.dart';
+import 'package:evemanager/presentation/pages/admins/catering_admin_home/catering_admin_home.dart';
+import 'package:evemanager/presentation/pages/admins/venue_admin_home/venue_admin_home.dart';
 import 'package:evemanager/presentation/pages/loading_screen/loading_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/client_home_page.dart';
-import 'package:evemanager/presentation/pages/venue_admin_home/venue_admin_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
