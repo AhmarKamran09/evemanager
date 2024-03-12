@@ -6,7 +6,6 @@ class VenueDetailsScreen extends StatelessWidget {
   final VenueEntity venueEntity;
   @override
   Widget build(BuildContext context) {
-
     // List<File> selectedImages = [];
     return Scaffold(
       appBar: AppBar(
@@ -45,8 +44,14 @@ class VenueDetailsScreen extends StatelessWidget {
                     ),
             ),
           ),
-          
-          ],
+          Row(
+            children: [
+              IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
+              IconButton(onPressed: () {}, icon: Icon(Icons.message)),
+              TextButton(onPressed: () {}, child: Text('Book Now '))
+            ],
+          )
+        ],
       ),
     );
   }
