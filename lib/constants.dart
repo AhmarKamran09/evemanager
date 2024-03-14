@@ -20,6 +20,17 @@ class PageNames {
   static const String CateringListScreen = "CateringListScreen";
   static const String AddCateringScreen = "AddCateringScreen";
   static const String UpdateCateringScreen = "UpdateCateringScreen";
+  static const String AddBridalMakeupAndHairScreen =
+      "AddBridalMakeupAndHairScreen";
+  static const String UpdateBridalMakeupAndHairScreen =
+      "UpdateBridalMakeupAndHairScreen";
+
+  static const String BridalMakeupAndHairDetailsScreen =
+      "BridalMakeupAndHairDetailsScreen";
+
+  static const String BridalMakeupAndHairListScreen =
+      "BridalMakeupAndHairListScreen";
+
   static const String PageNotFound = "PageNotFound";
 }
 
@@ -40,12 +51,11 @@ class FirebaseCollectionConst {
   static const String venues = "venues";
   static const String bridalMakeupAndHair = "bridalMakeupAndHair";
   static const String clothing = "clothing";
-  static const String decorations= "decorations";
+  static const String decorations = "decorations";
   static const String entertainment = "entertainment";
-  static const String invitation_design= "invitation_design";
+  static const String invitation_design = "invitation_design";
   static const String photography = "photography";
   static const String sweets = "sweets";
   static const String transportation = "transportation";
   static const String videography = "videography";
-  
 }

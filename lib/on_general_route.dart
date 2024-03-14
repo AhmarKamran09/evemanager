@@ -1,13 +1,18 @@
 import 'package:evemanager/constants.dart';
+import 'package:evemanager/domain/entities/bridal_makeup_&_hair/bridal_makeup_&_hair_entity.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/presentation/pages/Credentials/login_screen.dart';
 import 'package:evemanager/presentation/pages/Credentials/signup_screen.dart';
 import 'package:evemanager/presentation/pages/add_payment_method_screen/add-payment_method_screen.dart';
+import 'package:evemanager/presentation/pages/admins/bridal_makeup_and_hair_admin_home/add_bridal_makeup_and_hair__screen.dart';
+import 'package:evemanager/presentation/pages/admins/bridal_makeup_and_hair_admin_home/update_bridal_makeup_and_hair_screen.dart';
 import 'package:evemanager/presentation/pages/admins/catering_admin_home/add_catering_screen.dart';
 import 'package:evemanager/presentation/pages/admins/catering_admin_home/update_catering_screen.dart';
 import 'package:evemanager/presentation/pages/admins/venue_admin_home/add_venues.dart';
 import 'package:evemanager/presentation/pages/admins/venue_admin_home/update_venue_screen.dart';
+import 'package:evemanager/presentation/pages/client_home_page/bridal_makeup_and_hair/bridal_makeup_and_hair_details_screen.dart';
+import 'package:evemanager/presentation/pages/client_home_page/bridal_makeup_and_hair/bridal_makeup_and_hair_list_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/catering/catering_details_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/catering/cateringlist_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/venue/venue_details_screen.dart';
@@ -96,8 +101,31 @@ class OnGeneralRoute {
         }
       case PageNames.UpdateCateringScreen:
         {
-          return routeBuilder(UpdateCateringScreen());
+          return routeBuilder(UpdateCateringScreen(
+            cateringEntity: args as CateringEntity,
+          ));
         }
+      case PageNames.AddBridalMakeupAndHairScreen:
+        {
+          return routeBuilder(
+              AddBridalMakeupAndHairScreen(uid: args as String));
+        }
+      case PageNames.UpdateBridalMakeupAndHairScreen:
+        {
+          return routeBuilder(UpdateBridalMakeupAndHairScreen(
+            bridalMakeupAndHairEntity: args as BridalMakeupAndHairEntity,
+          ));
+        } case PageNames.BridalMakeupAndHairDetailsScreen:
+        {
+          return routeBuilder(BridalMakeupAndHairDetailsScreen(
+            bridalEntity: args as BridalMakeupAndHairEntity,
+          ));
+        }
+      case PageNames.BridalMakeupAndHairListScreen:
+        {
+          return routeBuilder(BridalMakeupAndHairListScreen());
+        }
+     
 
       default:
         {
