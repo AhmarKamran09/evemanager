@@ -1,15 +1,13 @@
 import 'package:evemanager/constants.dart';
-import 'package:evemanager/presentation/cubit/cateringservice/cateringservice_cubit.dart';
-import 'package:evemanager/presentation/widgets/_admin_home_page/admin_catering_service_card.dart';
+import 'package:evemanager/presentation/cubit/videography/videography_cubit.dart';
 import 'package:evemanager/presentation/widgets/loading_screen/loading_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CateringAdminHome extends StatelessWidget {
-  CateringAdminHome({
-    super.key,
-    required this.uid,
-  });
+import '../../../widgets/_admin_home_page/admin_videography_card.dart';
+
+class VideographyAdminHome extends StatelessWidget {
+  VideographyAdminHome({Key? key, required this.uid});
   final String? uid;
 
   @override
@@ -26,11 +24,11 @@ class CateringAdminHome extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, PageNames.ProfileMenuPage,
-                    arguments: uid);
-              },
-              icon: Icon(size: 40, Icons.person)),
+            onPressed: () {
+              Navigator.pushNamed(context, PageNames.ProfileMenuPage, arguments: uid);
+            },
+            icon: Icon(Icons.person, size: 40),
+          ),
           SizedBox(
             width: 10,
           )
@@ -38,61 +36,60 @@ class CateringAdminHome extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, PageNames.AddCateringScreen,
-              arguments: uid);
+          Navigator.pushNamed(context, PageNames.AddVideographyScreen, arguments: uid);
         },
         child: Icon(Icons.add),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          await BlocProvider.of<CateringserviceCubit>(context)
-              .GetCateringServiceForOwner(uid!);
+          await BlocProvider.of<VideographyCubit>(context).getVideographyForOwner(uid!);
         },
         child: FutureBuilder(
-            future: BlocProvider.of<CateringserviceCubit>(context)
-                .GetCateringServiceForOwner(uid!),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return BlocConsumer<CateringserviceCubit, CateringserviceState>(
-                  listener: (context, state) {
-                    if (state is CateringserviceFailure) {
-                      DisplayToast('Failed To Get Catering Services');
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is CateringserviceSuccessForOwner) {
-                      if (state.catering_entities?.isEmpty ?? false) {
-                        return Center(
-                          child: Text('No Catering Services listed'),
-                        );
-                      } else {
-                        return Container(
-                          child: ListView.builder(
-                            itemCount: state.catering_entities?.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  child: AdminCateringServiceCard(
-                                      cateringEntity:
-                                          state.catering_entities![index]));
-                            },
-                          ),
-                        );
-                      }
-                    } else if (state is CateringserviceFailure) {
+          future: BlocProvider.of<VideographyCubit>(context).getVideographyForOwner(uid!),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return BlocConsumer<VideographyCubit, VideographyState>(
+                listener: (context, state) {
+                  if (state is VideographyFailure) {
+                    DisplayToast('Failed To Get Videography Services');
+                  }
+                },
+                builder: (context, state) {
+                  if (state is VideographySuccessForOwner) {
+                    if (state.videography_entity?.isEmpty ?? false) {
                       return Center(
-                        child: Container(
-                          child: Text('Failed To Show Catering Services'),
-                        ),
+                        child: Text('No Videography Services listed'),
                       );
                     } else {
-                      return LoadingBody();
+                      return Container(
+                        child: ListView.builder(
+                          itemCount: state.videography_entity?.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              child: AdminVideographyCard(
+                                videographyEntity: state.videography_entity![index],
+                              ),
+                            );
+                          },
+                        ),
+                      );
                     }
-                  },
-                );
-              } else {
-                return LoadingBody();
-              }
-            }),
+                  } else if (state is VideographyFailure) {
+                    return Center(
+                      child: Container(
+                        child: Text('Failed To Show Videography Services'),
+                      ),
+                    );
+                  } else {
+                    return LoadingBody();
+                  }
+                },
+              );
+            } else {
+              return LoadingBody();
+            }
+          },
+        ),
       ),
     );
   }

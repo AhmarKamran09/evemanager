@@ -24,12 +24,45 @@ class PageNames {
       "AddBridalMakeupAndHairScreen";
   static const String UpdateBridalMakeupAndHairScreen =
       "UpdateBridalMakeupAndHairScreen";
-
   static const String BridalMakeupAndHairDetailsScreen =
       "BridalMakeupAndHairDetailsScreen";
-
   static const String BridalMakeupAndHairListScreen =
       "BridalMakeupAndHairListScreen";
+  static const String AddClothingScreen = "AddClothingScreen";
+  static const String UpdateClothingScreen = "UpdateClothingScreen";
+  static const String ClothngDetailsScreen = "ClothngDetailsScreen";
+  static const String ClothngListScreen = "ClothngListScreen";
+  static const String AddDecorationScreen = "AddDecorationScreen";
+  static const String UpdateDecorationScreen = "UpdateDecorationScreen";
+  static const String DecorationDetailsScreen = "DecorationDetailsScreen";
+  static const String DecorationListScreen = "DecorationListScreen";
+  static const String AddEntertainmentScreen = "AddEntertainmentScreen";
+  static const String UpdateEntertainmentScreen = "UpdateEntertainmentScreen";
+  static const String EntertainmentDetailsScreen = "EntertainmentDetailsScreen";
+  static const String EntertainmentListScreen = "EntertainmentListScreen";
+  static const String AddInvitationDesignScreen = "AddInvitationDesignScreen";
+  static const String UpdateInvitationDesignScreen =
+      "UpdateInvitationDesignScreen";
+  static const String InvitationDesignDetailsScreen =
+      "InvitationDesignDetailsScreen";
+  static const String InvitationDesignListScreen = "InvitationDesignListScreen";
+  static const String AddPhotographyScreen = "AddPhotographyScreen";
+  static const String UpdatePhotographyScreen = "UpdatePhotographyScreen";
+  static const String PhotographyDetailsScreen = "PhotographyDetailsScreen";
+  static const String PhotographyListScreen = "PhotographyListScreen";
+  static const String AddSweetsScreen = "AddSweetsScreen";
+  static const String UpdateSweetsScreen = "UpdateSweetsScreen";
+  static const String SweetsDetailsScreen = "SweetsDetailsScreen";
+  static const String SweetsListScreen = "SweetsListScreen";
+  static const String AddTransportationScreen = "AddTransportationScreen";
+  static const String UpdateTransportationScreen = "UpdateTransportationScreen";
+  static const String TransportationDetailsScreen =
+      "TransportationDetailsScreen";
+  static const String TransportationListScreen = "TransportationListScreen";
+  static const String AddVideographyScreen = "AddVideographyScreen";
+  static const String UpdateVideographyScreen = "UpdateVideographyScreen";
+  static const String VideographyDetailsScreen = "VideographyDetailsScreen";
+  static const String VideographyListScreen = "VideographyListScreen";
 
   static const String PageNotFound = "PageNotFound";
 }

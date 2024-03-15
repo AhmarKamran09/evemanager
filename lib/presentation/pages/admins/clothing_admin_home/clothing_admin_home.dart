@@ -1,15 +1,13 @@
 import 'package:evemanager/constants.dart';
-import 'package:evemanager/presentation/cubit/cateringservice/cateringservice_cubit.dart';
-import 'package:evemanager/presentation/widgets/_admin_home_page/admin_catering_service_card.dart';
+import 'package:evemanager/presentation/cubit/clothing/clothing_cubit.dart';
 import 'package:evemanager/presentation/widgets/loading_screen/loading_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CateringAdminHome extends StatelessWidget {
-  CateringAdminHome({
-    super.key,
-    required this.uid,
-  });
+import '../../../widgets/_admin_home_page/admin_clothing_card.dart';
+
+class ClothingAdminHome extends StatelessWidget {
+  ClothingAdminHome({super.key, required this.uid});
   final String? uid;
 
   @override
@@ -38,50 +36,50 @@ class CateringAdminHome extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, PageNames.AddCateringScreen,
+          Navigator.pushNamed(context, PageNames.AddClothingScreen,
               arguments: uid);
         },
         child: Icon(Icons.add),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          await BlocProvider.of<CateringserviceCubit>(context)
-              .GetCateringServiceForOwner(uid!);
+          await BlocProvider.of<ClothingCubit>(context)
+              .GetClothingForOwner(uid!);
         },
         child: FutureBuilder(
-            future: BlocProvider.of<CateringserviceCubit>(context)
-                .GetCateringServiceForOwner(uid!),
+            future: BlocProvider.of<ClothingCubit>(context)
+                .GetClothingForOwner(uid!),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return BlocConsumer<CateringserviceCubit, CateringserviceState>(
+                return BlocConsumer<ClothingCubit, ClothingState>(
                   listener: (context, state) {
-                    if (state is CateringserviceFailure) {
-                      DisplayToast('Failed To Get Catering Services');
+                    if (state is ClothingFailure) {
+                      DisplayToast('Failed To Get Clothing Services');
                     }
                   },
                   builder: (context, state) {
-                    if (state is CateringserviceSuccessForOwner) {
-                      if (state.catering_entities?.isEmpty ?? false) {
+                    if (state is ClothingSuccessForOwner) {
+                      if (state.clothing_entity?.isEmpty ?? false) {
                         return Center(
-                          child: Text('No Catering Services listed'),
+                          child: Text('No clothing Services listed'),
                         );
                       } else {
                         return Container(
                           child: ListView.builder(
-                            itemCount: state.catering_entities?.length,
+                            itemCount: state.clothing_entity?.length,
                             itemBuilder: (context, index) {
                               return Container(
-                                  child: AdminCateringServiceCard(
-                                      cateringEntity:
-                                          state.catering_entities![index]));
+                                  child: AdminClothingCard(
+                                      clothingEntity:
+                                          state.clothing_entity![index]));
                             },
                           ),
                         );
                       }
-                    } else if (state is CateringserviceFailure) {
+                    } else if (state is ClothingFailure) {
                       return Center(
                         child: Container(
-                          child: Text('Failed To Show Catering Services'),
+                          child: Text('Failed To Show clothing Services'),
                         ),
                       );
                     } else {

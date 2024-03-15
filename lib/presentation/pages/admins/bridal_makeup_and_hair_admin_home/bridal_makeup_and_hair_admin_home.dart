@@ -56,7 +56,7 @@ class BridalMAkeupAndHairAdminHome extends StatelessWidget {
                 return BlocConsumer<BridalMakeupHairCubit, BridalMakeupHairState>(
                   listener: (context, state) {
                     if (state is BridalMakeupHairFailure) {
-                      DisplayToast('Failed To Get Catering Services');
+                      DisplayToast('Failed To Get Bridal Services');
                     }
                   },
                   builder: (context, state) {
