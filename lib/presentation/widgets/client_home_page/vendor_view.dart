@@ -40,39 +40,43 @@ class VendorView extends StatelessWidget {
 
                   break;
                 case 2:
-                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+                  Navigator.pushNamed(context, PageNames.SweetsListScreen);
 
                   break;
                 case 3:
-                  Navigator.pushNamed(context, PageNames.BridalMakeupAndHairListScreen);
+                  Navigator.pushNamed(
+                      context, PageNames.BridalMakeupAndHairListScreen);
 
                   break;
                 case 4:
-                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+                  Navigator.pushNamed(
+                      context, PageNames.TransportationListScreen);
 
                   break;
                 case 5:
-                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+                  Navigator.pushNamed(
+                      context, PageNames.InvitationDesignListScreen);
 
                   break;
                 case 6:
-                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+                  Navigator.pushNamed(context, PageNames.ClothngListScreen);
 
                   break;
                 case 7:
-                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+                  Navigator.pushNamed(context, PageNames.DecorationListScreen);
 
                   break;
                 case 8:
-                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+                  Navigator.pushNamed(context, PageNames.PhotographyListScreen);
 
                   break;
                 case 9:
-                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+                  Navigator.pushNamed(context, PageNames.VideographyListScreen);
 
                   break;
                 case 10:
-                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+                  Navigator.pushNamed(
+                      context, PageNames.EntertainmentListScreen);
 
                   break;
 

@@ -4,7 +4,15 @@ import 'package:evemanager/presentation/cubit/userprofile/user_profile_cubit.dar
 import 'package:evemanager/presentation/pages/Credentials/login_screen.dart';
 import 'package:evemanager/presentation/pages/admins/bridal_makeup_and_hair_admin_home/bridal_makeup_and_hair_admin_home.dart';
 import 'package:evemanager/presentation/pages/admins/catering_admin_home/catering_admin_home.dart';
+import 'package:evemanager/presentation/pages/admins/clothing_admin_home/clothing_admin_home.dart';
+import 'package:evemanager/presentation/pages/admins/decoration_admin_home/decoration_admin_home.dart';
+import 'package:evemanager/presentation/pages/admins/entertainment_admin_home/entertainment_admin_home.dart';
+import 'package:evemanager/presentation/pages/admins/invitation_design_admin_home/invitation_design_admin_home.dart';
+import 'package:evemanager/presentation/pages/admins/photography_admin_home/photography_admin_home.dart';
+import 'package:evemanager/presentation/pages/admins/sweets_admin_home/sweets_admin_home.dart';
+import 'package:evemanager/presentation/pages/admins/transportation_admin_home/transportation_admin_home.dart';
 import 'package:evemanager/presentation/pages/admins/venue_admin_home/venue_admin_home.dart';
+import 'package:evemanager/presentation/pages/admins/videography_admin_home/videography_admin_home.dart';
 import 'package:evemanager/presentation/pages/loading_screen/loading_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/client_home_page.dart';
 import 'package:flutter/material.dart';
@@ -59,15 +67,29 @@ class _HomeNavigationScreenState extends State<HomeNavigationScreen> {
       if (state is UserProfileSuccess) {
         uid = state.user.uid;
         if (state.user.role == "1") {
-          return ClientHomePage(
-            uid: uid,
-          );
+          return ClientHomePage(uid: uid);
+        } else if (state.user.role == "2") {
+          return DecorationAdminHome(uid: uid);
         } else if (state.user.role == "3") {
           return VenueAdminHome(uid: uid);
+        } else if (state.user.role == "4") {
+          return TransportationAdminHome(uid: uid);
         } else if (state.user.role == "5") {
           return CateringAdminHome(uid: uid);
+        } else if (state.user.role == "6") {
+          return PhotographyAdminHome(uid: uid);
+        } else if (state.user.role == "7") {
+          return EntertainmentAdminHome(uid: uid);
         } else if (state.user.role == "8") {
           return BridalMAkeupAndHairAdminHome(uid: uid);
+        } else if (state.user.role == "9") {
+          return InvitationDesignAdminHome(uid: uid);
+        } else if (state.user.role == "10") {
+          return ClothingAdminHome(uid: uid);
+        } else if (state.user.role == "11") {
+          return SweetsAdminHome(uid: uid);
+        } else if (state.user.role == "12") {
+          return VideographyAdminHome(uid: uid);
         } else {
           return LoginScreen();
         }
@@ -82,3 +104,4 @@ class _HomeNavigationScreenState extends State<HomeNavigationScreen> {
     await BlocProvider.of<UserProfileCubit>(context).GetUser();
   }
 }
+
