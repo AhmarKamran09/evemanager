@@ -39,6 +39,7 @@ import 'package:evemanager/presentation/pages/client_home_page/bridal_makeup_and
 import 'package:evemanager/presentation/pages/client_home_page/bridal_makeup_and_hair/bridal_makeup_and_hair_list_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/catering/catering_details_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/catering/cateringlist_screen.dart';
+import 'package:evemanager/presentation/pages/client_home_page/client_home_page.dart';
 import 'package:evemanager/presentation/pages/client_home_page/clothing/clothing_details_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/clothing/clothing_list_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/decoration/decoration_details_screen.dart';
@@ -102,6 +103,10 @@ class OnGeneralRoute {
           return routeBuilder(ProfileMenuPage(
             uid: args as String,
           ));
+        }
+      case PageNames.ClientHomePage:
+        {
+          return routeBuilder(ClientHomePage(uid: args as String));
         }
       case PageNames.VenueDetailsScreen:
         {

@@ -104,4 +104,3 @@ class _HomeNavigationScreenState extends State<HomeNavigationScreen> {
     await BlocProvider.of<UserProfileCubit>(context).GetUser();
   }
 }
-

@@ -63,7 +63,7 @@ class PageNames {
   static const String UpdateVideographyScreen = "UpdateVideographyScreen";
   static const String VideographyDetailsScreen = "VideographyDetailsScreen";
   static const String VideographyListScreen = "VideographyListScreen";
-
+static const String ClientHomePage = "ClientHomePage";
   static const String PageNotFound = "PageNotFound";
 }
 

@@ -6,6 +6,10 @@ class AddDecorationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Add Decoration Service'),
+      ),
+    );
   }
 }
