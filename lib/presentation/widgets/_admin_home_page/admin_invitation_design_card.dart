@@ -1,4 +1,3 @@
-// TODO Implement this library.import 'package:flutter/material.dart';
 
 import 'package:evemanager/domain/entities/invitation_design/invitation_design_entity.dart';
 import 'package:flutter/material.dart';
