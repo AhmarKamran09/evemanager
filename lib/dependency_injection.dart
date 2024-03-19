@@ -41,6 +41,9 @@ import 'package:evemanager/domain/usecases/invitation_design/delete_invitation_d
 import 'package:evemanager/domain/usecases/invitation_design/get_invitation_design_for_client_usecase.dart';
 import 'package:evemanager/domain/usecases/invitation_design/get_invitation_design_for_owner_usecase.dart';
 import 'package:evemanager/domain/usecases/invitation_design/update_invitation_design_usecase.dart';
+import 'package:evemanager/domain/usecases/message/get_chats_usecase.dart';
+import 'package:evemanager/domain/usecases/message/get_messages_usecase.dart';
+import 'package:evemanager/domain/usecases/message/send_message_usecase.dart';
 import 'package:evemanager/domain/usecases/photography/add_photography_usecase.dart';
 import 'package:evemanager/domain/usecases/photography/delete_photography_usecase.dart';
 import 'package:evemanager/domain/usecases/photography/get_photography_for_client_usecase.dart';
@@ -71,11 +74,13 @@ import 'package:evemanager/domain/usecases/videography/update_videography_usecas
 import 'package:evemanager/presentation/cubit/auth/auth_cubit.dart';
 import 'package:evemanager/presentation/cubit/bridal_makeup_and_hair/bridal_makeup_hair_cubit.dart';
 import 'package:evemanager/presentation/cubit/cateringservice/cateringservice_cubit.dart';
+import 'package:evemanager/presentation/cubit/chat/chat_cubit.dart';
 import 'package:evemanager/presentation/cubit/clothing/clothing_cubit.dart';
 import 'package:evemanager/presentation/cubit/credentials/credentials_cubit.dart';
 import 'package:evemanager/presentation/cubit/decoration/decoration_cubit.dart';
 import 'package:evemanager/presentation/cubit/entertainment/entertainment_cubit.dart';
 import 'package:evemanager/presentation/cubit/invitation_design/invitation_design_cubit.dart';
+import 'package:evemanager/presentation/cubit/messages/messages_cubit.dart';
 import 'package:evemanager/presentation/cubit/photography/photography_cubit.dart';
 import 'package:evemanager/presentation/cubit/sweets/sweets_cubit.dart';
 import 'package:evemanager/presentation/cubit/transportation/transportation_cubit.dart';
@@ -190,6 +195,15 @@ Future<void> init() async {
         updateVideographyUsecase: sl.call(),
         getVideographyForClientUsecase: sl.call(),
         getVideographyForOwnerUsecase: sl.call(),
+      ));
+
+  sl.registerFactory(() => ChatCubit(
+        getChatsUsecase: sl.call(),
+      ));
+
+  sl.registerFactory(() => MessagesCubit(
+        getMessagesUsecase: sl.call(),
+        sendMessageUsecase: sl.call(),
       ));
 
   // Usecases
@@ -388,6 +402,17 @@ Future<void> init() async {
   );
   sl.registerLazySingleton(
     () => GetVideographyForOwnerUsecase(firebaseRepository: sl.call()),
+  );
+// Messages
+  sl.registerLazySingleton(
+    () => GetMessagesUsecase(firebaseRepository: sl.call()),
+  );
+  sl.registerLazySingleton(
+    () => SendMessageUsecase(firebaseRepository: sl.call()),
+  );
+// Chat
+  sl.registerLazySingleton(
+    () => GetChatsUsecase(firebaseRepository: sl.call()),
   );
 
 // Repository

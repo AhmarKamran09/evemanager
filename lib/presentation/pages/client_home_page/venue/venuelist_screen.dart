@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VenueListScreen extends StatelessWidget {
+  final String uid;
+
+  const VenueListScreen({super.key, required this.uid});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +43,7 @@ class VenueListScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return Container(
                                   child: ClientVenuesCard(
+                                    uid: uid,
                                       venue: state.VenueEntities![index]));
                             },
                           ),

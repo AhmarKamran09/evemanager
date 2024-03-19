@@ -63,8 +63,9 @@ class PageNames {
   static const String UpdateVideographyScreen = "UpdateVideographyScreen";
   static const String VideographyDetailsScreen = "VideographyDetailsScreen";
   static const String VideographyListScreen = "VideographyListScreen";
-static const String ClientHomePage = "ClientHomePage";
+  static const String ClientHomePage = "ClientHomePage";
   static const String PageNotFound = "PageNotFound";
+  static const String MessagesScreen = "MessagesScreen";
 }
 
 void DisplayToast(String message) {
@@ -91,4 +92,6 @@ class FirebaseCollectionConst {
   static const String sweets = "sweets";
   static const String transportation = "transportation";
   static const String videography = "videography";
+  static const String chats = "chat";
+  static const String messages = "messages";
 }

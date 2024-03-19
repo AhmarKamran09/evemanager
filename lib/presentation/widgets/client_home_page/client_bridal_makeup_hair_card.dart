@@ -41,7 +41,7 @@ final BridalMakeupAndHairEntity bridalMakeupAndHairEntity;
                   ),
                   // Text('Capacity: ${bridalMakeupAndHairEntity.capacity}'),
                   Text('Contact: ${bridalMakeupAndHairEntity.contact}'),
-                  (bridalMakeupAndHairEntity.availability == null || bridalMakeupAndHairEntity.pricingInfo == null)
+                  ( bridalMakeupAndHairEntity.pricingInfo == null)
                       ? Text(
                           'Not published ',
                           style: TextStyle(color: Colors.red),

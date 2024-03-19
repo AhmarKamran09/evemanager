@@ -1,9 +1,9 @@
 import 'package:evemanager/constants.dart';
+import 'package:evemanager/presentation/widgets/client_home_page/chat_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/client_home_page/explore_view.dart';
 import '../../widgets/client_home_page/home_view.dart';
-import '../../widgets/client_home_page/message_view.dart';
 import '../../widgets/client_home_page/planning_view.dart';
 import '../../widgets/client_home_page/vendor_view.dart';
 
@@ -18,14 +18,6 @@ class ClientHomePage extends StatefulWidget {
 class _ClientHomePageState extends State<ClientHomePage> {
   int _selectedIndex = 0;
 
-  List<Widget> _widgetOptions = <Widget>[
-    HomeView(),
-    VendorView(),
-    PlanningView(),
-    ExploreView(),
-    MessageView(),
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -34,6 +26,18 @@ class _ClientHomePageState extends State<ClientHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _widgetOptions = <Widget>[
+      HomeView(),
+      VendorView(
+        uid: widget.uid!,
+      ),
+      PlanningView(),
+      ExploreView(),
+      ChatView(
+        userid: widget.uid!,
+      ),
+    ];
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

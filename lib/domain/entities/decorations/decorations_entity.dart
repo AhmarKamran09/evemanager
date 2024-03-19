@@ -1,32 +1,30 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
+import 'package:evemanager/domain/entities/service/service_entity.dart';
 
-class DecorationsEntity extends Equatable {
-  final String? id;
-  final String? owner_id;
-  final String? address;
-  final List<File>? images;
-  final String? name;
-  final String? contact;
-  final List<String>? facilities;
-  final Map<String, dynamic>? pricingInfo;
-  final Map<String, Map<String, bool>>? availability;
-  final String? description;
- 
+class DecorationsEntity extends ServiceEntity {
   DecorationsEntity({
-    this.images,
-    this.name,
-    this.contact,
-    this.facilities,
-    this.pricingInfo,
-    this.availability,
-    this.description,
-    this.id,
-    this.owner_id,
-    this.address,
-  });
+    String? id,
+    String? owner_id,
+    String? name,
+    String? contact,
+    String? address,
+    List<File>? images,
+    List<String>? facilities,
+    String? description,
+    Map<String, dynamic>? pricingInfo,
+  }) : super(
+          images: images,
+          name: name,
+          contact: contact,
+          facilities: facilities,
+          pricingInfo: pricingInfo,
+          description: description,
+          id: id,
+          owner_id: owner_id,
+          address: address,
+        );
 
   factory DecorationsEntity.factory(
       DocumentSnapshot snapshot, List<File>? imagesfromstorage) {
@@ -38,7 +36,6 @@ class DecorationsEntity extends Equatable {
       contact: snap['contact'],
       // facilities: snap['facilities'],
       pricingInfo: snap['pricingInfo'],
-      availability: snap['availability'],
       description: snap['description'],
       id: snap['id'],
       owner_id: snap['owner_id'],
@@ -53,11 +50,9 @@ class DecorationsEntity extends Equatable {
         contact,
         facilities,
         pricingInfo,
-        availability,
         description,
         id,
         owner_id,
         address,
       ];
 }
-

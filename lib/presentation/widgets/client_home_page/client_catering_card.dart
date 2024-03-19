@@ -10,7 +10,8 @@ class ClientCateringCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, PageNames.CateringDetailsScreen,arguments: catering);
+        Navigator.pushNamed(context, PageNames.CateringDetailsScreen,
+            arguments: catering);
       },
       child: Card(
         elevation: 30.0,
@@ -40,9 +41,8 @@ class ClientCateringCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text('Capacity: ${catering.capacity}'),
                   Text('Contact: ${catering.contact}'),
-                  (catering.availability == null || catering.pricingInfo == null)
+                  (catering.pricingInfo == null)
                       ? Text(
                           'Not published ',
                           style: TextStyle(color: Colors.red),

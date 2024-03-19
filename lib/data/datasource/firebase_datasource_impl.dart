@@ -6,6 +6,8 @@ import 'package:evemanager/data/models/clothing_model/clothing_model.dart';
 import 'package:evemanager/data/models/decorations_model/decorations_model.dart';
 import 'package:evemanager/data/models/entertainment_model/entertainment_model.dart';
 import 'package:evemanager/data/models/invitation_design_model/invitation_design_model.dart';
+import 'package:evemanager/data/models/message_model/chat_model.dart';
+import 'package:evemanager/data/models/message_model/message_model.dart';
 import 'package:evemanager/data/models/photography_model/photography_model.dart';
 import 'package:evemanager/data/models/sweets_model/sweets_model.dart';
 import 'package:evemanager/data/models/transportation_model/transportation_model.dart';
@@ -16,7 +18,11 @@ import 'package:evemanager/domain/entities/clothing/clothing_entity.dart';
 import 'package:evemanager/domain/entities/decorations/decorations_entity.dart';
 import 'package:evemanager/domain/entities/entertainment/entertainment_entity.dart';
 import 'package:evemanager/domain/entities/invitation_design/invitation_design_entity.dart';
+import 'package:evemanager/domain/entities/message/chat_entity.dart';
+import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
+import 'package:evemanager/domain/entities/planned_events/planned_events_entity.dart';
+import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
 import 'package:evemanager/domain/entities/transportation/transportation_entity.dart';
 import 'package:evemanager/domain/entities/videography/videography_entity.dart';
@@ -43,6 +49,15 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
       required this.firebaseAuth});
 
 // Utility functions
+
+  String chatRoomId(String clientid, String adminid, String serviceid) {
+    if (clientid[0].toLowerCase().codeUnits[0] >
+        adminid.toLowerCase().codeUnits[0]) {
+      return "$clientid$adminid$serviceid";
+    } else {
+      return "$adminid$clientid$serviceid";
+    }
+  }
 
   Future<List<File>> getPictures(List<String>? imagesurl) async {
     List<File> images = [];
@@ -223,7 +238,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
             capacity: venueEntity.capacity,
             contact: venueEntity.contact,
             facilities: venueEntity.facilities,
-            availability: venueEntity.availability,
             pricingInfo: venueEntity.pricingInfo,
             description: venueEntity.description,
           ).toJson());
@@ -409,10 +423,8 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
             owner_id: cateringEntity.owner_id,
             address: cateringEntity.address,
             name: cateringEntity.name,
-            capacity: cateringEntity.capacity,
             contact: cateringEntity.contact,
             facilities: cateringEntity.facilities,
-            availability: cateringEntity.availability,
             pricingInfo: cateringEntity.pricingInfo,
             description: cateringEntity.description,
           ).toJson());
@@ -508,7 +520,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         'cuisinetype': cateringEntity.cuisinetype,
         'menu': cateringEntity.menu,
         'name': cateringEntity.name,
-        'capacity': cateringEntity.capacity,
         'contact': cateringEntity.contact,
         'facilities': cateringEntity.facilities,
         'pricingInfo': cateringEntity.pricingInfo,
@@ -1614,137 +1625,270 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   }
 
 // Videography
-@override
-Future<void> AddVideography(VideographyEntity videographyEntity) async {
-  List<String> imagelinks = [];
+  @override
+  Future<void> AddVideography(VideographyEntity videographyEntity) async {
+    List<String> imagelinks = [];
 
-  try {
-    String autoId = FirebaseFirestore.instance
-        .collection(FirebaseCollectionConst.videography)
-        .doc()
-        .id;
-    Reference venuefolderref =
-        storage.ref().child(FirebaseCollectionConst.videography);
-    Reference subfolderRef = venuefolderref.child(autoId);
+    try {
+      String autoId = FirebaseFirestore.instance
+          .collection(FirebaseCollectionConst.videography)
+          .doc()
+          .id;
+      Reference venuefolderref =
+          storage.ref().child(FirebaseCollectionConst.videography);
+      Reference subfolderRef = venuefolderref.child(autoId);
 
-    for (int i = 0; i < videographyEntity.images!.length; i++) {
-      File imageFile = videographyEntity.images![i];
-      String imageName = DateTime.now().millisecondsSinceEpoch.toString();
-      Reference imageRef = subfolderRef.child('$imageName.jpg');
-      await imageRef.putFile(imageFile);
+      for (int i = 0; i < videographyEntity.images!.length; i++) {
+        File imageFile = videographyEntity.images![i];
+        String imageName = DateTime.now().millisecondsSinceEpoch.toString();
+        Reference imageRef = subfolderRef.child('$imageName.jpg');
+        await imageRef.putFile(imageFile);
 
-      imagelinks.add(await imageRef.getDownloadURL());
+        imagelinks.add(await imageRef.getDownloadURL());
+      }
+
+      await firebaseFirestore
+          .collection(FirebaseCollectionConst.videography)
+          .doc(autoId)
+          .set(VideographyModel(
+            // Assuming VideographyModel is the corresponding model
+            // Adjust the fields accordingly
+            // type: videographyEntity.type,
+            // brand: videographyEntity.brand,
+            imageslink: imagelinks,
+            id: autoId,
+            owner_id: videographyEntity.owner_id,
+            // Add other fields as needed
+          ).toJson());
+    } catch (e) {
+      DisplayToast('error in add Videography Service ${e.toString()}');
     }
+  }
 
-    await firebaseFirestore
+  @override
+  Future<void> DeleteVideography(String id) async {
+    try {
+      Reference mainFolderRef =
+          storage.ref().child(FirebaseCollectionConst.videography);
+      Reference subfolderRef = mainFolderRef.child(id);
+      ListResult listResult = await subfolderRef.listAll();
+      await Future.forEach(listResult.items, (Reference item) async {
+        await item.delete();
+      });
+      await firebaseFirestore
+          .collection(FirebaseCollectionConst.videography)
+          .doc(id)
+          .delete();
+    } catch (e) {
+      DisplayToast(e.toString());
+    }
+  }
+
+  @override
+  Stream<List<VideographyEntity>> GetVideographyforClient() {
+    return firebaseFirestore
         .collection(FirebaseCollectionConst.videography)
-        .doc(autoId)
-        .set(VideographyModel(
-          // Assuming VideographyModel is the corresponding model
-          // Adjust the fields accordingly
-          // type: videographyEntity.type,
-          // brand: videographyEntity.brand,
-          imageslink: imagelinks,
-          id: autoId,
-          owner_id: videographyEntity.owner_id,
-          // Add other fields as needed
+        .snapshots()
+        .asyncMap((querySnapshot) async {
+      List<VideographyEntity> videography_entity = [];
+
+      for (var document in querySnapshot.docs) {
+        var imagesLinkdoc = document['imagesLink'];
+        if (imagesLinkdoc != null) {
+          List<String>? imagelinks = [];
+          for (var element in imagesLinkdoc) {
+            imagelinks.add(element.toString());
+          }
+
+          List<File>? pictures = await getPictures(imagelinks);
+
+          VideographyEntity videography =
+              VideographyEntity.factory(document, pictures);
+
+          videography_entity.add(videography);
+        }
+      }
+      return videography_entity;
+    }).handleError((error) {
+      DisplayToast('Error in GetVideographyServiceForClient: $error');
+    });
+  }
+
+  @override
+  Stream<List<VideographyEntity>> GetVideographyforOwner(String ownerid) {
+    return firebaseFirestore
+        .collection(FirebaseCollectionConst.videography)
+        .where('owner_id', isEqualTo: ownerid)
+        .snapshots()
+        .asyncMap((querySnapshot) async {
+      List<VideographyEntity> videography_entity = [];
+      for (var document in querySnapshot.docs) {
+        var imagesLinkdoc = document['imagesLink'];
+        if (imagesLinkdoc != null) {
+          List<String>? imagelinks = [];
+          for (var element in imagesLinkdoc) {
+            imagelinks.add(element.toString());
+          }
+
+          List<File>? pictures = await getPictures(imagelinks);
+
+          VideographyEntity videography =
+              VideographyEntity.factory(document, pictures);
+
+          videography_entity.add(videography);
+        }
+      }
+      return videography_entity;
+    }).handleError((error) {
+      DisplayToast('Error in GetVideographyServiceForOwner: $error');
+    });
+  }
+
+  @override
+  Future<void> UpdateVideography(VideographyEntity videographyEntity) async {
+    try {
+      await firebaseFirestore
+          .collection(FirebaseCollectionConst.videography)
+          .doc(videographyEntity.id!)
+          .update({
+        // 'type': videographyEntity.type,
+        // 'brand': videographyEntity.brand,
+        // Add other fields as needed
+      });
+    } catch (e) {
+      DisplayToast('Error in Update Videography Service: $e');
+    }
+  }
+
+// Planned Events
+
+  @override
+  Future<void> AddPlannedEvents(PlannedEventEntity plannedEventEntity) {
+    // TODO: implement AddPlannedEvents
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> DeletePlannedEvents(String id) {
+    // TODO: implement DeletePlannedEvents
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<PlannedEventEntity>> GetPlannedEvents(String userid) {
+    // TODO: implement GetPlannedEvents
+    throw UnimplementedError();
+  }
+
+// Chats
+  @override
+  Stream<List<ChatEntity>> GetChats(String userid) {
+    try {
+      bool isquery1empty = false;
+      //  isquery2empty;
+      Query finalquery;
+      Query? query1 = firebaseFirestore
+          .collection(FirebaseCollectionConst.chats)
+          .where('user1id', isEqualTo: userid);
+      Query? query2 = firebaseFirestore
+          .collection(FirebaseCollectionConst.chats)
+          .where('user2id_serviceowner', isEqualTo: userid);
+      query1.get().then((query1snapshot) {
+        isquery1empty = query1snapshot.docs.isEmpty;
+      });
+      // query2.get().then((query2snapshot) {
+      //    isquery2empty=query2snapshot.docs.isEmpty ;
+      // } );
+
+      if (isquery1empty) {
+        finalquery = query2;
+      } else {
+        finalquery = query1;
+      }
+      return finalquery.snapshots().asyncMap((snapshot) async {
+        List<ChatEntity> chats = [];
+
+        for (var doc in snapshot.docs) {
+          chats.add(ChatModel.factory(doc));
+        }
+        return chats;
+      }).handleError((error) {
+        DisplayToast('Error in GetChats: $error');
+      });
+    } catch (error) {
+      print('Error fetching chats: $error');
+      throw error;
+    }
+  }
+
+// Messages
+  @override
+  Stream<List<MessageEntity>> GetMessages(ChatEntity chatEntity) {
+    try {
+      String chatid = chatRoomId(
+        chatEntity.user1id,
+        chatEntity.user2id_serviceowner,
+        chatEntity.serviceid,
+      );
+
+      return firebaseFirestore
+          .collection(FirebaseCollectionConst.chats)
+          .doc(chatid)
+          .collection(FirebaseCollectionConst.messages)
+          .orderBy('timestamp', descending: false)
+          .snapshots()
+          .asyncMap((snapshot) async {
+        List<MessageEntity> messages = [];
+        for (var doc in snapshot.docs) {
+          messages.add(MessageModel.factory(doc));
+        }
+        return messages;
+      }).handleError((error) {
+        DisplayToast('Error in GetMessages: $error');
+      });
+    } catch (error) {
+      print('Error fetching messages: $error');
+      throw error; // You can handle the error according to your application's logic
+    }
+  }
+
+  @override
+  Future<void> SendMessage({
+    required MessageEntity messageEntity,
+    required ServiceEntity serviceEntity,
+  }) async {
+    try {
+      String chatid = chatRoomId(
+        messageEntity.senderid,
+        serviceEntity.owner_id!,
+        serviceEntity.id!,
+      );
+
+      // Get a reference to the chat document
+      DocumentReference chatDocRef = firebaseFirestore
+          .collection(FirebaseCollectionConst.chats)
+          .doc(chatid);
+
+      // Create the chat document if it doesn't exist
+      if (!(await chatDocRef.get()).exists) {
+        await chatDocRef.set(ChatModel(
+          servicename: serviceEntity.name!,
+          user1id: messageEntity.senderid,
+          user2id_serviceowner: serviceEntity.owner_id!,
+          serviceid: serviceEntity.id!,
         ).toJson());
-  } catch (e) {
-    DisplayToast('error in add Videography Service ${e.toString()}');
-  }
-}
-
-@override
-Future<void> DeleteVideography(String id) async {
-  try {
-    Reference mainFolderRef =
-        storage.ref().child(FirebaseCollectionConst.videography);
-    Reference subfolderRef = mainFolderRef.child(id);
-    ListResult listResult = await subfolderRef.listAll();
-    await Future.forEach(listResult.items, (Reference item) async {
-      await item.delete();
-    });
-    await firebaseFirestore
-        .collection(FirebaseCollectionConst.videography)
-        .doc(id)
-        .delete();
-  } catch (e) {
-    DisplayToast(e.toString());
-  }
-}
-
-@override
-Stream<List<VideographyEntity>> GetVideographyforClient() {
-  return firebaseFirestore
-      .collection(FirebaseCollectionConst.videography)
-      .snapshots()
-      .asyncMap((querySnapshot) async {
-    List<VideographyEntity> videography_entity = [];
-
-    for (var document in querySnapshot.docs) {
-      var imagesLinkdoc = document['imagesLink'];
-      if (imagesLinkdoc != null) {
-        List<String>? imagelinks = [];
-        for (var element in imagesLinkdoc) {
-          imagelinks.add(element.toString());
-        }
-
-        List<File>? pictures = await getPictures(imagelinks);
-
-        VideographyEntity videography = VideographyEntity.factory(document, pictures);
-
-        videography_entity.add(videography);
       }
+
+      // Add the message to the messages subcollection
+      await chatDocRef.collection(FirebaseCollectionConst.messages).add(
+            MessageModel(
+              message: messageEntity.message,
+              timestamp: messageEntity.timestamp,
+              senderid: messageEntity.senderid,
+            ).toJson(),
+          );
+    } catch (error) {
+      print('Error sending message: $error');
     }
-    return videography_entity;
-  }).handleError((error) {
-    DisplayToast('Error in GetVideographyServiceForClient: $error');
-  });
-}
-
-@override
-Stream<List<VideographyEntity>> GetVideographyforOwner(String ownerid) {
-  return firebaseFirestore
-      .collection(FirebaseCollectionConst.videography)
-      .where('owner_id', isEqualTo: ownerid)
-      .snapshots()
-      .asyncMap((querySnapshot) async {
-    List<VideographyEntity> videography_entity = [];
-    for (var document in querySnapshot.docs) {
-      var imagesLinkdoc = document['imagesLink'];
-      if (imagesLinkdoc != null) {
-        List<String>? imagelinks = [];
-        for (var element in imagesLinkdoc) {
-          imagelinks.add(element.toString());
-        }
-
-        List<File>? pictures = await getPictures(imagelinks);
-
-        VideographyEntity videography = VideographyEntity.factory(document, pictures);
-
-        videography_entity.add(videography);
-      }
-    }
-    return videography_entity;
-  }).handleError((error) {
-    DisplayToast('Error in GetVideographyServiceForOwner: $error');
-  });
-}
-
-@override
-Future<void> UpdateVideography(VideographyEntity videographyEntity) async {
-  try {
-    await firebaseFirestore
-        .collection(FirebaseCollectionConst.videography)
-        .doc(videographyEntity.id!)
-        .update({
-      // 'type': videographyEntity.type,
-      // 'brand': videographyEntity.brand,
-      // Add other fields as needed
-    });
-  } catch (e) {
-    DisplayToast('Error in Update Videography Service: $e');
   }
-}
-
 }

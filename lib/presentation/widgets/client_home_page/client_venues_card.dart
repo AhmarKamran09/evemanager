@@ -3,14 +3,22 @@ import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:flutter/material.dart';
 
 class ClientVenuesCard extends StatelessWidget {
-  ClientVenuesCard({super.key, required this.venue});
+  ClientVenuesCard({super.key, required this.venue, required this.uid});
   final VenueEntity venue;
+  final String uid;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, PageNames.VenueDetailsScreen,arguments: venue);
+        Navigator.pushNamed(
+          context,
+          PageNames.VenueDetailsScreen,
+          arguments: {
+            'venue': venue,
+            'uid': uid,
+          },
+        );
       },
       child: Card(
         elevation: 30.0,
@@ -42,7 +50,7 @@ class ClientVenuesCard extends StatelessWidget {
                   ),
                   Text('Capacity: ${venue.capacity}'),
                   Text('Contact: ${venue.contact}'),
-                  (venue.availability == null || venue.pricingInfo == null)
+                  (venue.pricingInfo == null)
                       ? Text(
                           'Not published ',
                           style: TextStyle(color: Colors.red),

@@ -3,11 +3,13 @@ import 'package:evemanager/on_general_route.dart';
 import 'package:evemanager/presentation/cubit/auth/auth_cubit.dart';
 import 'package:evemanager/presentation/cubit/bridal_makeup_and_hair/bridal_makeup_hair_cubit.dart';
 import 'package:evemanager/presentation/cubit/cateringservice/cateringservice_cubit.dart';
+import 'package:evemanager/presentation/cubit/chat/chat_cubit.dart';
 import 'package:evemanager/presentation/cubit/clothing/clothing_cubit.dart';
 import 'package:evemanager/presentation/cubit/credentials/credentials_cubit.dart';
 import 'package:evemanager/presentation/cubit/decoration/decoration_cubit.dart';
 import 'package:evemanager/presentation/cubit/entertainment/entertainment_cubit.dart';
 import 'package:evemanager/presentation/cubit/invitation_design/invitation_design_cubit.dart';
+import 'package:evemanager/presentation/cubit/messages/messages_cubit.dart';
 import 'package:evemanager/presentation/cubit/photography/photography_cubit.dart';
 import 'package:evemanager/presentation/cubit/sweets/sweets_cubit.dart';
 import 'package:evemanager/presentation/cubit/transportation/transportation_cubit.dart';
@@ -78,6 +80,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<VideographyCubit>(
           create: (_) => di.sl<VideographyCubit>(),
+        ),
+        BlocProvider<ChatCubit>(
+          create: (_) => di.sl<ChatCubit>(),
+        ),
+        BlocProvider<MessagesCubit>(
+          create: (_) => di.sl<MessagesCubit>(),
         ),
       ],
       child: MaterialApp(

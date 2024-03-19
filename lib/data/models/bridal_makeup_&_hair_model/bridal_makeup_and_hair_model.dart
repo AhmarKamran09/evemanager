@@ -1,18 +1,17 @@
 import 'package:evemanager/domain/entities/bridal_makeup_&_hair/bridal_makeup_&_hair_entity.dart';
 
-class BridalMakeupAndHairModel extends BridalMakeupAndHairEntity {
+class BridalMakeupAndHairModel extends BridalMakeupAndHairEntity  {
   final String? id;
   final String? owner_id;
+  final String? name;
+  final String? contact;
   final String? address;
   final List<String>? imageslink;
-  final String? name;
-  final int? capacity;
-  final String? contact;
   final List<String>? facilities;
-  final Map<String, dynamic>? pricingInfo;
-  final Map<String, Map<String, bool>>? availability;
   final String? description;
-
+  final Map<String, dynamic>? pricingInfo;
+  final int? capacity;
+ 
   BridalMakeupAndHairModel({
     this.imageslink,
     this.name,
@@ -20,7 +19,6 @@ class BridalMakeupAndHairModel extends BridalMakeupAndHairEntity {
     this.contact,
     this.facilities,
     this.pricingInfo,
-    this.availability,
     this.description,
     this.id,
     this.owner_id,
@@ -34,12 +32,12 @@ class BridalMakeupAndHairModel extends BridalMakeupAndHairEntity {
         'contact': contact,
         'facilities': facilities,
         'pricingInfo': pricingInfo,
-        'availability': availability,
         'description': description,
         'id': id,
         'owner_id': owner_id,
         'address': address,
       };
+
 
   @override
   List<Object?> get props => [
@@ -49,7 +47,6 @@ class BridalMakeupAndHairModel extends BridalMakeupAndHairEntity {
         contact,
         facilities,
         pricingInfo,
-        availability,
         description,
         id,
         owner_id,

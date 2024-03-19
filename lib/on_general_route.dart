@@ -5,6 +5,7 @@ import 'package:evemanager/domain/entities/clothing/clothing_entity.dart';
 import 'package:evemanager/domain/entities/decorations/decorations_entity.dart';
 import 'package:evemanager/domain/entities/entertainment/entertainment_entity.dart';
 import 'package:evemanager/domain/entities/invitation_design/invitation_design_entity.dart';
+import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
 import 'package:evemanager/domain/entities/transportation/transportation_entity.dart';
@@ -48,6 +49,7 @@ import 'package:evemanager/presentation/pages/client_home_page/entertainment/ent
 import 'package:evemanager/presentation/pages/client_home_page/entertainment/entertainment_list_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/invitation_design/invitation_design_details_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/invitation_design/invitation_design_list_screen.dart';
+import 'package:evemanager/presentation/pages/client_home_page/messages_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/photography/photography_details_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/photography/photography_list_screen.dart';
 import 'package:evemanager/presentation/pages/client_home_page/sweets/sweets_details_screen.dart';
@@ -108,15 +110,28 @@ class OnGeneralRoute {
         {
           return routeBuilder(ClientHomePage(uid: args as String));
         }
+      case PageNames.MessagesScreen:
+        {
+          final argsMap = args as Map<String, dynamic>?;
+
+          return routeBuilder(MessagesScreen(
+            chatEntity: argsMap!['chatEntity'] as ChatEntity,
+            uid: argsMap['uid'] as String,
+          ));
+        }
       case PageNames.VenueDetailsScreen:
         {
+          final argsMap = args as Map<String, dynamic>?;
           return routeBuilder(VenueDetailsScreen(
-            venueEntity: args as VenueEntity,
+            venueEntity: argsMap!['venue'] as VenueEntity,
+            userid: argsMap['uid'] as String,
           ));
         }
       case PageNames.VenueListScreen:
         {
-          return routeBuilder(VenueListScreen());
+          return routeBuilder(VenueListScreen(
+            uid: args as String,
+          ));
         }
       case PageNames.UpdateVenueScreen:
         {

@@ -1,53 +1,47 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
+import 'package:evemanager/domain/entities/service/service_entity.dart';
 
-class CateringEntity extends Equatable {
-  final String? id;
-  final String? owner_id;
-  final String? address;
-  final List<File>? images;
-  final String? name;
-  final int? capacity;
-  final String? contact;
-  final List<String>? facilities;
-  final Map<String, dynamic>? pricingInfo;
-  final Map<String, Map<String, bool>>? availability;
-  final String? description;
+class CateringEntity extends ServiceEntity {
   final List<String>? cuisinetype;
   final List<MenuItem>? menu;
 
   CateringEntity({
+    String? id,
+    String? owner_id,
+    String? name,
+    String? contact,
+    String? address,
+    List<File>? images,
+    List<String>? facilities,
+    String? description,
+    Map<String, dynamic>? pricingInfo,
     this.menu,
     this.cuisinetype,
-    this.images,
-    this.name,
-    this.capacity,
-    this.contact,
-    this.facilities,
-    this.pricingInfo,
-    this.availability,
-    this.description,
-    this.id,
-    this.owner_id,
-    this.address,
-  });
+  }) : super(
+          images: images,
+          name: name,
+          contact: contact,
+          facilities: facilities,
+          pricingInfo: pricingInfo,
+          description: description,
+          id: id,
+          owner_id: owner_id,
+          address: address,
+        );
 
   factory CateringEntity.factory(
       DocumentSnapshot snapshot, List<File>? imagesfromstorage) {
     var snap = snapshot.data() as Map<String, dynamic>;
 
     return CateringEntity(
-      images: imagesfromstorage,
-      name: snap['name'],
-      capacity: snap['capacity'],
-      contact: snap['contact'],
       cuisinetype: snap['cuisinetype'],
-      menu: snap['menu'],
+      menu: snap['menu'], images: imagesfromstorage,
+      name: snap['name'],
+      contact: snap['contact'],
       // facilities: snap['facilities'],
       pricingInfo: snap['pricingInfo'],
-      availability: snap['availability'],
       description: snap['description'],
       id: snap['id'],
       owner_id: snap['owner_id'],
@@ -61,11 +55,9 @@ class CateringEntity extends Equatable {
         menu,
         images,
         name,
-        capacity,
         contact,
         facilities,
         pricingInfo,
-        availability,
         description,
         id,
         owner_id,

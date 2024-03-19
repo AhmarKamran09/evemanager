@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class VendorView extends StatelessWidget {
   VendorView({
     super.key,
+    required this.uid,
   });
+  final String uid;
   final List<String> services = [
     'Venue Booking',
     'Catering',
@@ -32,7 +34,8 @@ class VendorView extends StatelessWidget {
             onTap: () {
               switch (index) {
                 case 0:
-                  Navigator.pushNamed(context, PageNames.VenueListScreen);
+                  Navigator.pushNamed(context, PageNames.VenueListScreen,
+                      arguments: uid);
 
                   break;
                 case 1:
