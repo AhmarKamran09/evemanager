@@ -66,6 +66,7 @@ class PageNames {
   static const String ClientHomePage = "ClientHomePage";
   static const String PageNotFound = "PageNotFound";
   static const String MessagesScreen = "MessagesScreen";
+  static const String ChatScreenAdmin = "ChatScreenAdmin";
 }
 
 void DisplayToast(String message) {
@@ -94,4 +95,9 @@ class FirebaseCollectionConst {
   static const String videography = "videography";
   static const String chats = "chat";
   static const String messages = "messages";
+}
+
+enum UserRole {
+  client,
+  admin,
 }

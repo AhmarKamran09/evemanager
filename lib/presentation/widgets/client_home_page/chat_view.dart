@@ -15,10 +15,12 @@ class ChatView extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        await BlocProvider.of<ChatCubit>(context).GetChats(userid: userid);
+        await BlocProvider.of<ChatCubit>(context)
+            .GetChatsForClient(userid: userid);
       },
       child: FutureBuilder(
-        future: BlocProvider.of<ChatCubit>(context).GetChats(userid: userid),
+        future: BlocProvider.of<ChatCubit>(context)
+            .GetChatsForClient(userid: userid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return BlocConsumer<ChatCubit, ChatState>(
@@ -43,6 +45,7 @@ class ChatView extends StatelessWidget {
                                 arguments: {
                                   'chatEntity': state.chatEntity[index],
                                   'uid': userid,
+                                  'userrole': UserRole.client
                                 },
                               );
                             },

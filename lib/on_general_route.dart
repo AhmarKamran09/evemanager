@@ -18,6 +18,7 @@ import 'package:evemanager/presentation/pages/admins/bridal_makeup_and_hair_admi
 import 'package:evemanager/presentation/pages/admins/bridal_makeup_and_hair_admin_home/update_bridal_makeup_and_hair_screen.dart';
 import 'package:evemanager/presentation/pages/admins/catering_admin_home/add_catering_screen.dart';
 import 'package:evemanager/presentation/pages/admins/catering_admin_home/update_catering_screen.dart';
+import 'package:evemanager/presentation/pages/admins/chat_screen_admin.dart';
 import 'package:evemanager/presentation/pages/admins/clothing_admin_home/add_clothing__screen.dart';
 import 'package:evemanager/presentation/pages/admins/clothing_admin_home/update_clothing_screen.dart';
 import 'package:evemanager/presentation/pages/admins/decoration_admin_home/add_decoration__screen.dart';
@@ -106,6 +107,12 @@ class OnGeneralRoute {
             uid: args as String,
           ));
         }
+      case PageNames.ChatScreenAdmin:
+        {
+          return routeBuilder(ChatScreenAdmin(
+            uid: args as String,
+          ));
+        }
       case PageNames.ClientHomePage:
         {
           return routeBuilder(ClientHomePage(uid: args as String));
@@ -117,6 +124,7 @@ class OnGeneralRoute {
           return routeBuilder(MessagesScreen(
             chatEntity: argsMap!['chatEntity'] as ChatEntity,
             uid: argsMap['uid'] as String,
+            userRole: argsMap['userrole'] as UserRole,
           ));
         }
       case PageNames.VenueDetailsScreen:

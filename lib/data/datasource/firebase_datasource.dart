@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:evemanager/constants.dart';
 import 'package:evemanager/domain/entities/bridal_makeup_&_hair/bridal_makeup_&_hair_entity.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
 import 'package:evemanager/domain/entities/clothing/clothing_entity.dart';
@@ -130,9 +131,10 @@ abstract class FirebaseDatasource {
 
   // Messages
   Future<void> SendMessage(
-      {required MessageEntity messageEntity,
+      {required MessageEntity messageEntity,required String clientid,
       required ServiceEntity serviceEntity});
-  Stream<List<MessageEntity>> GetMessages(ChatEntity chatEntity);
+  Stream<List<MessageEntity>> GetMessages({required ChatEntity chatEntity,required UserRole userRole});
 
-  Stream<List<ChatEntity>> GetChats(String userid);
+  Stream<List<ChatEntity>> GetChatsForClient(String userid);
+  Stream<List<ChatEntity>> GetChatsForAdmin(String userid);
 }

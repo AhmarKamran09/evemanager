@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:evemanager/constants.dart';
 import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
@@ -16,10 +17,12 @@ class MessagesCubit extends Cubit<MessagesState> {
   final SendMessageUsecase sendMessageUsecase;
   final GetMessagesUsecase getMessagesUsecase;
 
-  Future<void> GetMessages({required ChatEntity chatEntity}) async {
+  Future<void> GetMessages(
+      {required ChatEntity chatEntity, required UserRole userRole}) async {
     try {
       emit(MessagesLoading());
-      final streamResponse = await getMessagesUsecase.call(chatEntity);
+      final streamResponse = await getMessagesUsecase.call(
+          chatEntity: chatEntity, userRole: userRole);
       streamResponse.listen((messageEntity) {
         emit(MessagesSuccess(messageEntity: messageEntity));
       });
@@ -31,15 +34,22 @@ class MessagesCubit extends Cubit<MessagesState> {
 
   Future<void> SendMessages(
       {required MessageEntity messageEntity,
+      required UserRole userRole,
+      required ChatEntity chatEntity,
+      required String clientid,
       required ServiceEntity serviceEntity}) async {
     try {
       emit(MessagesLoading());
       await sendMessageUsecase.call(
-          messageEntity: messageEntity, serviceEntity: serviceEntity);
+          clientid: clientid,
+          messageEntity: messageEntity,
+          serviceEntity: serviceEntity);
       // streamResponse.listen(( chatEntity) {
       //   emit(ChatSuccess(chatEntity: chatEntity));
       // });
-      emit(MessagesSuccess());
+      await GetMessages(chatEntity: chatEntity, userRole: userRole);
+
+      // emit(MessagesSuccess());
     } catch (e) {
       emit(MessagesFailure());
     }

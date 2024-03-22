@@ -8,9 +8,12 @@ class SendMessageUsecase {
   SendMessageUsecase({required this.firebaseRepository});
 
   Future<void> call(
-      {required MessageEntity messageEntity,
+      {required String clientid,
+      required MessageEntity messageEntity,
       required ServiceEntity serviceEntity}) async {
     return await firebaseRepository.SendMessage(
-        messageEntity: messageEntity, serviceEntity: serviceEntity);
+        clientid: clientid,
+        messageEntity: messageEntity,
+        serviceEntity: serviceEntity);
   }
 }

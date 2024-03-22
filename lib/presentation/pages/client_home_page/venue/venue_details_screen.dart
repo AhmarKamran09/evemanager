@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evemanager/constants.dart';
+import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
@@ -112,13 +113,21 @@ class _VenueDetailsScreenState extends State<VenueDetailsScreen> {
                                   onPressed: () {
                                     BlocProvider.of<MessagesCubit>(context)
                                         .SendMessages(
+                                      userRole: UserRole.client,
+                                      chatEntity: ChatEntity(
+                                          servicename: widget.venueEntity.name!,
+                                          user1id: widget.userid,
+                                          user2id_serviceowner:
+                                              widget.venueEntity.owner_id!,
+                                          serviceid: widget.venueEntity.id!),
+                                      clientid: widget.userid,
                                       messageEntity: MessageEntity(
                                           message: message_controller.text,
                                           timestamp: Timestamp.now(),
                                           senderid: widget.userid),
                                       serviceEntity: ServiceEntity(
                                           id: widget.venueEntity.id,
-                                          owner_id: widget.venueEntity.id,
+                                          owner_id: widget.venueEntity.owner_id,
                                           name: widget.venueEntity.name),
                                     );
                                     Navigator.of(context).pop();

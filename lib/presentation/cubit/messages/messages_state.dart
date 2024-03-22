@@ -15,7 +15,7 @@ final class MessagesSuccess extends MessagesState {
   MessagesSuccess({this.messageEntity});
   @override
   List<Object> get props => [
-        // messageEntity,
+        // messageEntity!,
       ];
 }
 

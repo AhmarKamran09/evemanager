@@ -1782,29 +1782,11 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
 
 // Chats
   @override
-  Stream<List<ChatEntity>> GetChats(String userid) {
+  Stream<List<ChatEntity>> GetChatsForClient(String userid) {
     try {
-      bool isquery1empty = false;
-      //  isquery2empty;
-      Query finalquery;
-      Query? query1 = firebaseFirestore
+      Query? finalquery = firebaseFirestore
           .collection(FirebaseCollectionConst.chats)
           .where('user1id', isEqualTo: userid);
-      Query? query2 = firebaseFirestore
-          .collection(FirebaseCollectionConst.chats)
-          .where('user2id_serviceowner', isEqualTo: userid);
-      query1.get().then((query1snapshot) {
-        isquery1empty = query1snapshot.docs.isEmpty;
-      });
-      // query2.get().then((query2snapshot) {
-      //    isquery2empty=query2snapshot.docs.isEmpty ;
-      // } );
-
-      if (isquery1empty) {
-        finalquery = query2;
-      } else {
-        finalquery = query1;
-      }
       return finalquery.snapshots().asyncMap((snapshot) async {
         List<ChatEntity> chats = [];
 
@@ -1816,14 +1798,39 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         DisplayToast('Error in GetChats: $error');
       });
     } catch (error) {
-      print('Error fetching chats: $error');
+      print('Error fetching chats for client: $error');
+      throw error;
+    }
+  }
+
+  @override
+  Stream<List<ChatEntity>> GetChatsForAdmin(String userid) {
+    try {
+      Query? finalquery = firebaseFirestore
+          .collection(FirebaseCollectionConst.chats)
+          .where('user2id_serviceowner', isEqualTo: userid);
+      return finalquery.snapshots().asyncMap((snapshot) async {
+        List<ChatEntity> chats = [];
+
+        for (var doc in snapshot.docs) {
+          chats.add(ChatModel.factory(doc));
+        }
+        return chats;
+      }).handleError((error) {
+        DisplayToast('Error in GetChats: $error');
+      });
+    } catch (error) {
+      print('Error fetching chatsfor admin : $error');
       throw error;
     }
   }
 
 // Messages
-  @override
-  Stream<List<MessageEntity>> GetMessages(ChatEntity chatEntity) {
+  StreamController<List<MessageEntity>> _messageStreamControllerforclient =
+      StreamController<List<MessageEntity>>();
+
+  Stream<List<MessageEntity>> GetMessages(
+      {required ChatEntity chatEntity, required UserRole userRole}) {
     try {
       String chatid = chatRoomId(
         chatEntity.user1id,
@@ -1831,35 +1838,80 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         chatEntity.serviceid,
       );
 
-      return firebaseFirestore
+      firebaseFirestore
           .collection(FirebaseCollectionConst.chats)
           .doc(chatid)
           .collection(FirebaseCollectionConst.messages)
           .orderBy('timestamp', descending: false)
           .snapshots()
-          .asyncMap((snapshot) async {
+          .listen((snapshot) {
         List<MessageEntity> messages = [];
         for (var doc in snapshot.docs) {
           messages.add(MessageModel.factory(doc));
         }
-        return messages;
-      }).handleError((error) {
+        // if (userRole == UserRole.admin) {
+        // _messageStreamControllerforadmin.add(messages);
+        // } else {
+        _messageStreamControllerforclient.add(messages);
+        // }
+      }, onError: (error) {
         DisplayToast('Error in GetMessages: $error');
       });
+      // if (userRole == UserRole.admin) {
+      // return _messageStreamControllerforadmin.stream;
+      // } else {
+      return _messageStreamControllerforclient.stream;
+      // }
     } catch (error) {
       print('Error fetching messages: $error');
       throw error; // You can handle the error according to your application's logic
     }
   }
 
+  void dispose() {
+    _messageStreamControllerforclient.close();
+    // _messageStreamControllerforadmin.close();
+  }
+
+  // @override
+  // Stream<List<MessageEntity>> GetMessages(ChatEntity chatEntity) {
+  //   try {
+  //     String chatid = chatRoomId(
+  //       chatEntity.user1id,
+  //       chatEntity.user2id_serviceowner,
+  //       chatEntity.serviceid,
+  //     );
+
+  //     return firebaseFirestore
+  //         .collection(FirebaseCollectionConst.chats)
+  //         .doc(chatid)
+  //         .collection(FirebaseCollectionConst.messages)
+  //         .orderBy('timestamp', descending: false)
+  //         .snapshots()
+  //         .asyncMap((snapshot) async {
+  //       List<MessageEntity> messages = [];
+  //       for (var doc in snapshot.docs) {
+  //         messages.add(MessageModel.factory(doc));
+  //       }
+  //       return messages;
+  //     }).handleError((error) {
+  //       DisplayToast('Error in GetMessages: $error');
+  //     });
+  //   } catch (error) {
+  //     print('Error fetching messages: $error');
+  //     throw error; // You can handle the error according to your application's logic
+  //   }
+  // }
+
   @override
   Future<void> SendMessage({
+    required String clientid,
     required MessageEntity messageEntity,
     required ServiceEntity serviceEntity,
   }) async {
     try {
       String chatid = chatRoomId(
-        messageEntity.senderid,
+        clientid,
         serviceEntity.owner_id!,
         serviceEntity.id!,
       );
@@ -1873,7 +1925,7 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
       if (!(await chatDocRef.get()).exists) {
         await chatDocRef.set(ChatModel(
           servicename: serviceEntity.name!,
-          user1id: messageEntity.senderid,
+          user1id: clientid,
           user2id_serviceowner: serviceEntity.owner_id!,
           serviceid: serviceEntity.id!,
         ).toJson());

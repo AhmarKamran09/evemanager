@@ -23,24 +23,6 @@ class ServiceEntity extends Equatable {
     this.description,
     this.pricingInfo,
   });
-
-  // factory ServiceEntity.factory(
-  //     DocumentSnapshot snapshot, List<File>? imagesfromstorage) {
-  //   var snap = snapshot.data() as Map<String, dynamic>;
-
-  //   return ServiceEntity(
-  //     images: imagesfromstorage,
-  //     name: snap['name'],
-  //     contact: snap['contact'],
-  //     // facilities: snap['facilities'],
-  //     pricingInfo: snap['pricingInfo'],
-  //     description: snap['description'],
-  //     id: snap['id'],
-  //     owner_id: snap['owner_id'],
-  //     address: snap['address'],
-  //   );
-  // }
-
   @override
   List<Object?> get props => [
         images,

@@ -9,9 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MessagesScreen extends StatefulWidget {
-  MessagesScreen({super.key, required this.uid, required this.chatEntity});
+  MessagesScreen(
+      {super.key,
+      required this.uid,
+      required this.chatEntity,
+      required this.userRole});
   final ChatEntity chatEntity;
   final String uid;
+  final UserRole userRole;
 
   @override
   State<MessagesScreen> createState() => _MessagesScreenState();
@@ -25,8 +30,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 1), () async {
-      await BlocProvider.of<MessagesCubit>(context)
-          .GetMessages(chatEntity: widget.chatEntity);
+      await BlocProvider.of<MessagesCubit>(context).GetMessages(
+          chatEntity: widget.chatEntity, userRole: widget.userRole);
     });
   }
 
@@ -39,8 +44,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
       ),
       body: RefreshIndicator(
           onRefresh: () async {
-            await BlocProvider.of<MessagesCubit>(context)
-                .GetMessages(chatEntity: widget.chatEntity);
+            await BlocProvider.of<MessagesCubit>(context).GetMessages(
+                chatEntity: widget.chatEntity, userRole: widget.userRole);
           },
           child: BlocConsumer<MessagesCubit, MessagesState>(
             listener: (context, state) {
@@ -82,6 +87,9 @@ class _MessagesScreenState extends State<MessagesScreen> {
                               onPressed: () {
                                 BlocProvider.of<MessagesCubit>(context)
                                     .SendMessages(
+                                        chatEntity: widget.chatEntity,
+                                        userRole: widget.userRole,
+                                        clientid: widget.chatEntity.user1id,
                                         messageEntity: MessageEntity(
                                             message: message_controller.text,
                                             timestamp: Timestamp.now(),

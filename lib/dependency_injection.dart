@@ -41,7 +41,8 @@ import 'package:evemanager/domain/usecases/invitation_design/delete_invitation_d
 import 'package:evemanager/domain/usecases/invitation_design/get_invitation_design_for_client_usecase.dart';
 import 'package:evemanager/domain/usecases/invitation_design/get_invitation_design_for_owner_usecase.dart';
 import 'package:evemanager/domain/usecases/invitation_design/update_invitation_design_usecase.dart';
-import 'package:evemanager/domain/usecases/message/get_chats_usecase.dart';
+import 'package:evemanager/domain/usecases/message/get_chats_for_admin_usecase.dart';
+import 'package:evemanager/domain/usecases/message/get_chats_for_client_usecase.dart';
 import 'package:evemanager/domain/usecases/message/get_messages_usecase.dart';
 import 'package:evemanager/domain/usecases/message/send_message_usecase.dart';
 import 'package:evemanager/domain/usecases/photography/add_photography_usecase.dart';
@@ -198,8 +199,7 @@ Future<void> init() async {
       ));
 
   sl.registerFactory(() => ChatCubit(
-        getChatsUsecase: sl.call(),
-      ));
+      getChatsForClientUsecase: sl.call(), getChatsForAdminUsecase: sl.call()));
 
   sl.registerFactory(() => MessagesCubit(
         getMessagesUsecase: sl.call(),
@@ -412,7 +412,10 @@ Future<void> init() async {
   );
 // Chat
   sl.registerLazySingleton(
-    () => GetChatsUsecase(firebaseRepository: sl.call()),
+    () => GetChatsForClientUsecase(firebaseRepository: sl.call()),
+  );
+  sl.registerLazySingleton(
+    () => GetChatsForAdminUsecase(firebaseRepository: sl.call()),
   );
 
 // Repository

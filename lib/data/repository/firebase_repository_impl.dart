@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:evemanager/constants.dart';
 import 'package:evemanager/data/datasource/firebase_datasource.dart';
 import 'package:evemanager/domain/entities/bridal_makeup_&_hair/bridal_makeup_&_hair_entity.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
@@ -372,20 +373,25 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   }
 
   @override
-  Stream<List<MessageEntity>> GetMessages(ChatEntity chatEntity) {
-    return firebaseDatasource.GetMessages(chatEntity);
+  Stream<List<MessageEntity>> GetMessages({required ChatEntity chatEntity,required UserRole userRole}) {
+    return firebaseDatasource.GetMessages(chatEntity:chatEntity,userRole: userRole);
   }
 
   @override
   Future<void> SendMessage(
-      {required MessageEntity messageEntity,
+    
+      {required MessageEntity messageEntity,required String clientid,
       required ServiceEntity serviceEntity}) {
-    return firebaseDatasource.SendMessage(
+    return firebaseDatasource.SendMessage(clientid: clientid,
         messageEntity: messageEntity, serviceEntity: serviceEntity);
   }
 
   @override
-  Stream<List<ChatEntity>> GetChats(String userid) {
-    return firebaseDatasource.GetChats(userid);
+  Stream<List<ChatEntity>> GetChatsForClient(String userid) {
+    return firebaseDatasource.GetChatsForClient(userid);
+  }
+  @override
+  Stream<List<ChatEntity>> GetChatsForAdmin(String userid) {
+    return firebaseDatasource.GetChatsForAdmin(userid);
   }
 }

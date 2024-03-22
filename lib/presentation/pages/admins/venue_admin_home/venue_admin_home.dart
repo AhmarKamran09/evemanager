@@ -27,6 +27,12 @@ class VenueAdminHome extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
+                Navigator.pushNamed(context, PageNames.ChatScreenAdmin,
+                    arguments: uid);
+              },
+              icon: Icon(size: 40, Icons.message)),
+          IconButton(
+              onPressed: () {
                 Navigator.pushNamed(context, PageNames.ProfileMenuPage,
                     arguments: uid);
               },
