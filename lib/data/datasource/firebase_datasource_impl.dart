@@ -1849,19 +1849,11 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         for (var doc in snapshot.docs) {
           messages.add(MessageModel.factory(doc));
         }
-        // if (userRole == UserRole.admin) {
-        // _messageStreamControllerforadmin.add(messages);
-        // } else {
         _messageStreamControllerforclient.add(messages);
-        // }
       }, onError: (error) {
         DisplayToast('Error in GetMessages: $error');
       });
-      // if (userRole == UserRole.admin) {
-      // return _messageStreamControllerforadmin.stream;
-      // } else {
       return _messageStreamControllerforclient.stream.asBroadcastStream();
-      // }
     } catch (error) {
       print('Error fetching messages: $error');
       throw error; // You can handle the error according to your application's logic
@@ -1870,38 +1862,7 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
 
   void dispose() {
     _messageStreamControllerforclient.close();
-    // _messageStreamControllerforadmin.close();
   }
-
-  // @override
-  // Stream<List<MessageEntity>> GetMessages(ChatEntity chatEntity) {
-  //   try {
-  //     String chatid = chatRoomId(
-  //       chatEntity.user1id,
-  //       chatEntity.user2id_serviceowner,
-  //       chatEntity.serviceid,
-  //     );
-
-  //     return firebaseFirestore
-  //         .collection(FirebaseCollectionConst.chats)
-  //         .doc(chatid)
-  //         .collection(FirebaseCollectionConst.messages)
-  //         .orderBy('timestamp', descending: false)
-  //         .snapshots()
-  //         .asyncMap((snapshot) async {
-  //       List<MessageEntity> messages = [];
-  //       for (var doc in snapshot.docs) {
-  //         messages.add(MessageModel.factory(doc));
-  //       }
-  //       return messages;
-  //     }).handleError((error) {
-  //       DisplayToast('Error in GetMessages: $error');
-  //     });
-  //   } catch (error) {
-  //     print('Error fetching messages: $error');
-  //     throw error; // You can handle the error according to your application's logic
-  //   }
-  // }
 
   @override
   Future<void> SendMessage({
