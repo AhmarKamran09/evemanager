@@ -1827,7 +1827,7 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
 
 // Messages
   StreamController<List<MessageEntity>> _messageStreamControllerforclient =
-      StreamController<List<MessageEntity>>();
+      StreamController<List<MessageEntity>>.broadcast();
 
   Stream<List<MessageEntity>> GetMessages(
       {required ChatEntity chatEntity, required UserRole userRole}) {
@@ -1860,7 +1860,7 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
       // if (userRole == UserRole.admin) {
       // return _messageStreamControllerforadmin.stream;
       // } else {
-      return _messageStreamControllerforclient.stream;
+      return _messageStreamControllerforclient.stream.asBroadcastStream();
       // }
     } catch (error) {
       print('Error fetching messages: $error');

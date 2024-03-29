@@ -28,6 +28,7 @@ class MessagesCubit extends Cubit<MessagesState> {
       });
       // emit(MessagesSuccess(messageEntity: chatresponse));
     } catch (e) {
+      print(e);
       emit(MessagesFailure());
     }
   }
