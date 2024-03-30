@@ -53,6 +53,13 @@ class ChatView extends StatelessWidget {
                               title: Text(
                                 state.chatEntity[index].servicename,
                               ),
+                              subtitle: Text(
+                                state.chatEntity[index]
+                                            .unseenMessagesByClient !=
+                                        0
+                                    ? 'unread'
+                                    : 'all read',
+                              ),
                             ),
                           );
                         });

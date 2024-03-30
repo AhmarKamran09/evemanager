@@ -31,7 +31,9 @@ class _MessagesScreenState extends State<MessagesScreen> {
     super.initState();
     Future.delayed(Duration(seconds: 1), () async {
       await BlocProvider.of<MessagesCubit>(context).GetMessages(
-          chatEntity: widget.chatEntity, userRole: widget.userRole);
+          request_sender_id: widget.uid,
+          chatEntity: widget.chatEntity,
+          userRole: widget.userRole);
     });
   }
 
@@ -45,7 +47,9 @@ class _MessagesScreenState extends State<MessagesScreen> {
       body: RefreshIndicator(
           onRefresh: () async {
             await BlocProvider.of<MessagesCubit>(context).GetMessages(
-                chatEntity: widget.chatEntity, userRole: widget.userRole);
+                request_sender_id: widget.uid,
+                chatEntity: widget.chatEntity,
+                userRole: widget.userRole);
           },
           child: BlocConsumer<MessagesCubit, MessagesState>(
             listener: (context, state) {
@@ -87,10 +91,12 @@ class _MessagesScreenState extends State<MessagesScreen> {
                               onPressed: () {
                                 BlocProvider.of<MessagesCubit>(context)
                                     .SendMessages(
+                                        request_sender_id: widget.uid,
                                         chatEntity: widget.chatEntity,
                                         userRole: widget.userRole,
                                         clientid: widget.chatEntity.user1id,
                                         messageEntity: MessageEntity(
+                                            seen: false,
                                             message: message_controller.text,
                                             timestamp: Timestamp.now(),
                                             senderid: widget.uid),

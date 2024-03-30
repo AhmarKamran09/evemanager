@@ -131,9 +131,14 @@ abstract class FirebaseDatasource {
 
   // Messages
   Future<void> SendMessage(
-      {required MessageEntity messageEntity,required String clientid,
+      {required MessageEntity messageEntity,
+      required String clientid,
       required ServiceEntity serviceEntity});
-  Stream<List<MessageEntity>> GetMessages({required ChatEntity chatEntity,required UserRole userRole});
+  Stream<List<MessageEntity>> GetMessages({
+    required ChatEntity chatEntity,
+    required UserRole userRole,
+    required String request_sender_id,
+  });
 
   Stream<List<ChatEntity>> GetChatsForClient(String userid);
   Stream<List<ChatEntity>> GetChatsForAdmin(String userid);

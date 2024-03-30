@@ -17,12 +17,17 @@ class MessagesCubit extends Cubit<MessagesState> {
   final SendMessageUsecase sendMessageUsecase;
   final GetMessagesUsecase getMessagesUsecase;
 
-  Future<void> GetMessages(
-      {required ChatEntity chatEntity, required UserRole userRole}) async {
+  Future<void> GetMessages({
+    required ChatEntity chatEntity,
+    required UserRole userRole,
+    required String request_sender_id,
+  }) async {
     try {
       emit(MessagesLoading());
       final streamResponse = await getMessagesUsecase.call(
-          chatEntity: chatEntity, userRole: userRole);
+          request_sender_id: request_sender_id,
+          chatEntity: chatEntity,
+          userRole: userRole);
       streamResponse.listen((messageEntity) {
         emit(MessagesSuccess(messageEntity: messageEntity));
       });
@@ -38,6 +43,7 @@ class MessagesCubit extends Cubit<MessagesState> {
       required UserRole userRole,
       required ChatEntity chatEntity,
       required String clientid,
+      required String request_sender_id,
       required ServiceEntity serviceEntity}) async {
     try {
       emit(MessagesLoading());
@@ -48,10 +54,15 @@ class MessagesCubit extends Cubit<MessagesState> {
       // streamResponse.listen(( chatEntity) {
       //   emit(ChatSuccess(chatEntity: chatEntity));
       // });
-      await GetMessages(chatEntity: chatEntity, userRole: userRole);
 
+      await GetMessages(
+          chatEntity: chatEntity,
+          userRole: userRole,
+          request_sender_id: request_sender_id);
       // emit(MessagesSuccess());
     } catch (e) {
+      print(e);
+
       emit(MessagesFailure());
     }
   }

@@ -373,8 +373,10 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   }
 
   @override
-  Stream<List<MessageEntity>> GetMessages({required ChatEntity chatEntity,required UserRole userRole}) {
-    return firebaseDatasource.GetMessages(chatEntity:chatEntity,userRole: userRole);
+  Stream<List<MessageEntity>> GetMessages({required ChatEntity chatEntity,required UserRole userRole,
+    required String request_sender_id,
+ }) {
+    return firebaseDatasource.GetMessages(chatEntity:chatEntity,userRole: userRole,request_sender_id: request_sender_id);
   }
 
   @override

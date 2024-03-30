@@ -131,7 +131,9 @@ abstract class FirebaseRepository {
       required String clientid,
       required ServiceEntity serviceEntity});
   Stream<List<MessageEntity>> GetMessages(
-      {required ChatEntity chatEntity, required UserRole userRole});
+      {required ChatEntity chatEntity, required UserRole userRole,
+    required String request_sender_id,
+ });
   Stream<List<ChatEntity>> GetChatsForClient(String userid);
   Stream<List<ChatEntity>> GetChatsForAdmin(String userid);
 }

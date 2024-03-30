@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ChatScreenAdmin extends StatelessWidget {
   const ChatScreenAdmin({super.key, required this.uid});
   final String uid;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +54,13 @@ class ChatScreenAdmin extends StatelessWidget {
                               child: ListTile(
                                 title: Text(
                                   state.chatEntity[index].servicename,
+                                ),
+                                subtitle: Text(
+                                  state.chatEntity[index]
+                                              .unseenMessagesByAdmin !=
+                                          0
+                                      ? 'unread'
+                                      : 'allread',
                                 ),
                               ),
                             );

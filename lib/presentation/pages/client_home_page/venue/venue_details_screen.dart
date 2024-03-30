@@ -111,10 +111,18 @@ class _VenueDetailsScreenState extends State<VenueDetailsScreen> {
                               // ),
                               IconButton(
                                   onPressed: () {
+                                    // print('object');
                                     BlocProvider.of<MessagesCubit>(context)
                                         .SendMessages(
+                                      request_sender_id: widget.userid,
                                       userRole: UserRole.client,
                                       chatEntity: ChatEntity(
+                                          unseenMessagesByAdmin: 1,
+                                          unseenMessagesByClient: 0,
+                                          lastseentimestampbyadmin:
+                                              Timestamp.now(),
+                                          lastseentimestampbyclient:
+                                              Timestamp(0, 0),
                                           servicename: widget.venueEntity.name!,
                                           user1id: widget.userid,
                                           user2id_serviceowner:
@@ -122,6 +130,7 @@ class _VenueDetailsScreenState extends State<VenueDetailsScreen> {
                                           serviceid: widget.venueEntity.id!),
                                       clientid: widget.userid,
                                       messageEntity: MessageEntity(
+                                          seen: false,
                                           message: message_controller.text,
                                           timestamp: Timestamp.now(),
                                           senderid: widget.userid),

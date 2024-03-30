@@ -9,8 +9,10 @@ class GetMessagesUsecase {
   GetMessagesUsecase({required this.firebaseRepository});
 
   Stream<List<MessageEntity>> call(
-      {required ChatEntity chatEntity, required UserRole userRole}) {
-    return firebaseRepository.GetMessages(
+      {required ChatEntity chatEntity, required UserRole userRole,
+    required String request_sender_id,
+ }) {
+    return firebaseRepository.GetMessages(request_sender_id: request_sender_id,
         chatEntity: chatEntity, userRole: userRole);
   }
 }
