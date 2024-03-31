@@ -119,10 +119,6 @@ class _VenueDetailsScreenState extends State<VenueDetailsScreen> {
                                       chatEntity: ChatEntity(
                                           unseenMessagesByAdmin: 1,
                                           unseenMessagesByClient: 0,
-                                          lastseentimestampbyadmin:
-                                              Timestamp.now(),
-                                          lastseentimestampbyclient:
-                                              Timestamp(0, 0),
                                           servicename: widget.venueEntity.name!,
                                           user1id: widget.userid,
                                           user2id_serviceowner:
