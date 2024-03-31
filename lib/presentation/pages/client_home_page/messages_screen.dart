@@ -43,6 +43,16 @@ class _MessagesScreenState extends State<MessagesScreen> {
       appBar: AppBar(
         title: Text('Messages'),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          onPressed: () async {
+            await BlocProvider.of<MessagesCubit>(context).GetMessages(
+                request_sender_id: widget.uid,
+                chatEntity: widget.chatEntity,
+                userRole: widget.userRole);
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: RefreshIndicator(
           onRefresh: () async {
