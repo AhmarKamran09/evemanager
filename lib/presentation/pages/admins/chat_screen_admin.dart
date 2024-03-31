@@ -55,13 +55,11 @@ class ChatScreenAdmin extends StatelessWidget {
                                 title: Text(
                                   state.chatEntity[index].servicename,
                                 ),
-                                subtitle: Text(
-                                  state.chatEntity[index]
-                                              .unseenMessagesByAdmin !=
-                                          0
-                                      ? 'unread'
-                                      : 'allread',
-                                ),
+                                subtitle: Text(state.chatEntity[index]
+                                            .unseenMessagesByAdmin ==
+                                        0
+                                    ? 'all seen'
+                                    : 'unseen'),
                               ),
                             );
                           });

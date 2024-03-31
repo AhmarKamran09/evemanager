@@ -1840,7 +1840,19 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         chatEntity.user2id_serviceowner,
         chatEntity.serviceid,
       );
-      int unseenclient = 0, unseenadmin = 0;
+      if (request_sender_id == chatEntity.user1id) {
+        // chatEntity.unseenMessagesByAdmin;
+        firebaseFirestore
+            .collection(FirebaseCollectionConst.chats)
+            .doc(chatid)
+            .update({'unseenMessagesByClient': 0});
+      } else if (request_sender_id == chatEntity.user2id_serviceowner) {
+        firebaseFirestore
+            .collection(FirebaseCollectionConst.chats)
+            .doc(chatid)
+            .update({'unseenMessagesByAdmin': 0});
+      }
+
       firebaseFirestore
           .collection(FirebaseCollectionConst.chats)
           .doc(chatid)
@@ -1850,86 +1862,17 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .listen((snapshot) {
         List<MessageEntity> messages = [];
         for (var doc in snapshot.docs) {
-          Timestamp docTimestamp = doc['timestamp'];
           MessageEntity singlemessage;
-          if (doc['senderid'] == chatEntity.user2id_serviceowner) {
-            // all admin  sent messages
-            if (docTimestamp.compareTo(chatEntity.lastseentimestampbyclient) ==
-                1) {
-              // if (doc['timestamp'] > chatEntity.lastseentimestampbyclient) {
-              if (doc['senderid'] != request_sender_id) {
-                doc.reference.update({'seen': true});
-                // do reading true of these messages.
-                String chatid = chatRoomId(
-                  chatEntity.user1id,
-                  chatEntity.user2id_serviceowner,
-                  chatEntity.serviceid,
-                );
-                firebaseFirestore
-                    .collection(FirebaseCollectionConst.chats)
-                    .doc(chatid)
-                    .update({'lastseentimestampbyclient': doc['timestamp']});
-              }
-              // else {
-              //   unseenclient++;
-              // }
-            }
-          } else if (doc['senderid'] == chatEntity.user1id) {
-            // all client  sent messages
-            if (docTimestamp.compareTo(chatEntity.lastseentimestampbyadmin) ==
-                1) {
-              // if (docTimestamp.nanoseconds >
-              //     chatEntity.lastseentimestampbyadmin.nanoseconds) {
-
-              // if (doc['timestamp'] > chatEntity.lastseentimestampbyadmin) {
-              if (doc['senderid'] != request_sender_id) {
-                doc.reference.update({'seen': true});
-                // do reading true of these messages.
-                String chatid = chatRoomId(
-                  chatEntity.user1id,
-                  chatEntity.user2id_serviceowner,
-                  chatEntity.serviceid,
-                );
-
-                firebaseFirestore
-                    .collection(FirebaseCollectionConst.chats)
-                    .doc(chatid)
-                    .update({'lastseentimestampbyadmin': doc['timestamp']});
-              }
-              //  else {
-              //   unseenadmin++;
-              // }
-            }
-          }
           singlemessage = MessageModel.factory(doc);
-          if (doc['seen'] == false) {
-            if (doc['senderid'] == chatEntity.user2id_serviceowner &&
-                docTimestamp.compareTo(chatEntity.lastseentimestampbyclient) ==
-                    1) {
-              unseenclient++;
-            } else if (doc['senderid'] == chatEntity.user1id &&
-                docTimestamp.compareTo(chatEntity.lastseentimestampbyadmin) ==
-                    1) {
-              unseenadmin++;
-            }
-          }
           // separate logic for showing notification of each side
           messages.add(singlemessage);
         }
-      
+
         //Update the recent no if unseen messages
         _messageStreamControllerforclient.add(messages);
       }, onError: (error) {
         DisplayToast('Error in GetMessages: $error');
       });
-      firebaseFirestore
-          .collection(FirebaseCollectionConst.chats)
-          .doc(chatid)
-          .update({'unseenMessagesByClient': unseenclient});
-      firebaseFirestore
-          .collection(FirebaseCollectionConst.chats)
-          .doc(chatid)
-          .update({'unseenMessagesByAdmin': unseenadmin});
 
       return _messageStreamControllerforclient.stream.asBroadcastStream();
     } catch (error) {
@@ -1955,7 +1898,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         serviceEntity.owner_id!,
         serviceEntity.id!,
       );
-
       // Get a reference to the chat document
       DocumentReference chatDocRef = firebaseFirestore
           .collection(FirebaseCollectionConst.chats)
@@ -1966,13 +1908,27 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         await chatDocRef.set(ChatModel(
           unseenMessagesByAdmin: 1,
           unseenMessagesByClient: 0,
-          lastseentimestampbyadmin: Timestamp(0, 0),
-          lastseentimestampbyclient: Timestamp.now(),
           servicename: serviceEntity.name!,
           user1id: clientid,
           user2id_serviceowner: serviceEntity.owner_id!,
           serviceid: serviceEntity.id!,
         ).toJson());
+      } else {
+        if (messageEntity.senderid == clientid) {
+          firebaseFirestore
+              .collection(FirebaseCollectionConst.chats)
+              .doc(chatid)
+              .update({'unseenMessagesByAdmin': 1});
+        } else {
+          firebaseFirestore
+              .collection(FirebaseCollectionConst.chats)
+              .doc(chatid)
+              .update({'unseenMessagesByClient': 1});
+          //  firebaseFirestore
+          // .collection(FirebaseCollectionConst.chats)
+          // .doc(chatid)
+          // .update({'unseenMessagesByAdmin': 0});
+        }
       }
 
       // Add the message to the messages subcollection
