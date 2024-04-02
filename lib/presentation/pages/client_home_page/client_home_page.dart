@@ -92,7 +92,7 @@ class _ClientHomePageState extends State<ClientHomePage> {
         ],
         unselectedItemColor: Colors.grey,
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: lightBlue,
         onTap: _onItemTapped,
       ),
     );

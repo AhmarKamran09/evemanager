@@ -16,7 +16,6 @@ class CateringAdminHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: lightBlue.withOpacity(0.5),
         centerTitle: true,
         title: Text(
           'EVE MANAGER',

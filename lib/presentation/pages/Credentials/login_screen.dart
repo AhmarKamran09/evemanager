@@ -40,7 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: lightBlue.withOpacity(0.5),
           title: const Center(child: Text('LoginScreen')),
         ),
         body: ListView(
@@ -73,7 +72,6 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               width: 100,
               decoration: BoxDecoration(
-                color: lightBlue.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: TextButton(

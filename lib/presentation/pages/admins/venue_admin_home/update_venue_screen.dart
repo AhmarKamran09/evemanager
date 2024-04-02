@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:evemanager/constants.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,7 +25,7 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
     'Parking',
     'Catering',
     'AC',
-    'Projector',
+    'Projector Lights',
     'Stage',
     // Add more facilities as needed
   ];
@@ -35,7 +34,6 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: lightBlue.withOpacity(0.5),
         centerTitle: true,
         title: Text('Update Venue'),
       ),
@@ -80,7 +78,6 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 26, // Set the font size
-                color: Colors.black87, // Set the text color
               ),
             ),
             TextFormField(

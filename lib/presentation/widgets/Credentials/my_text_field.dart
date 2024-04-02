@@ -39,7 +39,7 @@ class _MyTextFieldState extends State<MyTextField> {
           ),
           focusedBorder: OutlineInputBorder(
             
-            borderSide: BorderSide(color: Colors.blueGrey, width: 2.0),
+            // borderSide: BorderSide(color: Colors.blueGrey, width: 2.0),
             borderRadius: BorderRadius.circular(10.0),
           ),
           contentPadding:

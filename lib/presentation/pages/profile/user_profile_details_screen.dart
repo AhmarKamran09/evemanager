@@ -56,7 +56,6 @@ class _UserProfileDetailsScreenState extends State<UserProfileDetailsScreen> {
   Scaffold _body(bool readonly, BuildContext context, String? uidvalue) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: lightBlue.withOpacity(0.5),
         centerTitle: true,
         title: Text("Profile Details"),
       ),
@@ -97,7 +96,6 @@ class _UserProfileDetailsScreenState extends State<UserProfileDetailsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  color: lightBlue.withOpacity(0.5),
                   child: TextButton(
                       onPressed: () async {
                         await _update(context, uidvalue);
@@ -105,7 +103,6 @@ class _UserProfileDetailsScreenState extends State<UserProfileDetailsScreen> {
                       child: Text("UPDATE")),
                 ),
                 Container(
-                    color: lightBlue.withOpacity(0.5),
                     child: TextButton(
                         onPressed: () async {
                           await deleteaccount(context, uidvalue);

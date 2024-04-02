@@ -11,7 +11,6 @@ class ProfileMenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: lightBlue.withOpacity(0.5),
         centerTitle: true,
         title: Text("My Profile"),
       ),
@@ -19,20 +18,7 @@ class ProfileMenuPage extends StatelessWidget {
         child: Column(
           // padding: EdgeInsets.zero,
           children: [
-            // ListTile(
-            //   iconColor: lightBlue,
-            //   splashColor: lightBlue.withOpacity(0.2),
-            //   leading: Icon(Icons.home),
-            //   title: Text("Home"),
-            //   onTap: () {
-            //     Navigator.pop(context);
-            //     Navigator.pushNamed(context, PageNames.HomeScreen,
-            //         arguments: uid);
-            //   },
-            // ),
             ListTile(
-              iconColor: lightBlue,
-              splashColor: lightBlue.withOpacity(0.2),
               leading: Icon(Icons.person),
               title: Text("My Profile"),
               onTap: () {
@@ -41,8 +27,6 @@ class ProfileMenuPage extends StatelessWidget {
               },
             ),
             ListTile(
-              iconColor: lightBlue,
-              splashColor: lightBlue.withOpacity(0.2),
               leading: Icon(Icons.payment),
               title: Text("Add Payment Method"),
               onTap: () async {
@@ -51,8 +35,6 @@ class ProfileMenuPage extends StatelessWidget {
               },
             ),
             ListTile(
-              iconColor: lightBlue,
-              splashColor: lightBlue.withOpacity(0.2),
               leading: Icon(Icons.logout),
               title: Text("Logout"),
               onTap: () async {

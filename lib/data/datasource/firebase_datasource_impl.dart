@@ -1841,7 +1841,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         chatEntity.serviceid,
       );
       if (request_sender_id == chatEntity.user1id) {
-        // chatEntity.unseenMessagesByAdmin;
         firebaseFirestore
             .collection(FirebaseCollectionConst.chats)
             .doc(chatid)
@@ -1924,10 +1923,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
               .collection(FirebaseCollectionConst.chats)
               .doc(chatid)
               .update({'unseenMessagesByClient': 1});
-          //  firebaseFirestore
-          // .collection(FirebaseCollectionConst.chats)
-          // .doc(chatid)
-          // .update({'unseenMessagesByAdmin': 0});
         }
       }
 

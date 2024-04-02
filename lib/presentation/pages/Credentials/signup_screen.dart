@@ -41,7 +41,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: lightBlue.withOpacity(0.5),
           title: Center(child: Text('SignUp Screen')),
         ),
         body: ListView(
@@ -69,7 +68,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Container(
               width: 100,
               decoration: BoxDecoration(
-                color: lightBlue.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: TextButton(
