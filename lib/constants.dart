@@ -20,18 +20,6 @@ class PageNames {
   static const String CateringListScreen = "CateringListScreen";
   static const String AddCateringScreen = "AddCateringScreen";
   static const String UpdateCateringScreen = "UpdateCateringScreen";
-  static const String AddBridalMakeupAndHairScreen =
-      "AddBridalMakeupAndHairScreen";
-  static const String UpdateBridalMakeupAndHairScreen =
-      "UpdateBridalMakeupAndHairScreen";
-  static const String BridalMakeupAndHairDetailsScreen =
-      "BridalMakeupAndHairDetailsScreen";
-  static const String BridalMakeupAndHairListScreen =
-      "BridalMakeupAndHairListScreen";
-  static const String AddClothingScreen = "AddClothingScreen";
-  static const String UpdateClothingScreen = "UpdateClothingScreen";
-  static const String ClothngDetailsScreen = "ClothngDetailsScreen";
-  static const String ClothngListScreen = "ClothngListScreen";
   static const String AddDecorationScreen = "AddDecorationScreen";
   static const String UpdateDecorationScreen = "UpdateDecorationScreen";
   static const String DecorationDetailsScreen = "DecorationDetailsScreen";
@@ -40,12 +28,6 @@ class PageNames {
   static const String UpdateEntertainmentScreen = "UpdateEntertainmentScreen";
   static const String EntertainmentDetailsScreen = "EntertainmentDetailsScreen";
   static const String EntertainmentListScreen = "EntertainmentListScreen";
-  static const String AddInvitationDesignScreen = "AddInvitationDesignScreen";
-  static const String UpdateInvitationDesignScreen =
-      "UpdateInvitationDesignScreen";
-  static const String InvitationDesignDetailsScreen =
-      "InvitationDesignDetailsScreen";
-  static const String InvitationDesignListScreen = "InvitationDesignListScreen";
   static const String AddPhotographyScreen = "AddPhotographyScreen";
   static const String UpdatePhotographyScreen = "UpdatePhotographyScreen";
   static const String PhotographyDetailsScreen = "PhotographyDetailsScreen";
@@ -54,11 +36,6 @@ class PageNames {
   static const String UpdateSweetsScreen = "UpdateSweetsScreen";
   static const String SweetsDetailsScreen = "SweetsDetailsScreen";
   static const String SweetsListScreen = "SweetsListScreen";
-  static const String AddTransportationScreen = "AddTransportationScreen";
-  static const String UpdateTransportationScreen = "UpdateTransportationScreen";
-  static const String TransportationDetailsScreen =
-      "TransportationDetailsScreen";
-  static const String TransportationListScreen = "TransportationListScreen";
   static const String AddVideographyScreen = "AddVideographyScreen";
   static const String UpdateVideographyScreen = "UpdateVideographyScreen";
   static const String VideographyDetailsScreen = "VideographyDetailsScreen";
@@ -84,14 +61,10 @@ class FirebaseCollectionConst {
   static const String user = "user";
   static const String catering = "catering";
   static const String venues = "venues";
-  static const String bridalMakeupAndHair = "bridalMakeupAndHair";
-  static const String clothing = "clothing";
   static const String decorations = "decorations";
   static const String entertainment = "entertainment";
-  static const String invitation_design = "invitation_design";
   static const String photography = "photography";
   static const String sweets = "sweets";
-  static const String transportation = "transportation";
   static const String videography = "videography";
   static const String chats = "chat";
   static const String messages = "messages";

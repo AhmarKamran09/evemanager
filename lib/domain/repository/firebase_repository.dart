@@ -1,19 +1,15 @@
 import 'dart:io';
 
 import 'package:evemanager/constants.dart';
-import 'package:evemanager/domain/entities/bridal_makeup_&_hair/bridal_makeup_&_hair_entity.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
-import 'package:evemanager/domain/entities/clothing/clothing_entity.dart';
 import 'package:evemanager/domain/entities/decorations/decorations_entity.dart';
 import 'package:evemanager/domain/entities/entertainment/entertainment_entity.dart';
-import 'package:evemanager/domain/entities/invitation_design/invitation_design_entity.dart';
 import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
 import 'package:evemanager/domain/entities/planned_events/planned_events_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
-import 'package:evemanager/domain/entities/transportation/transportation_entity.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/domain/entities/user/user_entity.dart';
 import 'package:evemanager/domain/entities/videography/videography_entity.dart';
@@ -50,23 +46,6 @@ abstract class FirebaseRepository {
   Stream<List<CateringEntity>> GetCateringServiceforClient();
   Stream<List<CateringEntity>> GetCateringServiceforOwner(String ownerid);
 
-// BridalMakeupAndHair
-  Future<void> AddBridalMakeupAndHair(
-      BridalMakeupAndHairEntity bridalMakeupAndHairEntity);
-  Future<void> DeleteBridalMakeupAndHair(String id);
-  Stream<List<BridalMakeupAndHairEntity>> GetBridalMakeupAndHairforClient();
-  Stream<List<BridalMakeupAndHairEntity>> GetBridalMakeupAndHairforOwner(
-      String ownerid);
-  Future<void> UpdateBridalMakeupAndHair(
-      BridalMakeupAndHairEntity bridalMakeupAndHairEntity);
-
-// clothing
-  Future<void> AddClothing(ClothingEntity clothingEntity);
-  Future<void> DeleteClothing(String id);
-  Stream<List<ClothingEntity>> GetClothingforClient();
-  Stream<List<ClothingEntity>> GetClothingforOwner(String ownerid);
-  Future<void> UpdateClothing(ClothingEntity clothingEntity);
-
 // Decorations
   Future<void> AddDecorations(DecorationsEntity decorationsEntity);
   Future<void> DeleteDecorations(String id);
@@ -80,16 +59,6 @@ abstract class FirebaseRepository {
   Stream<List<EntertainmentEntity>> GetEntertainmentforClient();
   Stream<List<EntertainmentEntity>> GetEntertainmentforOwner(String ownerid);
   Future<void> UpdateEntertainment(EntertainmentEntity entertainmentEntity);
-
-// InvitationDesign
-  Future<void> AddInvitationDesign(
-      InvitationDesignEntity invitationDesignEntity);
-  Future<void> DeleteInvitationDesign(String id);
-  Stream<List<InvitationDesignEntity>> GetInvitationDesignforClient();
-  Stream<List<InvitationDesignEntity>> GetInvitationDesignforOwner(
-      String ownerid);
-  Future<void> UpdateInvitationDesign(
-      InvitationDesignEntity invitationDesignEntity);
 
 // Photography
   Future<void> AddPhotography(PhotographyEntity photographyEntity);
@@ -105,12 +74,6 @@ abstract class FirebaseRepository {
   Stream<List<SweetEntity>> GetSweetsforOwner(String ownerid);
   Future<void> UpdateSweets(SweetEntity sweetEntity);
 
-// Transportation
-  Future<void> AddTransportation(TransportationEntity transportationEntity);
-  Future<void> DeleteTransportation(String id);
-  Stream<List<TransportationEntity>> GetTransportationforClient();
-  Stream<List<TransportationEntity>> GetTransportationforOwner(String ownerid);
-  Future<void> UpdateTransportation(TransportationEntity transportationEntity);
 
 // Videography
   Future<void> AddVideography(VideographyEntity videographyEntity);

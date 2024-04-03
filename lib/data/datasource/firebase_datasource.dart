@@ -1,19 +1,14 @@
 import 'dart:io';
-
 import 'package:evemanager/constants.dart';
-import 'package:evemanager/domain/entities/bridal_makeup_&_hair/bridal_makeup_&_hair_entity.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
-import 'package:evemanager/domain/entities/clothing/clothing_entity.dart';
 import 'package:evemanager/domain/entities/decorations/decorations_entity.dart';
 import 'package:evemanager/domain/entities/entertainment/entertainment_entity.dart';
-import 'package:evemanager/domain/entities/invitation_design/invitation_design_entity.dart';
 import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
 import 'package:evemanager/domain/entities/planned_events/planned_events_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
-import 'package:evemanager/domain/entities/transportation/transportation_entity.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/domain/entities/user/user_entity.dart';
 import 'package:evemanager/domain/entities/videography/videography_entity.dart';
@@ -54,23 +49,6 @@ abstract class FirebaseDatasource {
   Stream<List<CateringEntity>> GetCateringServiceforClient();
   Stream<List<CateringEntity>> GetCateringServiceforOwner(String ownerid);
 
-// Bridal Makeup and hair
-  Future<void> AddBridalMakeupAndHair(
-      BridalMakeupAndHairEntity bridalMakeupAndHairEntity);
-  Future<void> DeleteBridalMakeupAndHair(String id);
-  Stream<List<BridalMakeupAndHairEntity>> GetBridalMakeupAndHairforClient();
-  Stream<List<BridalMakeupAndHairEntity>> GetBridalMakeupAndHairforOwner(
-      String ownerid);
-  Future<void> UpdateBridalMakeupAndHair(
-      BridalMakeupAndHairEntity bridalMakeupAndHairEntity);
-
-// Clothing
-  Future<void> AddClothing(ClothingEntity clothingEntity);
-  Future<void> DeleteClothing(String id);
-  Future<void> UpdateClothing(ClothingEntity clothingEntity);
-  Stream<List<ClothingEntity>> GetClothingforClient();
-  Stream<List<ClothingEntity>> GetClothingforOwner(String ownerid);
-
 // Decorations
   Future<void> AddDecorations(DecorationsEntity decorationsEntity);
   Future<void> DeleteDecorations(String id);
@@ -85,16 +63,6 @@ abstract class FirebaseDatasource {
   Stream<List<EntertainmentEntity>> GetEntertainmentforClient();
   Stream<List<EntertainmentEntity>> GetEntertainmentforOwner(String ownerid);
 
-  // InvitationDesign
-  Future<void> AddInvitationDesign(
-      InvitationDesignEntity invitationDesignEntity);
-  Future<void> DeleteInvitationDesign(String id);
-  Future<void> UpdateInvitationDesign(
-      InvitationDesignEntity invitationDesignEntity);
-  Stream<List<InvitationDesignEntity>> GetInvitationDesignforClient();
-  Stream<List<InvitationDesignEntity>> GetInvitationDesignforOwner(
-      String ownerid);
-
 // Photography
   Future<void> AddPhotography(PhotographyEntity photographyEntity);
   Future<void> DeletePhotography(String id);
@@ -108,13 +76,6 @@ abstract class FirebaseDatasource {
   Future<void> UpdateSweets(SweetEntity sweetEntity);
   Stream<List<SweetEntity>> GetSweetsforClient();
   Stream<List<SweetEntity>> GetSweetsforOwner(String ownerid);
-
-// Transportation
-  Future<void> AddTransportation(TransportationEntity transportationEntity);
-  Future<void> DeleteTransportation(String id);
-  Future<void> UpdateTransportation(TransportationEntity transportationEntity);
-  Stream<List<TransportationEntity>> GetTransportationforClient();
-  Stream<List<TransportationEntity>> GetTransportationforOwner(String ownerid);
 
 // Videography
   Future<void> AddVideography(VideographyEntity videographyEntity);

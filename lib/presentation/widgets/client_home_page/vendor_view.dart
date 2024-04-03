@@ -11,10 +11,6 @@ class VendorView extends StatelessWidget {
     'Venue Booking',
     'Catering',
     'Sweets',
-    'Bridal Makeup & Hair',
-    'Transportation',
-    'Invitation Design',
-    'Clothing',
     'Decorations',
     'Photography',
     'Videography',
@@ -47,37 +43,18 @@ class VendorView extends StatelessWidget {
 
                   break;
                 case 3:
-                  Navigator.pushNamed(
-                      context, PageNames.BridalMakeupAndHairListScreen);
-
-                  break;
-                case 4:
-                  Navigator.pushNamed(
-                      context, PageNames.TransportationListScreen);
-
-                  break;
-                case 5:
-                  Navigator.pushNamed(
-                      context, PageNames.InvitationDesignListScreen);
-
-                  break;
-                case 6:
-                  Navigator.pushNamed(context, PageNames.ClothngListScreen);
-
-                  break;
-                case 7:
                   Navigator.pushNamed(context, PageNames.DecorationListScreen);
 
                   break;
-                case 8:
+                case 4:
                   Navigator.pushNamed(context, PageNames.PhotographyListScreen);
 
                   break;
-                case 9:
+                case 5:
                   Navigator.pushNamed(context, PageNames.VideographyListScreen);
 
                   break;
-                case 10:
+                case 6:
                   Navigator.pushNamed(
                       context, PageNames.EntertainmentListScreen);
 

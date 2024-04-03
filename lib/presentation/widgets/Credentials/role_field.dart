@@ -13,15 +13,11 @@ class _RoleFieldState extends State<RoleField> {
     {"title": "Client", "value": "1"},
     {"title": "Decoration", "value": "2"},
     {"title": "Venue", "value": "3"},
-    {"title": "Transportation", "value": "4"},
-    {"title": "Catering", "value": "5"},
-    {"title": "Photography", "value": "6"},
-    {"title": "Entertainment (Music and Speakers)", "value": "7"},
-    {"title": "Bridal Makeup & Hair", "value": "8"},
-    {"title": "Invitation Design", "value": "9"},
-    {"title": "Clothing", "value": "10"},
-    {"title": "Sweets", "value": "11"},
-    {"title": "Videography", "value": "12"},
+    {"title": "Catering", "value": "4"},
+    {"title": "Photography", "value": "5"},
+    {"title": "Entertainment (Music and Speakers)", "value": "6"},
+    {"title": "Sweets", "value": "7"},
+    {"title": "Videography", "value": "8"},
   ];
 
   String? selectedrole = "";

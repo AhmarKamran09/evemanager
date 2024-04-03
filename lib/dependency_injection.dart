@@ -11,21 +11,11 @@ import 'package:evemanager/domain/usecases/User/sign_in_usecase.dart';
 import 'package:evemanager/domain/usecases/User/sign_out_usecase.dart';
 import 'package:evemanager/domain/usecases/User/sign_up_usecase.dart';
 import 'package:evemanager/domain/usecases/User/update_user-usecase.dart';
-import 'package:evemanager/domain/usecases/bridal_makeup_&_hair/add_bridal_makeup_&_hair_usecase.dart';
-import 'package:evemanager/domain/usecases/bridal_makeup_&_hair/delete_bridal_makeup_&_hair_usecase.dart';
-import 'package:evemanager/domain/usecases/bridal_makeup_&_hair/get_bridal_makeup_&_hair_for_client_usecase.dart';
-import 'package:evemanager/domain/usecases/bridal_makeup_&_hair/get_bridal_makeup_&_hair_for_owner_usecase.dart';
-import 'package:evemanager/domain/usecases/bridal_makeup_&_hair/update_bridal_makeup_&_hair_usecase.dart';
 import 'package:evemanager/domain/usecases/catering/add_catering_service_usecase.dart';
 import 'package:evemanager/domain/usecases/catering/delete_catering_service_usecase.dart';
 import 'package:evemanager/domain/usecases/catering/get_catering_service_for_client_usecase.dart';
 import 'package:evemanager/domain/usecases/catering/get_catering_service_for_owner_usecase.dart';
 import 'package:evemanager/domain/usecases/catering/update_catering_service_usecase.dart';
-import 'package:evemanager/domain/usecases/clothing/add_clothing_usecase.dart';
-import 'package:evemanager/domain/usecases/clothing/delete_clothing_usecase.dart';
-import 'package:evemanager/domain/usecases/clothing/get_clothing_for_client_usecase.dart';
-import 'package:evemanager/domain/usecases/clothing/get_clothing_for_owner_usecase.dart';
-import 'package:evemanager/domain/usecases/clothing/update_clothing_usecase.dart';
 import 'package:evemanager/domain/usecases/decorations/add_decorations_usecase.dart';
 import 'package:evemanager/domain/usecases/decorations/delete_decorations_usecase.dart';
 import 'package:evemanager/domain/usecases/decorations/get_decorations_for_client_usecase.dart';
@@ -36,11 +26,6 @@ import 'package:evemanager/domain/usecases/entertainment/delete_entertainment_us
 import 'package:evemanager/domain/usecases/entertainment/get_entertainment_for_client_usecase.dart';
 import 'package:evemanager/domain/usecases/entertainment/get_entertainment_for_owner_usecase.dart';
 import 'package:evemanager/domain/usecases/entertainment/update_entertainment_usecase.dart';
-import 'package:evemanager/domain/usecases/invitation_design/add_invitation_design_usecase.dart';
-import 'package:evemanager/domain/usecases/invitation_design/delete_invitation_design_usecase.dart';
-import 'package:evemanager/domain/usecases/invitation_design/get_invitation_design_for_client_usecase.dart';
-import 'package:evemanager/domain/usecases/invitation_design/get_invitation_design_for_owner_usecase.dart';
-import 'package:evemanager/domain/usecases/invitation_design/update_invitation_design_usecase.dart';
 import 'package:evemanager/domain/usecases/message/get_chats_for_admin_usecase.dart';
 import 'package:evemanager/domain/usecases/message/get_chats_for_client_usecase.dart';
 import 'package:evemanager/domain/usecases/message/get_messages_usecase.dart';
@@ -55,11 +40,6 @@ import 'package:evemanager/domain/usecases/sweets/delete_sweets_usecase.dart';
 import 'package:evemanager/domain/usecases/sweets/get_sweets_for_client_usecase.dart';
 import 'package:evemanager/domain/usecases/sweets/get_sweets_for_owner_usecase.dart';
 import 'package:evemanager/domain/usecases/sweets/update_sweets_usecase.dart';
-import 'package:evemanager/domain/usecases/transportation/add_transportation_usecase.dart';
-import 'package:evemanager/domain/usecases/transportation/delete_transportation_usecase.dart';
-import 'package:evemanager/domain/usecases/transportation/get_transportation_for_client_usecase.dart';
-import 'package:evemanager/domain/usecases/transportation/get_transportation_for_owner_usecase.dart';
-import 'package:evemanager/domain/usecases/transportation/update_transportation_usecase.dart';
 import 'package:evemanager/domain/usecases/venues/add_venue_usecase.dart';
 import 'package:evemanager/domain/usecases/venues/delete_venue_usecase.dart';
 import 'package:evemanager/domain/usecases/venues/edit_availability_of_venue_usecase.dart';
@@ -73,18 +53,14 @@ import 'package:evemanager/domain/usecases/videography/get_videography_for_clien
 import 'package:evemanager/domain/usecases/videography/get_videography_for_owner_usecase.dart';
 import 'package:evemanager/domain/usecases/videography/update_videography_usecase.dart';
 import 'package:evemanager/presentation/cubit/auth/auth_cubit.dart';
-import 'package:evemanager/presentation/cubit/bridal_makeup_and_hair/bridal_makeup_hair_cubit.dart';
 import 'package:evemanager/presentation/cubit/cateringservice/cateringservice_cubit.dart';
 import 'package:evemanager/presentation/cubit/chat/chat_cubit.dart';
-import 'package:evemanager/presentation/cubit/clothing/clothing_cubit.dart';
 import 'package:evemanager/presentation/cubit/credentials/credentials_cubit.dart';
 import 'package:evemanager/presentation/cubit/decoration/decoration_cubit.dart';
 import 'package:evemanager/presentation/cubit/entertainment/entertainment_cubit.dart';
-import 'package:evemanager/presentation/cubit/invitation_design/invitation_design_cubit.dart';
 import 'package:evemanager/presentation/cubit/messages/messages_cubit.dart';
 import 'package:evemanager/presentation/cubit/photography/photography_cubit.dart';
 import 'package:evemanager/presentation/cubit/sweets/sweets_cubit.dart';
-import 'package:evemanager/presentation/cubit/transportation/transportation_cubit.dart';
 import 'package:evemanager/presentation/cubit/venue/venue_cubit.dart';
 import 'package:evemanager/presentation/cubit/userprofile/user_profile_cubit.dart';
 import 'package:evemanager/presentation/cubit/videography/videography_cubit.dart';
@@ -126,21 +102,6 @@ Future<void> init() async {
         getCateringServiceForClientUsecase: sl.call(),
         getCateringServiceForOwnerUsecase: sl.call(),
       ));
-  sl.registerFactory(() => BridalMakeupHairCubit(
-        addBridalMakeupAndHairUsecase: sl.call(),
-        deleteBridalMakeupAndHairUsecase: sl.call(),
-        updateBridalMakeupAndHairUsecase: sl.call(),
-        getBridalMakeupAndHairForClientUsecase: sl.call(),
-        getBridalMakeupAndHairForOwnerUsecase: sl.call(),
-      ));
-
-  sl.registerFactory(() => ClothingCubit(
-        addClothingUsecase: sl.call(),
-        deleteClothingUsecase: sl.call(),
-        updateClothingUsecase: sl.call(),
-        getClothingForClientUsecase: sl.call(),
-        getClothingForOwnerUsecase: sl.call(),
-      ));
 
   sl.registerFactory(() => DecorationCubit(
         addDecorationsUsecase: sl.call(),
@@ -158,14 +119,6 @@ Future<void> init() async {
         getEntertainmentForOwnerUsecase: sl.call(),
       ));
 
-  sl.registerFactory(() => InvitationDesignCubit(
-        addInvitationDesignUsecase: sl.call(),
-        deleteInvitationDesignUsecase: sl.call(),
-        updateInvitationDesignUsecase: sl.call(),
-        getInvitationDesignForClientUsecase: sl.call(),
-        getInvitationDesignForOwnerUsecase: sl.call(),
-      ));
-
   sl.registerFactory(() => PhotographyCubit(
         addPhotographyUsecase: sl.call(),
         deletePhotographyUsecase: sl.call(),
@@ -180,14 +133,6 @@ Future<void> init() async {
         updateSweetsUsecase: sl.call(),
         getSweetsForClientUsecase: sl.call(),
         getSweetsForOwnerUsecase: sl.call(),
-      ));
-
-  sl.registerFactory(() => TransportationCubit(
-        addTransportationUsecase: sl.call(),
-        deleteTransportationUsecase: sl.call(),
-        updateTransportationUsecase: sl.call(),
-        getTransportationForClientUsecase: sl.call(),
-        getTransportationForOwnerUsecase: sl.call(),
       ));
 
   sl.registerFactory(() => VideographyCubit(
@@ -250,41 +195,6 @@ Future<void> init() async {
       () => GetCateringServiceForClientUsecase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(
       () => GetCateringServiceForOwnerUsecase(firebaseRepository: sl.call()));
-
-// Bridalmakeupandhair
-
-  sl.registerLazySingleton(
-    () => AddBridalMakeupAndHairUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => DeleteBridalMakeupAndHairUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => UpdateBridalMakeupAndHairUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => GetBridalMakeupAndHairForClientUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => GetBridalMakeupAndHairForOwnerUsecase(firebaseRepository: sl.call()),
-  );
-
-// Clothing
-  sl.registerLazySingleton(
-    () => AddClothingUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => DeleteClothingUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => UpdateClothingUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => GetClothingForClientUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => GetClothingForOwnerUsecase(firebaseRepository: sl.call()),
-  );
 // Decorations
 
   sl.registerLazySingleton(
@@ -320,23 +230,6 @@ Future<void> init() async {
     () => GetEntertainmentForOwnerUsecase(firebaseRepository: sl.call()),
   );
 
-// InvitationDesign
-  sl.registerLazySingleton(
-    () => AddInvitationDesignUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => DeleteInvitationDesignUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => UpdateInvitationDesignUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => GetInvitationDesignForClientUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => GetInvitationDesignForOwnerUsecase(firebaseRepository: sl.call()),
-  );
-
 // Photography
 
   sl.registerLazySingleton(
@@ -370,22 +263,6 @@ Future<void> init() async {
   );
   sl.registerLazySingleton(
     () => GetSweetsForOwnerUsecase(firebaseRepository: sl.call()),
-  );
-// Transportation
-  sl.registerLazySingleton(
-    () => AddTransportationUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => DeleteTransportationUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => UpdateTransportationUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => GetTransportationForClientUsecase(firebaseRepository: sl.call()),
-  );
-  sl.registerLazySingleton(
-    () => GetTransportationForOwnerUsecase(firebaseRepository: sl.call()),
   );
 // Videography
   sl.registerLazySingleton(
