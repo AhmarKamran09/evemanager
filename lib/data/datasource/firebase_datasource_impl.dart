@@ -6,6 +6,7 @@ import 'package:evemanager/data/models/entertainment_model/entertainment_model.d
 import 'package:evemanager/data/models/message_model/chat_model.dart';
 import 'package:evemanager/data/models/message_model/message_model.dart';
 import 'package:evemanager/data/models/photography_model/photography_model.dart';
+import 'package:evemanager/data/models/rating_model/rating_model.dart';
 import 'package:evemanager/data/models/sweets_model/sweets_model.dart';
 import 'package:evemanager/data/models/videography_model/videography_model.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
@@ -15,6 +16,7 @@ import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
 import 'package:evemanager/domain/entities/planned_events/planned_events_entity.dart';
+import 'package:evemanager/domain/entities/rating_entity/rating_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
 import 'package:evemanager/domain/entities/videography/videography_entity.dart';
@@ -1201,26 +1203,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
     }
   }
 
-// Planned Events
-
-  @override
-  Future<void> AddPlannedEvents(PlannedEventEntity plannedEventEntity) {
-    // TODO: implement AddPlannedEvents
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> DeletePlannedEvents(String id) {
-    // TODO: implement DeletePlannedEvents
-    throw UnimplementedError();
-  }
-
-  @override
-  Stream<List<PlannedEventEntity>> GetPlannedEvents(String userid) {
-    // TODO: implement GetPlannedEvents
-    throw UnimplementedError();
-  }
-
 // Chats
   @override
   Stream<List<ChatEntity>> GetChatsForClient(String userid) {
@@ -1379,5 +1361,69 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
     } catch (error) {
       print('Error sending message: $error');
     }
+  }
+
+// Rating
+  @override
+  Future<void> AddRating(RatingEntity ratingEntity) async {
+    try {
+      String autoId = FirebaseFirestore.instance
+          .collection(FirebaseCollectionConst.rating)
+          .doc()
+          .id;
+
+      await firebaseFirestore
+          .collection(FirebaseCollectionConst.rating)
+          .doc(autoId)
+          .set(RatingModel(
+            // Assuming VideographyModel is the corresponding model
+            // Adjust the fields accordingly
+            // type: videographyEntity.type,
+            // brand: videographyEntity.brand,
+            id: autoId,
+            // Add other fields as needed
+          ).toJson());
+    } catch (e) {
+      DisplayToast('error in add Rating  ${e.toString()}');
+    }
+  }
+
+  @override
+  Stream<List<RatingEntity>> GetRating(String serviceId) {
+    return firebaseFirestore
+        .collection(FirebaseCollectionConst.rating)
+        .where('serviceId', isEqualTo: serviceId)
+        .snapshots()
+        .asyncMap((querySnapshot) async {
+      List<RatingEntity> rating_entity = [];
+      for (var document in querySnapshot.docs) {
+        RatingEntity rating = RatingModel.factory(document);
+
+        rating_entity.add(rating);
+      }
+      return rating_entity;
+    }).handleError((error) {
+      DisplayToast('Error in GetRating: $error');
+    });
+  }
+
+// Planned Events
+
+  @override
+  Future<void> AddPlannedEvents(PlannedEventEntity plannedEventEntity) {
+    // TODO: implement AddPlannedEvents
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> DeletePlannedEvents(String id) {
+    // TODO: implement DeletePlannedEvents
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<PlannedEventEntity>> GetPlannedEvents(String userid) {
+    // TODO: implement GetPlannedEvents
+    throw UnimplementedError();
   }
 }

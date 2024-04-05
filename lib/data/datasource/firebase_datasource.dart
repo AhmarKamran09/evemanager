@@ -7,6 +7,7 @@ import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
 import 'package:evemanager/domain/entities/planned_events/planned_events_entity.dart';
+import 'package:evemanager/domain/entities/rating_entity/rating_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
@@ -103,4 +104,9 @@ abstract class FirebaseDatasource {
 
   Stream<List<ChatEntity>> GetChatsForClient(String userid);
   Stream<List<ChatEntity>> GetChatsForAdmin(String userid);
+
+// Rating
+
+  Future<void> AddRating(RatingEntity ratingEntity);
+  Stream<List<RatingEntity>> GetRating(String serviceId);
 }

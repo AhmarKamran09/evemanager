@@ -68,6 +68,7 @@ class FirebaseCollectionConst {
   static const String videography = "videography";
   static const String chats = "chat";
   static const String messages = "messages";
+  static const String rating = "rating";
 }
 
 enum UserRole {

@@ -9,6 +9,7 @@ import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
 import 'package:evemanager/domain/entities/planned_events/planned_events_entity.dart';
+import 'package:evemanager/domain/entities/rating_entity/rating_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
@@ -120,6 +121,7 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   Future<void> UpdateCateringService(CateringEntity cateringEntity) {
     return firebaseDatasource.UpdateCateringService(cateringEntity);
   }
+
   @override
   Future<void> AddDecorations(DecorationsEntity decorationsEntity) {
     return firebaseDatasource.AddDecorations(decorationsEntity);
@@ -261,27 +263,45 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   }
 
   @override
-  Stream<List<MessageEntity>> GetMessages({required ChatEntity chatEntity,required UserRole userRole,
+  Stream<List<MessageEntity>> GetMessages({
+    required ChatEntity chatEntity,
+    required UserRole userRole,
     required String request_sender_id,
- }) {
-    return firebaseDatasource.GetMessages(chatEntity:chatEntity,userRole: userRole,request_sender_id: request_sender_id);
+  }) {
+    return firebaseDatasource.GetMessages(
+        chatEntity: chatEntity,
+        userRole: userRole,
+        request_sender_id: request_sender_id);
   }
 
   @override
   Future<void> SendMessage(
-    
-      {required MessageEntity messageEntity,required String clientid,
+      {required MessageEntity messageEntity,
+      required String clientid,
       required ServiceEntity serviceEntity}) {
-    return firebaseDatasource.SendMessage(clientid: clientid,
-        messageEntity: messageEntity, serviceEntity: serviceEntity);
+    return firebaseDatasource.SendMessage(
+        clientid: clientid,
+        messageEntity: messageEntity,
+        serviceEntity: serviceEntity);
   }
 
   @override
   Stream<List<ChatEntity>> GetChatsForClient(String userid) {
     return firebaseDatasource.GetChatsForClient(userid);
   }
+
   @override
   Stream<List<ChatEntity>> GetChatsForAdmin(String userid) {
     return firebaseDatasource.GetChatsForAdmin(userid);
+  }
+
+  @override
+  Future<void> AddRating(RatingEntity ratingEntity) {
+    return firebaseDatasource.AddRating(ratingEntity);
+  }
+
+  @override
+  Stream<List<RatingEntity>> GetRating(String serviceId) {
+    return firebaseDatasource.GetRating(serviceId);
   }
 }
