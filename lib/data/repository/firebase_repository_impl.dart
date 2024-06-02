@@ -8,7 +8,6 @@ import 'package:evemanager/domain/entities/entertainment/entertainment_entity.da
 import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
-import 'package:evemanager/domain/entities/planned_events/planned_events_entity.dart';
 import 'package:evemanager/domain/entities/rating_entity/rating_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
@@ -247,20 +246,6 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
     return firebaseDatasource.GetVideographyforOwner(ownerid);
   }
 
-  @override
-  Future<void> AddPlannedEvents(PlannedEventEntity plannedEventEntity) {
-    return firebaseDatasource.AddPlannedEvents(plannedEventEntity);
-  }
-
-  @override
-  Future<void> DeletePlannedEvents(String id) {
-    return firebaseDatasource.DeletePlannedEvents(id);
-  }
-
-  @override
-  Stream<List<PlannedEventEntity>> GetPlannedEvents(String userid) {
-    return firebaseDatasource.GetPlannedEvents(userid);
-  }
 
   @override
   Stream<List<MessageEntity>> GetMessages({

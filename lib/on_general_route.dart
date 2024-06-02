@@ -9,7 +9,6 @@ import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/domain/entities/videography/videography_entity.dart';
 import 'package:evemanager/presentation/pages/Credentials/login_screen.dart';
 import 'package:evemanager/presentation/pages/Credentials/signup_screen.dart';
-import 'package:evemanager/presentation/pages/add_payment_method_screen/add-payment_method_screen.dart';
 import 'package:evemanager/presentation/pages/admins/catering_admin_home/add_catering_screen.dart';
 import 'package:evemanager/presentation/pages/admins/catering_admin_home/update_catering_screen.dart';
 import 'package:evemanager/presentation/pages/admins/chat_screen_admin.dart';
@@ -59,10 +58,6 @@ class OnGeneralRoute {
       case PageNames.UserProfileDetailsPage:
         {
           return routeBuilder(UserProfileDetailsScreen());
-        }
-      case PageNames.AddPaymentMethodScreen:
-        {
-          return routeBuilder(AddPaymentMethodScreen());
         }
       case PageNames.LoadingScreen:
         {

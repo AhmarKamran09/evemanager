@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../widgets/client_home_page/explore_view.dart';
 import '../../widgets/client_home_page/home_view.dart';
-import '../../widgets/client_home_page/planning_view.dart';
 import '../../widgets/client_home_page/vendor_view.dart';
 
 class ClientHomePage extends StatefulWidget {
@@ -31,7 +30,6 @@ class _ClientHomePageState extends State<ClientHomePage> {
       VendorView(
         uid: widget.uid!,
       ),
-      PlanningView(),
       ExploreView(),
       ChatView(
         userid: widget.uid!,
@@ -73,11 +71,6 @@ class _ClientHomePageState extends State<ClientHomePage> {
             icon: Icon(Icons.business_center),
             label: 'Vendors',
             // all the vendors types
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.checklist),
-            label: 'Planning',
-            //budget  and asks the user to complete what services he need in checklist
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),

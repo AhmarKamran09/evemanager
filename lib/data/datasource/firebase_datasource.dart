@@ -6,7 +6,6 @@ import 'package:evemanager/domain/entities/entertainment/entertainment_entity.da
 import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
-import 'package:evemanager/domain/entities/planned_events/planned_events_entity.dart';
 import 'package:evemanager/domain/entities/rating_entity/rating_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
@@ -84,12 +83,6 @@ abstract class FirebaseDatasource {
   Future<void> UpdateVideography(VideographyEntity videographyEntity);
   Stream<List<VideographyEntity>> GetVideographyforClient();
   Stream<List<VideographyEntity>> GetVideographyforOwner(String ownerid);
-
-// PlannedEvents
-
-  Future<void> AddPlannedEvents(PlannedEventEntity plannedEventEntity);
-  Future<void> DeletePlannedEvents(String id);
-  Stream<List<PlannedEventEntity>> GetPlannedEvents(String userid);
 
   // Messages
   Future<void> SendMessage(

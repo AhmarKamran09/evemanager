@@ -11,7 +11,6 @@ class PageNames {
   static const String ProfileMenuPage = "ProfileMenuPage";
   static const String HomeScreen = "HomeScreen";
   static const String LoadingScreen = "LoadingScreen";
-  static const String AddPaymentMethodScreen = "AddPaymentMethodScreen";
   static const String AddVenuesScreen = "AddVenuesScreen";
   static const String UpdateVenueScreen = "UpdateVenueScreen";
   static const String VenueListScreen = "VenueListScreen";

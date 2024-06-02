@@ -15,7 +15,6 @@ import 'package:evemanager/domain/entities/entertainment/entertainment_entity.da
 import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
-import 'package:evemanager/domain/entities/planned_events/planned_events_entity.dart';
 import 'package:evemanager/domain/entities/rating_entity/rating_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
@@ -1405,25 +1404,5 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
     }).handleError((error) {
       DisplayToast('Error in GetRating: $error');
     });
-  }
-
-// Planned Events
-
-  @override
-  Future<void> AddPlannedEvents(PlannedEventEntity plannedEventEntity) {
-    // TODO: implement AddPlannedEvents
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> DeletePlannedEvents(String id) {
-    // TODO: implement DeletePlannedEvents
-    throw UnimplementedError();
-  }
-
-  @override
-  Stream<List<PlannedEventEntity>> GetPlannedEvents(String userid) {
-    // TODO: implement GetPlannedEvents
-    throw UnimplementedError();
   }
 }
