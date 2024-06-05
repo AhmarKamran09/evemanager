@@ -1,5 +1,4 @@
-
-class ServiceModel  {
+class ServiceModel {
   final String? id;
   final String? owner_id;
   final String? address;
@@ -20,30 +19,5 @@ class ServiceModel  {
     this.id,
     this.owner_id,
     this.address,
-  }) ;
-
-  // Map<String, dynamic> toJson() => {
-  //       'imageslink': imageslink,
-  //       'name': name,
-  //       'contact': contact,
-  //       'facilities': facilities,
-  //       'pricingInfo': pricingInfo,
-  //       'description': description,
-  //       'id': id,
-  //       'owner_id': owner_id,
-  //       'address': address,
-  //     };
-
-  // @override
-  // List<Object?> get props => [
-  //       imageslink,
-  //       name,
-  //       contact,
-  //       facilities,
-  //       pricingInfo,
-  //       description,
-  //       id,
-  //       owner_id,
-  //       address,
-  //     ];
+  });
 }

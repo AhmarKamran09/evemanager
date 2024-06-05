@@ -2,19 +2,15 @@ import 'dart:io';
 
 import 'package:evemanager/constants.dart';
 import 'package:evemanager/data/datasource/firebase_datasource.dart';
-import 'package:evemanager/domain/entities/bridal_makeup_&_hair/bridal_makeup_&_hair_entity.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
-import 'package:evemanager/domain/entities/clothing/clothing_entity.dart';
 import 'package:evemanager/domain/entities/decorations/decorations_entity.dart';
 import 'package:evemanager/domain/entities/entertainment/entertainment_entity.dart';
-import 'package:evemanager/domain/entities/invitation_design/invitation_design_entity.dart';
 import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
-import 'package:evemanager/domain/entities/planned_events/planned_events_entity.dart';
+import 'package:evemanager/domain/entities/rating_entity/rating_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
-import 'package:evemanager/domain/entities/transportation/transportation_entity.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/domain/entities/user/user_entity.dart';
 import 'package:evemanager/domain/entities/videography/videography_entity.dart';
@@ -126,60 +122,6 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   }
 
   @override
-  Future<void> AddBridalMakeupAndHair(
-      BridalMakeupAndHairEntity bridalMakeupAndHairEntity) {
-    return firebaseDatasource.AddBridalMakeupAndHair(bridalMakeupAndHairEntity);
-  }
-
-  @override
-  Future<void> DeleteBridalMakeupAndHair(String id) {
-    return firebaseDatasource.DeleteBridalMakeupAndHair(id);
-  }
-
-  @override
-  Stream<List<BridalMakeupAndHairEntity>> GetBridalMakeupAndHairforClient() {
-    return firebaseDatasource.GetBridalMakeupAndHairforClient();
-  }
-
-  @override
-  Stream<List<BridalMakeupAndHairEntity>> GetBridalMakeupAndHairforOwner(
-      String ownerid) {
-    return firebaseDatasource.GetBridalMakeupAndHairforOwner(ownerid);
-  }
-
-  @override
-  Future<void> UpdateBridalMakeupAndHair(
-      BridalMakeupAndHairEntity bridalMakeupAndHairEntity) {
-    return firebaseDatasource.UpdateBridalMakeupAndHair(
-        bridalMakeupAndHairEntity);
-  }
-
-  @override
-  Future<void> AddClothing(ClothingEntity clothingEntity) {
-    return firebaseDatasource.AddClothing(clothingEntity);
-  }
-
-  @override
-  Future<void> DeleteClothing(String id) {
-    return firebaseDatasource.DeleteClothing(id);
-  }
-
-  @override
-  Future<void> UpdateClothing(ClothingEntity clothingEntity) {
-    return firebaseDatasource.UpdateClothing(clothingEntity);
-  }
-
-  @override
-  Stream<List<ClothingEntity>> GetClothingforClient() {
-    return firebaseDatasource.GetClothingforClient();
-  }
-
-  @override
-  Stream<List<ClothingEntity>> GetClothingforOwner(String ownerid) {
-    return firebaseDatasource.GetClothingforOwner(ownerid);
-  }
-
-  @override
   Future<void> AddDecorations(DecorationsEntity decorationsEntity) {
     return firebaseDatasource.AddDecorations(decorationsEntity);
   }
@@ -227,34 +169,6 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   @override
   Stream<List<EntertainmentEntity>> GetEntertainmentforOwner(String ownerid) {
     return firebaseDatasource.GetEntertainmentforOwner(ownerid);
-  }
-
-  @override
-  Future<void> AddInvitationDesign(
-      InvitationDesignEntity invitationDesignEntity) {
-    return firebaseDatasource.AddInvitationDesign(invitationDesignEntity);
-  }
-
-  @override
-  Future<void> DeleteInvitationDesign(String id) {
-    return firebaseDatasource.DeleteInvitationDesign(id);
-  }
-
-  @override
-  Future<void> UpdateInvitationDesign(
-      InvitationDesignEntity invitationDesignEntity) {
-    return firebaseDatasource.UpdateInvitationDesign(invitationDesignEntity);
-  }
-
-  @override
-  Stream<List<InvitationDesignEntity>> GetInvitationDesignforClient() {
-    return firebaseDatasource.GetInvitationDesignforClient();
-  }
-
-  @override
-  Stream<List<InvitationDesignEntity>> GetInvitationDesignforOwner(
-      String ownerid) {
-    return firebaseDatasource.GetInvitationDesignforOwner(ownerid);
   }
 
   @override
@@ -308,31 +222,6 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   }
 
   @override
-  Future<void> AddTransportation(TransportationEntity transportationEntity) {
-    return firebaseDatasource.AddTransportation(transportationEntity);
-  }
-
-  @override
-  Future<void> DeleteTransportation(String id) {
-    return firebaseDatasource.DeleteTransportation(id);
-  }
-
-  @override
-  Future<void> UpdateTransportation(TransportationEntity transportationEntity) {
-    return firebaseDatasource.UpdateTransportation(transportationEntity);
-  }
-
-  @override
-  Stream<List<TransportationEntity>> GetTransportationforClient() {
-    return firebaseDatasource.GetTransportationforClient();
-  }
-
-  @override
-  Stream<List<TransportationEntity>> GetTransportationforOwner(String ownerid) {
-    return firebaseDatasource.GetTransportationforOwner(ownerid);
-  }
-
-  @override
   Future<void> AddVideography(VideographyEntity videographyEntity) {
     return firebaseDatasource.AddVideography(videographyEntity);
   }
@@ -357,43 +246,47 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
     return firebaseDatasource.GetVideographyforOwner(ownerid);
   }
 
-  @override
-  Future<void> AddPlannedEvents(PlannedEventEntity plannedEventEntity) {
-    return firebaseDatasource.AddPlannedEvents(plannedEventEntity);
-  }
 
   @override
-  Future<void> DeletePlannedEvents(String id) {
-    return firebaseDatasource.DeletePlannedEvents(id);
-  }
-
-  @override
-  Stream<List<PlannedEventEntity>> GetPlannedEvents(String userid) {
-    return firebaseDatasource.GetPlannedEvents(userid);
-  }
-
-  @override
-  Stream<List<MessageEntity>> GetMessages({required ChatEntity chatEntity,required UserRole userRole,
+  Stream<List<MessageEntity>> GetMessages({
+    required ChatEntity chatEntity,
+    required UserRole userRole,
     required String request_sender_id,
- }) {
-    return firebaseDatasource.GetMessages(chatEntity:chatEntity,userRole: userRole,request_sender_id: request_sender_id);
+  }) {
+    return firebaseDatasource.GetMessages(
+        chatEntity: chatEntity,
+        userRole: userRole,
+        request_sender_id: request_sender_id);
   }
 
   @override
   Future<void> SendMessage(
-    
-      {required MessageEntity messageEntity,required String clientid,
+      {required MessageEntity messageEntity,
+      required String clientid,
       required ServiceEntity serviceEntity}) {
-    return firebaseDatasource.SendMessage(clientid: clientid,
-        messageEntity: messageEntity, serviceEntity: serviceEntity);
+    return firebaseDatasource.SendMessage(
+        clientid: clientid,
+        messageEntity: messageEntity,
+        serviceEntity: serviceEntity);
   }
 
   @override
   Stream<List<ChatEntity>> GetChatsForClient(String userid) {
     return firebaseDatasource.GetChatsForClient(userid);
   }
+
   @override
   Stream<List<ChatEntity>> GetChatsForAdmin(String userid) {
     return firebaseDatasource.GetChatsForAdmin(userid);
+  }
+
+  @override
+  Future<void> AddRating(RatingEntity ratingEntity) {
+    return firebaseDatasource.AddRating(ratingEntity);
+  }
+
+  @override
+  Stream<List<RatingEntity>> GetRating(String serviceId) {
+    return firebaseDatasource.GetRating(serviceId);
   }
 }

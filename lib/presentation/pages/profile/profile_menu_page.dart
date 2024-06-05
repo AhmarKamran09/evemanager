@@ -27,14 +27,6 @@ class ProfileMenuPage extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.payment),
-              title: Text("Add Payment Method"),
-              onTap: () async {
-                // Navigator.pushReplacementNamed(
-                //     context, );
-              },
-            ),
-            ListTile(
               leading: Icon(Icons.logout),
               title: Text("Logout"),
               onTap: () async {

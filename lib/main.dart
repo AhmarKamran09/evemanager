@@ -1,18 +1,14 @@
 import 'package:evemanager/dependency_injection.dart' as di;
 import 'package:evemanager/on_general_route.dart';
 import 'package:evemanager/presentation/cubit/auth/auth_cubit.dart';
-import 'package:evemanager/presentation/cubit/bridal_makeup_and_hair/bridal_makeup_hair_cubit.dart';
 import 'package:evemanager/presentation/cubit/cateringservice/cateringservice_cubit.dart';
 import 'package:evemanager/presentation/cubit/chat/chat_cubit.dart';
-import 'package:evemanager/presentation/cubit/clothing/clothing_cubit.dart';
 import 'package:evemanager/presentation/cubit/credentials/credentials_cubit.dart';
 import 'package:evemanager/presentation/cubit/decoration/decoration_cubit.dart';
 import 'package:evemanager/presentation/cubit/entertainment/entertainment_cubit.dart';
-import 'package:evemanager/presentation/cubit/invitation_design/invitation_design_cubit.dart';
 import 'package:evemanager/presentation/cubit/messages/messages_cubit.dart';
 import 'package:evemanager/presentation/cubit/photography/photography_cubit.dart';
 import 'package:evemanager/presentation/cubit/sweets/sweets_cubit.dart';
-import 'package:evemanager/presentation/cubit/transportation/transportation_cubit.dart';
 import 'package:evemanager/presentation/cubit/venue/venue_cubit.dart';
 import 'package:evemanager/presentation/cubit/userprofile/user_profile_cubit.dart';
 import 'package:evemanager/presentation/cubit/videography/videography_cubit.dart';
@@ -54,29 +50,17 @@ class MyApp extends StatelessWidget {
         BlocProvider<CateringserviceCubit>(
           create: (_) => di.sl<CateringserviceCubit>(),
         ),
-        BlocProvider<BridalMakeupHairCubit>(
-          create: (_) => di.sl<BridalMakeupHairCubit>(),
-        ),
-        BlocProvider<ClothingCubit>(
-          create: (_) => di.sl<ClothingCubit>(),
-        ),
         BlocProvider<DecorationCubit>(
           create: (_) => di.sl<DecorationCubit>(),
         ),
         BlocProvider<EntertainmentCubit>(
           create: (_) => di.sl<EntertainmentCubit>(),
         ),
-        BlocProvider<InvitationDesignCubit>(
-          create: (_) => di.sl<InvitationDesignCubit>(),
-        ),
         BlocProvider<PhotographyCubit>(
           create: (_) => di.sl<PhotographyCubit>(),
         ),
         BlocProvider<SweetsCubit>(
           create: (_) => di.sl<SweetsCubit>(),
-        ),
-        BlocProvider<TransportationCubit>(
-          create: (_) => di.sl<TransportationCubit>(),
         ),
         BlocProvider<VideographyCubit>(
           create: (_) => di.sl<VideographyCubit>(),
