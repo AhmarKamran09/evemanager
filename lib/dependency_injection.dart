@@ -35,6 +35,8 @@ import 'package:evemanager/domain/usecases/photography/delete_photography_usecas
 import 'package:evemanager/domain/usecases/photography/get_photography_for_client_usecase.dart';
 import 'package:evemanager/domain/usecases/photography/get_photography_for_owner_usecase.dart';
 import 'package:evemanager/domain/usecases/photography/update_photography_usecase.dart';
+import 'package:evemanager/domain/usecases/rating/add_rating_usecase.dart';
+import 'package:evemanager/domain/usecases/rating/get_rating_usecase.dart';
 import 'package:evemanager/domain/usecases/sweets/add_sweets_usecase.dart';
 import 'package:evemanager/domain/usecases/sweets/delete_sweets_usecase.dart';
 import 'package:evemanager/domain/usecases/sweets/get_sweets_for_client_usecase.dart';
@@ -60,6 +62,7 @@ import 'package:evemanager/presentation/cubit/decoration/decoration_cubit.dart';
 import 'package:evemanager/presentation/cubit/entertainment/entertainment_cubit.dart';
 import 'package:evemanager/presentation/cubit/messages/messages_cubit.dart';
 import 'package:evemanager/presentation/cubit/photography/photography_cubit.dart';
+import 'package:evemanager/presentation/cubit/rating/rating_cubit.dart';
 import 'package:evemanager/presentation/cubit/sweets/sweets_cubit.dart';
 import 'package:evemanager/presentation/cubit/venue/venue_cubit.dart';
 import 'package:evemanager/presentation/cubit/userprofile/user_profile_cubit.dart';
@@ -149,6 +152,10 @@ Future<void> init() async {
   sl.registerFactory(() => MessagesCubit(
         getMessagesUsecase: sl.call(),
         sendMessageUsecase: sl.call(),
+      )); 
+      sl.registerFactory(() => RatingCubit(
+        getRatingUsecase: sl.call(),
+        addRatingUsecase: sl.call(),
       ));
 
   // Usecases
@@ -293,6 +300,13 @@ Future<void> init() async {
   );
   sl.registerLazySingleton(
     () => GetChatsForAdminUsecase(firebaseRepository: sl.call()),
+  );
+  // Rating
+  sl.registerLazySingleton(
+    () => GetRatingUsecase(firebaseRepository: sl.call()),
+  );
+  sl.registerLazySingleton(
+    () => AddRatingUsecase(firebaseRepository: sl.call()),
   );
 
 // Repository

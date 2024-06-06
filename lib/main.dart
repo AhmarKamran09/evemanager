@@ -8,6 +8,7 @@ import 'package:evemanager/presentation/cubit/decoration/decoration_cubit.dart';
 import 'package:evemanager/presentation/cubit/entertainment/entertainment_cubit.dart';
 import 'package:evemanager/presentation/cubit/messages/messages_cubit.dart';
 import 'package:evemanager/presentation/cubit/photography/photography_cubit.dart';
+import 'package:evemanager/presentation/cubit/rating/rating_cubit.dart';
 import 'package:evemanager/presentation/cubit/sweets/sweets_cubit.dart';
 import 'package:evemanager/presentation/cubit/venue/venue_cubit.dart';
 import 'package:evemanager/presentation/cubit/userprofile/user_profile_cubit.dart';
@@ -43,6 +44,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<UserProfileCubit>(
           create: (_) => di.sl<UserProfileCubit>(),
+        ),
+        BlocProvider<RatingCubit>(
+          create: (_) => di.sl<RatingCubit>(),
         ),
         BlocProvider<VenueCubit>(
           create: (_) => di.sl<VenueCubit>(),

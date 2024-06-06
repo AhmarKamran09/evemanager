@@ -1366,21 +1366,27 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   @override
   Future<void> AddRating(RatingEntity ratingEntity) async {
     try {
-      String autoId = FirebaseFirestore.instance
+      var doc = await firebaseFirestore
           .collection(FirebaseCollectionConst.rating)
-          .doc()
-          .id;
+          .doc(ratingEntity.serviceId)
+          .get();
+      double newraiting = ratingEntity.rating!;
+      int newtotalreviews = 1;
+      if (doc.exists) {
+        RatingEntity prev_rating = RatingModel.factory(doc);
+        newtotalreviews = prev_rating.totalreviews! + 1;
+        newraiting = (prev_rating.rating! * prev_rating.totalreviews! +
+                ratingEntity.rating!) /
+            newtotalreviews;
+      }
 
       await firebaseFirestore
           .collection(FirebaseCollectionConst.rating)
-          .doc(autoId)
+          .doc(ratingEntity.serviceId)
           .set(RatingModel(
-            // Assuming VideographyModel is the corresponding model
-            // Adjust the fields accordingly
-            // type: videographyEntity.type,
-            // brand: videographyEntity.brand,
-            id: autoId,
-            // Add other fields as needed
+            serviceId: ratingEntity.serviceId,
+            rating: newraiting,
+            totalreviews: newtotalreviews,
           ).toJson());
     } catch (e) {
       DisplayToast('error in add Rating  ${e.toString()}');
@@ -1388,21 +1394,20 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   }
 
   @override
-  Stream<List<RatingEntity>> GetRating(String serviceId) {
-    return firebaseFirestore
-        .collection(FirebaseCollectionConst.rating)
-        .where('serviceId', isEqualTo: serviceId)
-        .snapshots()
-        .asyncMap((querySnapshot) async {
-      List<RatingEntity> rating_entity = [];
-      for (var document in querySnapshot.docs) {
-        RatingEntity rating = RatingModel.factory(document);
-
-        rating_entity.add(rating);
+  Future<double> GetRating(String serviceId) async {
+    try {
+      var doc = await firebaseFirestore
+          .collection(FirebaseCollectionConst.rating)
+          .doc(serviceId)
+          .get();
+      if (doc.exists) {
+        return doc['rating'];
+      } else {
+        return 0.00;
       }
-      return rating_entity;
-    }).handleError((error) {
-      DisplayToast('Error in GetRating: $error');
-    });
+    } catch (e) {
+      DisplayToast('error in getting Rating  ${e.toString()}');
+      return 0.00;
+    }
   }
 }

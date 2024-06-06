@@ -1,6 +1,9 @@
 import 'package:evemanager/constants.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
+import 'package:evemanager/presentation/cubit/rating/rating_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ClientVenuesCard extends StatelessWidget {
   ClientVenuesCard({super.key, required this.venue, required this.uid});
@@ -35,18 +38,54 @@ class ClientVenuesCard extends StatelessWidget {
                 height: 180,
                 fit: BoxFit.cover,
               ),
-            ), // Other details
+            ),
+            // Other details
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    venue.name!,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        venue.name!,
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      BlocBuilder<RatingCubit, RatingState>(
+                        builder: (context, state) {
+                          if (state is RatingSuccess) {
+                            print(state.ratingvalue);
+                            return Text(state.ratingvalue.toString());
+                            // print(state.serviceId);
+                            // return RatingBarIndicator(
+                            //     itemCount: 5,
+                            //     rating: state.ratingvalue,
+                            //     itemSize: 30.0,
+                            //     itemBuilder: (context, index) {
+                            //       return Icon(
+                            //         Icons.star_outlined,
+                            //         color: Colors.amber,
+                            //       );
+                            //     });
+                          } else {
+                            print(state);
+                            return RatingBarIndicator(
+                                itemCount: 5,
+                                rating: 0,
+                                itemSize: 30.0,
+                                itemBuilder: (context, index) {
+                                  return Icon(
+                                    Icons.star_outlined,
+                                    color: Colors.amber,
+                                  );
+                                });
+                          }
+                        },
+                      )
+                    ],
                   ),
                   Text('Capacity: ${venue.capacity}'),
                   Text('Contact: ${venue.contact}'),

@@ -97,6 +97,6 @@ abstract class FirebaseRepository {
 // Rating
 
   Future<void> AddRating(RatingEntity ratingEntity);
-   Stream<List<RatingEntity>> GetRating(String serviceId);
+   Future<double> GetRating(String serviceId);
 
 }

@@ -43,7 +43,7 @@ class VenueListScreen extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return Container(
                                   child: ClientVenuesCard(
-                                    uid: uid,
+                                      uid: uid,
                                       venue: state.VenueEntities![index]));
                             },
                           ),

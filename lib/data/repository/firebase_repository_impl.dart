@@ -286,7 +286,7 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   }
 
   @override
-  Stream<List<RatingEntity>> GetRating(String serviceId) {
+Future<double> GetRating(String serviceId) {
     return firebaseDatasource.GetRating(serviceId);
   }
 }
