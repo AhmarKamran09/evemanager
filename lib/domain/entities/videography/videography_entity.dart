@@ -42,7 +42,7 @@ class VideographyEntity extends ServiceEntity {
       description: snap['description'],
       id: snap['id'],
       owner_id: snap['owner_id'],
-      address: snap['address'], rating: snap['rating'],
+      address: snap['address'], rating:  double.tryParse(snap['rating'].toString()),
       totalreviews: snap['totalreviews'],
     );
   }

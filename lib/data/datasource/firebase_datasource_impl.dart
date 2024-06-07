@@ -1415,17 +1415,18 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
       double newraiting = rating;
       int newtotalreviews = 1;
 
-      if (doc.exists) {
-        int currentRating = int.tryParse(doc['rating'].toString()) ?? 0;
-        int currentTotalReviews =
-            int.tryParse(doc['totalreviews'].toString()) ?? 0;
+      double currentRating = double.tryParse(doc['rating'].toString()) ?? 0;
+      int currentTotalReviews =
+          int.tryParse(doc['totalreviews'].toString()) ?? 0;
 
-        if (currentRating != 0 && currentTotalReviews != 0) {
-          newtotalreviews = currentTotalReviews + 1;
-          newraiting =
-              (currentRating * currentTotalReviews + rating) / newtotalreviews;
-        }
+      if (currentRating != 0 || currentTotalReviews != 0) {
+        newtotalreviews = currentTotalReviews + 1;
+        newraiting =
+            (currentRating * currentTotalReviews + rating) / newtotalreviews;
       }
+      print(currentTotalReviews);
+      print(currentRating);
+
       await firebaseFirestore.collection(collection).doc(serviceId).update({
         'rating': newraiting,
         'totalreviews': newtotalreviews,

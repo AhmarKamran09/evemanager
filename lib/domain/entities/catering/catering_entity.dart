@@ -49,7 +49,7 @@ class CateringEntity extends ServiceEntity {
       id: snap['id'],
       owner_id: snap['owner_id'],
       address: snap['address'],
-      rating: snap['rating'],
+      rating: double.tryParse(snap['rating'].toString()),
       totalreviews: snap['totalreviews'],
     );
   }
