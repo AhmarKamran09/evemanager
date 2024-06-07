@@ -8,7 +8,6 @@ import 'package:evemanager/domain/entities/entertainment/entertainment_entity.da
 import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
-import 'package:evemanager/domain/entities/rating_entity/rating_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
@@ -246,7 +245,6 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
     return firebaseDatasource.GetVideographyforOwner(ownerid);
   }
 
-
   @override
   Stream<List<MessageEntity>> GetMessages({
     required ChatEntity chatEntity,
@@ -281,12 +279,11 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   }
 
   @override
-  Future<void> AddRating(RatingEntity ratingEntity) {
-    return firebaseDatasource.AddRating(ratingEntity);
-  }
-
-  @override
-Future<double> GetRating(String serviceId) {
-    return firebaseDatasource.GetRating(serviceId);
+  Future<void> AddRating(
+      {required double rating,
+      required String serviceId,
+      required Firebase_enum firebase_enum}) {
+    return firebaseDatasource.AddRating(
+        rating: rating, serviceId: serviceId, firebase_enum: firebase_enum);
   }
 }

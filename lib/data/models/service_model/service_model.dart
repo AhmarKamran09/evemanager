@@ -8,8 +8,12 @@ class ServiceModel {
   final List<String>? facilities;
   final Map<String, dynamic>? pricingInfo;
   final String? description;
+  final int? totalreviews;
+  final double? rating;
 
   ServiceModel({
+    this.totalreviews,
+    this.rating,
     this.imageslink,
     this.name,
     this.contact,

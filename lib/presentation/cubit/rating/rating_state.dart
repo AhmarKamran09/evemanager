@@ -13,19 +13,11 @@ final class RatingInitial extends RatingState {
 }
 
 final class RatingSuccess extends RatingState {
-  final double ratingvalue;
-  final String serviceId;
-
-  RatingSuccess({required this.serviceId, required this.ratingvalue});
+ 
   @override
-  List<Object> get props => [ratingvalue, serviceId];
+  List<Object> get props => [ ];
 }
 
-final class AddRatingSuccess extends RatingState {
-  AddRatingSuccess();
-  @override
-  List<Object> get props => [];
-}
 
 final class RatingFailure extends RatingState {
   @override

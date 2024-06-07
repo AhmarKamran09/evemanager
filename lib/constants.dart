@@ -74,3 +74,16 @@ enum UserRole {
   client,
   admin,
 }
+
+enum Firebase_enum {
+  user,
+  catering,
+  venues,
+  decorations,
+  entertainment,
+  photography,
+  sweets,
+  videography,
+  chats,
+  messages,
+}

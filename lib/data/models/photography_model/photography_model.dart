@@ -12,8 +12,12 @@ class PhotographyModel extends PhotographyEntity {
   final Map<String, dynamic>? pricingInfo;
   final Map<String, Map<String, bool>>? availability;
   final String? description;
+  final int? totalreviews;
+  final double? rating;
 
   PhotographyModel({
+    this.rating,
+    this.totalreviews,
     this.imageslink,
     this.name,
     this.capacity,
@@ -28,6 +32,8 @@ class PhotographyModel extends PhotographyEntity {
   }) : super();
 
   Map<String, dynamic> toJson() => {
+        'rating': rating,
+        'totalreviews': totalreviews,
         'imageslink': imageslink,
         'name': name,
         'capacity': capacity,
@@ -43,6 +49,8 @@ class PhotographyModel extends PhotographyEntity {
 
   @override
   List<Object?> get props => [
+        rating,
+        totalreviews,
         imageslink,
         name,
         capacity,

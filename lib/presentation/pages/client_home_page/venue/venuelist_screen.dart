@@ -31,6 +31,7 @@ class VenueListScreen extends StatelessWidget {
                     }
                   },
                   builder: (context, state) {
+                    print(state);
                     if (state is VenueSuccessForClient) {
                       if (state.VenueEntities?.isEmpty ?? false) {
                         return Center(

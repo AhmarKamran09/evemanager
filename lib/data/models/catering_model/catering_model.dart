@@ -14,8 +14,12 @@ class CateringModel extends CateringEntity {
   final String? description;
   final List<String>? cuisinetype;
   final List<MenuItem>? menu;
+  final int? totalreviews;
+  final double? rating;
 
   CateringModel({
+    this.totalreviews,
+    this.rating,
     this.cuisinetype,
     this.menu,
     this.imageslink,
@@ -32,6 +36,8 @@ class CateringModel extends CateringEntity {
   }) : super();
 
   Map<String, dynamic> toJson() => {
+        'rating': rating,
+        'totalreviews': totalreviews,
         'menu': menu,
         'cuisinetype': cuisinetype,
         'imageslink': imageslink,
@@ -49,6 +55,8 @@ class CateringModel extends CateringEntity {
 
   @override
   List<Object?> get props => [
+        totalreviews,
+        rating,
         cuisinetype,
         menu,
         imageslink,

@@ -11,10 +11,13 @@ class ServiceEntity extends Equatable {
   final List<String>? facilities;
   final String? description;
   final Map<String, dynamic>? pricingInfo;
-  final String? ratingid;
+  
+   final int? totalreviews;
+  final double? rating;
 
   ServiceEntity({
-    this.ratingid,
+    this.rating,
+    this.totalreviews,
     this.id,
     this.owner_id,
     this.name,
@@ -27,7 +30,8 @@ class ServiceEntity extends Equatable {
   });
   @override
   List<Object?> get props => [
-        ratingid,
+        rating,
+        totalreviews,
         images,
         name,
         contact,

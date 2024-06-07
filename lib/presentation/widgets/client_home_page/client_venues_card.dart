@@ -1,8 +1,6 @@
 import 'package:evemanager/constants.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
-import 'package:evemanager/presentation/cubit/rating/rating_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ClientVenuesCard extends StatelessWidget {
@@ -54,37 +52,44 @@ class ClientVenuesCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      BlocBuilder<RatingCubit, RatingState>(
-                        builder: (context, state) {
-                          if (state is RatingSuccess) {
-                            print(state.ratingvalue);
-                            return Text(state.ratingvalue.toString());
-                            // print(state.serviceId);
-                            // return RatingBarIndicator(
-                            //     itemCount: 5,
-                            //     rating: state.ratingvalue,
-                            //     itemSize: 30.0,
-                            //     itemBuilder: (context, index) {
-                            //       return Icon(
-                            //         Icons.star_outlined,
-                            //         color: Colors.amber,
-                            //       );
-                            //     });
-                          } else {
-                            print(state);
-                            return RatingBarIndicator(
-                                itemCount: 5,
-                                rating: 0,
-                                itemSize: 30.0,
-                                itemBuilder: (context, index) {
-                                  return Icon(
-                                    Icons.star_outlined,
-                                    color: Colors.amber,
-                                  );
-                                });
-                          }
-                        },
-                      )
+                      RatingBarIndicator(
+                          itemCount: 5,
+                          rating: venue.rating!,
+                          itemSize: 30.0,
+                          itemBuilder: (context, index) {
+                            return Icon(
+                              Icons.star_outlined,
+                              color: Colors.amber,
+                            );
+                          }),
+                      //
+                      // BlocBuilder<RatingCubit, RatingState>(
+                      //   builder: (context, state) {
+                      //     if (state is RatingSuccess) {
+                      //       return RatingBarIndicator(
+                      //           itemCount: 5,
+                      //           rating: state.ratingvalue,
+                      //           itemSize: 30.0,
+                      //           itemBuilder: (context, index) {
+                      //             return Icon(
+                      //               Icons.star_outlined,
+                      //               color: Colors.amber,
+                      //             );
+                      //           });
+                      //     } else {
+                      //       return RatingBarIndicator(
+                      //           itemCount: 5,
+                      //           rating: 0,
+                      //           itemSize: 30.0,
+                      //           itemBuilder: (context, index) {
+                      //             return Icon(
+                      //               Icons.star_outlined,
+                      //               color: Colors.amber,
+                      //             );
+                      //           });
+                      //     }
+                      //   },
+                      // )
                     ],
                   ),
                   Text('Capacity: ${venue.capacity}'),
