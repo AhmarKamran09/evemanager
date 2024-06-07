@@ -12,8 +12,11 @@ class EntertainmentModel extends EntertainmentEntity {
   final Map<String, dynamic>? pricingInfo;
   final Map<String, Map<String, bool>>? availability;
   final String? description;
-
+  final int? totalreviews;
+  final double? rating;
   EntertainmentModel({
+    this.rating,
+    this.totalreviews,
     this.imageslink,
     this.name,
     this.capacity,
@@ -28,6 +31,8 @@ class EntertainmentModel extends EntertainmentEntity {
   }) : super();
 
   Map<String, dynamic> toJson() => {
+        'rating': rating,
+        'totalreviews': totalreviews,
         'imageslink': imageslink,
         'name': name,
         'capacity': capacity,
@@ -43,6 +48,8 @@ class EntertainmentModel extends EntertainmentEntity {
 
   @override
   List<Object?> get props => [
+        rating,
+        totalreviews,
         imageslink,
         name,
         capacity,

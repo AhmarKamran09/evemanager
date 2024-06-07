@@ -6,7 +6,6 @@ import 'package:evemanager/data/models/entertainment_model/entertainment_model.d
 import 'package:evemanager/data/models/message_model/chat_model.dart';
 import 'package:evemanager/data/models/message_model/message_model.dart';
 import 'package:evemanager/data/models/photography_model/photography_model.dart';
-import 'package:evemanager/data/models/rating_model/rating_model.dart';
 import 'package:evemanager/data/models/sweets_model/sweets_model.dart';
 import 'package:evemanager/data/models/videography_model/videography_model.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
@@ -15,7 +14,6 @@ import 'package:evemanager/domain/entities/entertainment/entertainment_entity.da
 import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
 import 'package:evemanager/domain/entities/photography/photography_entity.dart';
-import 'package:evemanager/domain/entities/rating_entity/rating_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/sweets/sweets_entity.dart';
 import 'package:evemanager/domain/entities/videography/videography_entity.dart';
@@ -223,6 +221,8 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.venues)
           .doc(autoId)
           .set(VenueModel(
+            rating: 0,
+            totalreviews: 0,
             imageslink: imagelinks,
             id: autoId,
             owner_id: venueEntity.owner_id,
@@ -409,6 +409,8 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.catering)
           .doc(autoId)
           .set(CateringModel(
+            rating: 0,
+            totalreviews: 0,
             cuisinetype: cateringEntity.cuisinetype,
             menu: cateringEntity.menu,
             imageslink: imagelinks,
@@ -554,6 +556,8 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
             // Adjust the fields accordingly
             // type: decorationsEntity.type,
             // brand: decorationsEntity.brand,
+            rating: 0,
+            totalreviews: 0,
             imageslink: imagelinks,
             id: autoId,
             owner_id: decorationsEntity.owner_id,
@@ -690,6 +694,8 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
             // Adjust the fields accordingly
             // type: entertainmentEntity.type,
             // brand: entertainmentEntity.brand,
+            rating: 0,
+            totalreviews: 0,
             imageslink: imagelinks,
             id: autoId,
             owner_id: entertainmentEntity.owner_id,
@@ -823,6 +829,8 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.photography)
           .doc(autoId)
           .set(PhotographyModel(
+            rating: 0,
+            totalreviews: 0,
             // Assuming PhotographyModel is the corresponding model
             // Adjust the fields accordingly
             // type: photographyEntity.type,
@@ -959,6 +967,8 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.sweets)
           .doc(autoId)
           .set(SweetsModel(
+            rating: 0,
+            totalreviews: 0,
             // Assuming SweetModel is the corresponding model
             // Adjust the fields accordingly
             // type: sweetEntity.type,
@@ -1093,6 +1103,8 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.videography)
           .doc(autoId)
           .set(VideographyModel(
+            rating: 0,
+            totalreviews: 0,
             // Assuming VideographyModel is the corresponding model
             // Adjust the fields accordingly
             // type: videographyEntity.type,
@@ -1364,50 +1376,62 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
 
 // Rating
   @override
-  Future<void> AddRating(RatingEntity ratingEntity) async {
+  Future<void> AddRating(
+      {required double rating,
+      required String serviceId,
+      required Firebase_enum firebase_enum}) async {
     try {
-      var doc = await firebaseFirestore
-          .collection(FirebaseCollectionConst.rating)
-          .doc(ratingEntity.serviceId)
-          .get();
-      double newraiting = ratingEntity.rating!;
-      int newtotalreviews = 1;
-      if (doc.exists) {
-        RatingEntity prev_rating = RatingModel.factory(doc);
-        newtotalreviews = prev_rating.totalreviews! + 1;
-        newraiting = (prev_rating.rating! * prev_rating.totalreviews! +
-                ratingEntity.rating!) /
-            newtotalreviews;
+      String collection = '';
+      switch (firebase_enum) {
+        case Firebase_enum.catering:
+          collection = FirebaseCollectionConst.catering;
+          break;
+        case Firebase_enum.chats:
+          collection = FirebaseCollectionConst.chats;
+          break;
+        case Firebase_enum.decorations:
+          collection = FirebaseCollectionConst.decorations;
+          break;
+        case Firebase_enum.entertainment:
+          collection = FirebaseCollectionConst.entertainment;
+          break;
+        case Firebase_enum.photography:
+          collection = FirebaseCollectionConst.photography;
+          break;
+        case Firebase_enum.sweets:
+          collection = FirebaseCollectionConst.sweets;
+          break;
+        case Firebase_enum.venues:
+          collection = FirebaseCollectionConst.venues;
+          break;
+        case Firebase_enum.videography:
+          collection = FirebaseCollectionConst.videography;
+          break;
+        default:
       }
 
-      await firebaseFirestore
-          .collection(FirebaseCollectionConst.rating)
-          .doc(ratingEntity.serviceId)
-          .set(RatingModel(
-            serviceId: ratingEntity.serviceId,
-            rating: newraiting,
-            totalreviews: newtotalreviews,
-          ).toJson());
+      var doc =
+          await firebaseFirestore.collection(collection).doc(serviceId).get();
+      double newraiting = rating;
+      int newtotalreviews = 1;
+
+      if (doc.exists) {
+        int currentRating = int.tryParse(doc['rating'].toString()) ?? 0;
+        int currentTotalReviews =
+            int.tryParse(doc['totalreviews'].toString()) ?? 0;
+
+        if (currentRating != 0 && currentTotalReviews != 0) {
+          newtotalreviews = currentTotalReviews + 1;
+          newraiting =
+              (currentRating * currentTotalReviews + rating) / newtotalreviews;
+        }
+      }
+      await firebaseFirestore.collection(collection).doc(serviceId).update({
+        'rating': newraiting,
+        'totalreviews': newtotalreviews,
+      });
     } catch (e) {
       DisplayToast('error in add Rating  ${e.toString()}');
-    }
-  }
-
-  @override
-  Future<double> GetRating(String serviceId) async {
-    try {
-      var doc = await firebaseFirestore
-          .collection(FirebaseCollectionConst.rating)
-          .doc(serviceId)
-          .get();
-      if (doc.exists) {
-        return doc['rating'];
-      } else {
-        return 0.00;
-      }
-    } catch (e) {
-      DisplayToast('error in getting Rating  ${e.toString()}');
-      return 0.00;
     }
   }
 }

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evemanager/constants.dart';
 import 'package:evemanager/domain/entities/message/chat_entity.dart';
 import 'package:evemanager/domain/entities/message/message_entity.dart';
-import 'package:evemanager/domain/entities/rating_entity/rating_entity.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:evemanager/presentation/cubit/messages/messages_cubit.dart';
@@ -50,7 +49,7 @@ class _VenueDetailsScreenState extends State<VenueDetailsScreen> {
   Widget _body(BuildContext context, double _rating) {
     return BlocListener<RatingCubit, RatingState>(
       listener: (context, state) {
-        if (state is AddRatingSuccess) {
+        if (state is RatingSuccess) {
           DisplayToast('Thanks For The Feedback');
         }
       },
@@ -200,9 +199,10 @@ class _VenueDetailsScreenState extends State<VenueDetailsScreen> {
                                 onPressed: () {
                                   // print('object');
                                   BlocProvider.of<RatingCubit>(context)
-                                      .addRating(RatingEntity(
+                                      .addRating(
+                                        firebase_enum: Firebase_enum.venues,
                                           rating: _rating,
-                                          serviceId: widget.venueEntity.id));
+                                          serviceId: widget.venueEntity.id!);
 
                                   Navigator.of(context).pop();
                                 },

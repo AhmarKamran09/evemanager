@@ -36,7 +36,6 @@ import 'package:evemanager/domain/usecases/photography/get_photography_for_clien
 import 'package:evemanager/domain/usecases/photography/get_photography_for_owner_usecase.dart';
 import 'package:evemanager/domain/usecases/photography/update_photography_usecase.dart';
 import 'package:evemanager/domain/usecases/rating/add_rating_usecase.dart';
-import 'package:evemanager/domain/usecases/rating/get_rating_usecase.dart';
 import 'package:evemanager/domain/usecases/sweets/add_sweets_usecase.dart';
 import 'package:evemanager/domain/usecases/sweets/delete_sweets_usecase.dart';
 import 'package:evemanager/domain/usecases/sweets/get_sweets_for_client_usecase.dart';
@@ -154,7 +153,6 @@ Future<void> init() async {
         sendMessageUsecase: sl.call(),
       )); 
       sl.registerFactory(() => RatingCubit(
-        getRatingUsecase: sl.call(),
         addRatingUsecase: sl.call(),
       ));
 
@@ -302,9 +300,6 @@ Future<void> init() async {
     () => GetChatsForAdminUsecase(firebaseRepository: sl.call()),
   );
   // Rating
-  sl.registerLazySingleton(
-    () => GetRatingUsecase(firebaseRepository: sl.call()),
-  );
   sl.registerLazySingleton(
     () => AddRatingUsecase(firebaseRepository: sl.call()),
   );

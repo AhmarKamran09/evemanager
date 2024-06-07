@@ -14,17 +14,20 @@ class PhotographyEntity extends ServiceEntity {
     List<String>? facilities,
     String? description,
     Map<String, dynamic>? pricingInfo,
+    int? totalreviews,
+    double? rating,
   }) : super(
-          images: images,
-          name: name,
-          contact: contact,
-          facilities: facilities,
-          pricingInfo: pricingInfo,
-          description: description,
-          id: id,
-          owner_id: owner_id,
-          address: address,
-        );
+            images: images,
+            name: name,
+            contact: contact,
+            facilities: facilities,
+            pricingInfo: pricingInfo,
+            description: description,
+            id: id,
+            owner_id: owner_id,
+            address: address,
+            totalreviews: totalreviews,
+            rating: rating);
 
   factory PhotographyEntity.factory(
       DocumentSnapshot snapshot, List<File>? imagesfromstorage) {
@@ -39,12 +42,15 @@ class PhotographyEntity extends ServiceEntity {
       description: snap['description'],
       id: snap['id'],
       owner_id: snap['owner_id'],
-      address: snap['address'],
+      address: snap['address'], rating: snap['rating'],
+      totalreviews: snap['totalreviews'],
     );
   }
 
   @override
   List<Object?> get props => [
+        rating,
+        totalreviews,
         images,
         name,
         contact,
