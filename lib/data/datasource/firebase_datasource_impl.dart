@@ -319,6 +319,23 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   @override
   Future<void> UpdateVenue(VenueEntity venueEntity) async {
     try {
+      Reference mainFolderRef =
+          storage.ref().child(FirebaseCollectionConst.venues);
+      Reference subfolderRef = mainFolderRef.child(venueEntity.id!);
+      ListResult listResult = await subfolderRef.listAll();
+      await Future.forEach(listResult.items, (Reference item) async {
+        await item.delete();
+      });
+      List<String> imagelinks = [];
+
+      for (int i = 0; i < venueEntity.images!.length; i++) {
+        File imageFile = venueEntity.images![i];
+        String imageName = DateTime.now().millisecondsSinceEpoch.toString();
+        Reference imageRef = subfolderRef.child('$imageName.jpg');
+        await imageRef.putFile(imageFile);
+        imagelinks.add(await imageRef.getDownloadURL());
+      }
+
       await firebaseFirestore
           .collection(FirebaseCollectionConst.venues)
           .doc(venueEntity.id!)
@@ -329,64 +346,17 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         'facilities': venueEntity.facilities,
         'pricingInfo': venueEntity.pricingInfo,
         'description': venueEntity.description,
+        'imageslink': imagelinks,
       });
     } catch (e) {
       DisplayToast('Error in Update Venue: $e');
     }
   }
-
-  @override
-  Future<void> EditAvailabilityOfVenue(
-      String hallid, Map<String, bool> availability) async {
-    try {
-      await firebaseFirestore
-          .collection(FirebaseCollectionConst.venues)
-          .doc(hallid)
-          .update({
-        'availability': availability,
-      });
-    } catch (e) {
-      DisplayToast("Editting of Availability Failed: $e.toString()");
-    }
-  }
-
-  @override
-  Future<void> UpdateVenuePictures(String id, List<File>? images) async {
-    try {
-      Reference mainFolderRef =
-          storage.ref().child(FirebaseCollectionConst.venues);
-      Reference subfolderRef = mainFolderRef.child(id);
-      ListResult listResult = await subfolderRef.listAll();
-      await Future.forEach(listResult.items, (Reference item) async {
-        await item.delete();
-      });
-      List<String> imagelinks = [];
-
-      for (int i = 0; i < images!.length; i++) {
-        File imageFile = images[i];
-        String imageName = DateTime.now().millisecondsSinceEpoch.toString();
-        Reference imageRef = subfolderRef.child('$imageName.jpg');
-        await imageRef.putFile(imageFile);
-        imagelinks.add(await imageRef.getDownloadURL());
-      }
-
-      await firebaseFirestore
-          .collection(FirebaseCollectionConst.venues)
-          .doc(id)
-          .update({
-        'imageslink': imagelinks,
-      });
-    } catch (e) {
-      DisplayToast("Update Venue Pictures: $e.toString()");
-    }
-  }
-
 // Catering Service
 
   @override
   Future<void> AddCateringService(CateringEntity cateringEntity) async {
     List<String> imagelinks = [];
-
     try {
       String autoId = FirebaseFirestore.instance
           .collection(FirebaseCollectionConst.catering)
@@ -411,8 +381,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .set(CateringModel(
             rating: 0,
             totalreviews: 0,
-            cuisinetype: cateringEntity.cuisinetype,
-            menu: cateringEntity.menu,
             imageslink: imagelinks,
             id: autoId,
             owner_id: cateringEntity.owner_id,

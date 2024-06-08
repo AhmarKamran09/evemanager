@@ -81,6 +81,7 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
               ),
             ),
             TextFormField(
+              
               initialValue: widget.venueEntity.description,
               maxLines: null, // Allow unlimited lines
               keyboardType: TextInputType.multiline, // Enable multiline input

@@ -44,6 +44,7 @@ class ClientVenuesCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         venue.name!,
@@ -62,34 +63,6 @@ class ClientVenuesCard extends StatelessWidget {
                               color: Colors.amber,
                             );
                           }),
-                      //
-                      // BlocBuilder<RatingCubit, RatingState>(
-                      //   builder: (context, state) {
-                      //     if (state is RatingSuccess) {
-                      //       return RatingBarIndicator(
-                      //           itemCount: 5,
-                      //           rating: state.ratingvalue,
-                      //           itemSize: 30.0,
-                      //           itemBuilder: (context, index) {
-                      //             return Icon(
-                      //               Icons.star_outlined,
-                      //               color: Colors.amber,
-                      //             );
-                      //           });
-                      //     } else {
-                      //       return RatingBarIndicator(
-                      //           itemCount: 5,
-                      //           rating: 0,
-                      //           itemSize: 30.0,
-                      //           itemBuilder: (context, index) {
-                      //             return Icon(
-                      //               Icons.star_outlined,
-                      //               color: Colors.amber,
-                      //             );
-                      //           });
-                      //     }
-                      //   },
-                      // )
                     ],
                   ),
                   Text('Capacity: ${venue.capacity}'),

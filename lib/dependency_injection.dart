@@ -43,10 +43,8 @@ import 'package:evemanager/domain/usecases/sweets/get_sweets_for_owner_usecase.d
 import 'package:evemanager/domain/usecases/sweets/update_sweets_usecase.dart';
 import 'package:evemanager/domain/usecases/venues/add_venue_usecase.dart';
 import 'package:evemanager/domain/usecases/venues/delete_venue_usecase.dart';
-import 'package:evemanager/domain/usecases/venues/edit_availability_of_venue_usecase.dart';
 import 'package:evemanager/domain/usecases/venues/get_venue_for_client_usecase.dart';
 import 'package:evemanager/domain/usecases/venues/get_venue_for_owner_usecase.dart';
-import 'package:evemanager/domain/usecases/venues/update_venue_pictures_usecase.dart';
 import 'package:evemanager/domain/usecases/venues/update_venue_usecase.dart';
 import 'package:evemanager/domain/usecases/videography/add_videography_usecase.dart';
 import 'package:evemanager/domain/usecases/videography/delete_videography_usecase.dart';
@@ -91,8 +89,6 @@ Future<void> init() async {
   sl.registerFactory(() => VenueCubit(
         addVenueUsecase: sl.call(),
         deleteVenueUsecase: sl.call(),
-        editAvailabilityOfVenueUsecase: sl.call(),
-        updateVenuePicturesUsecase: sl.call(),
         updateVenueUsecase: sl.call(),
         getVenueForClientUsecase: sl.call(),
         getVenueForOwnerUsecase: sl.call(),
@@ -176,12 +172,9 @@ Future<void> init() async {
   // Venue
   sl.registerLazySingleton(
       () => AddVenueUsecase(firebaseRepository: sl.call()));
-  sl.registerLazySingleton(
-      () => EditAvailabilityOfVenueUsecase(firebaseRepository: sl.call()));
+
   sl.registerLazySingleton(
       () => DeleteVenueUsecase(firebaseRepository: sl.call()));
-  sl.registerLazySingleton(
-      () => UpdateVenuePicturesUsecase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(
       () => UpdateVenueUsecase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(

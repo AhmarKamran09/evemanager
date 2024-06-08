@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:evemanager/constants.dart';
 import 'package:evemanager/data/datasource/firebase_datasource.dart';
@@ -81,19 +80,6 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
     return firebaseDatasource.UpdateVenue(venueEntity);
   }
 
-  @override
-  Future<void> EditAvailabilityOfVenue(
-      String hallid, Map<String, bool> availability) {
-    return firebaseDatasource.EditAvailabilityOfVenue(hallid, availability);
-  }
-
-  @override
-  Future<void> UpdateVenuePictures(
-    String id,
-    List<File>? images,
-  ) {
-    return firebaseDatasource.UpdateVenuePictures(id, images);
-  }
 
   @override
   Future<void> AddCateringService(CateringEntity cateringEntity) {

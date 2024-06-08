@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:evemanager/constants.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
 import 'package:evemanager/domain/entities/decorations/decorations_entity.dart';
@@ -33,13 +32,6 @@ abstract class FirebaseDatasource {
   Future<void> UpdateVenue(VenueEntity venueEntity);
   Stream<List<VenueEntity>> GetVenueforClient();
   Stream<List<VenueEntity>> GetVenueforOwner(String ownerid);
-
-  Future<void> EditAvailabilityOfVenue(
-      String hallid, Map<String, bool> availability);
-  Future<void> UpdateVenuePictures(
-    String id,
-    List<File>? images,
-  );
 
 // Catering Service
   Future<void> AddCateringService(CateringEntity cateringEntity);
