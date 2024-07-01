@@ -19,7 +19,7 @@ class VenueCubit extends Cubit<VenueState> {
     required this.getVenueForOwnerUsecase,
   }) : super(VenueInitial());
   final AddVenueUsecase addVenueUsecase;
- 
+
   final DeleteVenueUsecase deleteVenueUsecase;
   final UpdateVenueUsecase updateVenueUsecase;
   final GetVenueForClientUsecase getVenueForClientUsecase;
@@ -40,6 +40,8 @@ class VenueCubit extends Cubit<VenueState> {
   Future<void> GetVenueForOwner(String ownerid) async {
     try {
       emit(VenueLoading());
+      print('object');
+
       final streamResponse = await getVenueForOwnerUsecase.call(ownerid);
       streamResponse.listen((Venue) {
         emit(VenueSuccessForOwner(VenueEntities: Venue));
@@ -72,14 +74,11 @@ class VenueCubit extends Cubit<VenueState> {
     }
   }
 
-
-
   Future<void> UpdateVenue(
     VenueEntity VenueEntity,
   ) async {
     try {
       emit(VenueLoading());
-
       await updateVenueUsecase.call(VenueEntity);
       emit(VenueSuccess());
     } catch (e) {

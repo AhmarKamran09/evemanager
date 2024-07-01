@@ -7,6 +7,7 @@ import 'package:evemanager/domain/usecases/User/delete_user_usecase.dart';
 import 'package:evemanager/domain/usecases/User/get_current_uid_usecase.dart';
 import 'package:evemanager/domain/usecases/User/get_user_usecase.dart';
 import 'package:evemanager/domain/usecases/User/is_sign_in_usecase.dart';
+import 'package:evemanager/domain/usecases/User/reset_password_usecase.dart';
 import 'package:evemanager/domain/usecases/User/sign_in_usecase.dart';
 import 'package:evemanager/domain/usecases/User/sign_out_usecase.dart';
 import 'package:evemanager/domain/usecases/User/sign_up_usecase.dart';
@@ -77,6 +78,7 @@ Future<void> init() async {
       getCurrentUidUsecase: sl.call(),
       isSignInUsecase: sl.call()));
   sl.registerFactory(() => CredentialsCubit(
+        resetPasswordUsecase: sl.call(),
         signInUsecase: sl.call(),
         signUpUserUsecase: sl.call(),
       ));
@@ -147,8 +149,8 @@ Future<void> init() async {
   sl.registerFactory(() => MessagesCubit(
         getMessagesUsecase: sl.call(),
         sendMessageUsecase: sl.call(),
-      )); 
-      sl.registerFactory(() => RatingCubit(
+      ));
+  sl.registerFactory(() => RatingCubit(
         addRatingUsecase: sl.call(),
       ));
 
@@ -156,6 +158,9 @@ Future<void> init() async {
 
   // Users
   sl.registerLazySingleton(() => SignOutUsecase(firebaseRepository: sl.call()));
+  sl.registerLazySingleton(
+      () => ResetPasswordUsecase(firebaseRepository: sl.call()));
+
   sl.registerLazySingleton(
       () => DeleteUserUsecase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(

@@ -24,6 +24,9 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state is CredentialsLoading) {
           Navigator.pushReplacementNamed(context, PageNames.LoadingScreen);
         }
+        if (state is CredentialsSuccessForResetPassword) {
+          DisplayToast('Email Sent');
+        }
         if (state is CredentialsSuccess) {
           Navigator.pushReplacementNamed(context, PageNames.HomeScreen);
         } else {
@@ -62,7 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: 250,
                 ),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _resetpassword(context);
+                    },
                     child: Text(
                       "Forgot Password?",
                       style: TextStyle(color: black.withOpacity(0.4)),
@@ -97,6 +102,13 @@ class _LoginScreenState extends State<LoginScreen> {
         user: UserEntity(
       email: email.text,
       password: password.text,
+    ));
+  }
+
+  Future<void> _resetpassword(BuildContext context) async {
+    await BlocProvider.of<CredentialsCubit>(context).ResetPassword(
+        user: UserEntity(
+      email: email.text,
     ));
   }
 }

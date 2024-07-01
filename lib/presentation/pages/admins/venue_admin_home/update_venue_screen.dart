@@ -1,8 +1,12 @@
 import 'dart:io';
 
+import 'package:evemanager/constants.dart';
 import 'package:evemanager/domain/entities/venues/venue_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../cubit/venue/venue_cubit.dart';
 
 class UpdateVenueScreen extends StatefulWidget {
   UpdateVenueScreen({super.key, required this.venueEntity});
@@ -13,11 +17,15 @@ class UpdateVenueScreen extends StatefulWidget {
 }
 
 class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
-  // String? _address;
-  // int? _capacity;
-  // String? _contact;
-  // String? _description;
-  List<String>? _facilities;
+  TextEditingController capacitycontroller = TextEditingController();
+  TextEditingController contactcontroller = TextEditingController();
+  TextEditingController descriptioncontroller = TextEditingController();
+
+  List<String>? _facilities = [];
+
+  List<File> selectedImages = [];
+
+  Map<String, dynamic>? pricingInfo;
 
   // List of available facilities
   List<String> _availableFacilities = [
@@ -29,9 +37,48 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
     'Stage',
     // Add more facilities as needed
   ];
-  List<File> selectedImages = [];
   @override
   Widget build(BuildContext context) {
+    for (int i = 0; i < (widget.venueEntity.facilities?.length ?? 0); i++) {
+      if (!_facilities!.contains(widget.venueEntity.facilities![i])) {
+        _facilities?.add(widget.venueEntity.facilities![i]);
+      }
+    }
+
+    capacitycontroller.text = widget.venueEntity.capacity!.toString();
+    contactcontroller.text = widget.venueEntity.contact!;
+    descriptioncontroller.text = widget.venueEntity.description!;
+
+    return BlocConsumer<VenueCubit, VenueState>(listener: (context, state) {
+      if (state is VenueSuccess) {
+        DisplayToast('Updated Successfully. Refresh To See Updates');
+        Navigator.pop(context);
+      } else if (state is VenueFailure) {
+        DisplayToast('Some Failure Occurred');
+      }
+    }, builder: (BuildContext context, VenueState state) {
+      if (state is VenueLoading) {
+        return PopScope(
+          canPop: false,
+          child: Stack(
+            children: [
+              _body(context),
+              Container(
+                color: Colors.black
+                    .withOpacity(0.5), // Semi-transparent black background
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            ],
+          ),
+        );
+      } else
+        return _body(context);
+    });
+  }
+
+  Scaffold _body(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -73,16 +120,12 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
                     },
                   )),
             ),
-            Text(
-              widget.venueEntity.name!,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 26, // Set the font size
-              ),
+            Text(widget.venueEntity.name!),
+            SizedBox(
+              height: 5,
             ),
             TextFormField(
-              
-              initialValue: widget.venueEntity.description,
+              controller: descriptioncontroller,
               maxLines: null, // Allow unlimited lines
               keyboardType: TextInputType.multiline, // Enable multiline input
               decoration: InputDecoration(
@@ -93,7 +136,7 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
               height: 5,
             ),
             TextFormField(
-              initialValue: widget.venueEntity.contact,
+              controller: contactcontroller,
               maxLines: 1, // Allow unlimited lines
               decoration: InputDecoration(
                 border: OutlineInputBorder(), // Box type decoration with border
@@ -103,7 +146,7 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
               height: 5,
             ),
             TextFormField(
-              initialValue: widget.venueEntity.capacity.toString(),
+              controller: capacitycontroller,
               maxLines: 1, // Allow unlimited lines
               decoration: InputDecoration(
                 border: OutlineInputBorder(), // Box type decoration with border
@@ -114,19 +157,22 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
               itemCount: _availableFacilities.length,
               itemBuilder: (context, index) {
                 final facility = _availableFacilities[index];
+                final valuebool = (_facilities?.contains(facility) ?? false);
                 return CheckboxListTile(
                   title: Text(facility),
-                  value: _facilities?.contains(facility) ?? false,
+                  value: valuebool,
                   onChanged: (bool? checked) {
                     setState(() {
-                      if (checked != null) {
-                        if (_facilities == null) {
-                          _facilities = [];
-                        }
-                        if (checked) {
+                      if (checked ?? false) {
+                        if (!_facilities!.contains(facility)) {
                           _facilities!.add(facility);
-                        } else {
-                          _facilities!.remove(facility);
+                        }
+                      } else {
+                        _facilities!
+                            .removeWhere((element) => element == facility);
+                        if (widget.venueEntity.facilities!.contains(facility)) {
+                          widget.venueEntity.facilities!
+                              .removeWhere((element) => element == facility);
                         }
                       }
                     });
@@ -134,16 +180,20 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
                 );
               },
             ),
+            Container(
+              color: lightBlue.withOpacity(0.5),
+              child: TextButton(
+                onPressed: () {
+                  _updatevenue(context);
+                },
+                child: Text('Save'),
+              ),
+            )
           ],
         ),
       ),
     );
   }
-
-  // final String? address;
-
-  // final Map<String, dynamic>? pricingInfo;
-  // final Map<String, Map<String, bool>>? availability;
 
   Future<void> pickImages() async {
     final List<XFile>? result = await ImagePicker().pickMultiImage();
@@ -153,11 +203,21 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
       });
     }
   }
+
+  Future<void> _updatevenue(BuildContext context) async {
+    if (selectedImages.isEmpty) {
+      selectedImages = widget.venueEntity.images!;
+    }
+
+    await BlocProvider.of<VenueCubit>(context).UpdateVenue(VenueEntity(
+      id: widget.venueEntity.id,
+      description: descriptioncontroller.text,
+      contact: contactcontroller.text,
+      capacity: int.parse(capacitycontroller.text),
+      facilities: _facilities,
+      pricingInfo: pricingInfo,
+      images: selectedImages,
+    ));
+    _facilities = [];
+  }
 }
-
-  // Future<void> EditAvailabilityOfVenue
-
-  // Future<void> UpdateVenuesPictures
-
-  // Future<void> UpdateVenue
-  

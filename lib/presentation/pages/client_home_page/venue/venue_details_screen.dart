@@ -10,6 +10,7 @@ import 'package:evemanager/presentation/pages/loading_screen/loading_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VenueDetailsScreen extends StatefulWidget {
   VenueDetailsScreen(
@@ -41,12 +42,12 @@ class _VenueDetailsScreenState extends State<VenueDetailsScreen> {
         if (state is MessagesLoading) {
           return LoadingScreen();
         } else
-          return _body(context, _rating);
+          return _body(context, _rating, widget.venueEntity);
       },
     );
   }
 
-  Widget _body(BuildContext context, double _rating) {
+  Widget _body(BuildContext context, double _rating, VenueEntity venueEntity) {
     return BlocListener<RatingCubit, RatingState>(
       listener: (context, state) {
         if (state is RatingSuccess) {
@@ -93,7 +94,11 @@ class _VenueDetailsScreenState extends State<VenueDetailsScreen> {
             ),
             Row(
               children: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
+                IconButton(
+                    onPressed: () {
+                      _launchDialer(venueEntity.contact!);
+                    },
+                    icon: Icon(Icons.phone)),
                 IconButton(
                     onPressed: () {
                       showDialog(
@@ -113,13 +118,6 @@ class _VenueDetailsScreenState extends State<VenueDetailsScreen> {
                                 ],
                               ),
                               actions: <Widget>[
-                                // TextButton(
-                                //   onPressed: () {
-                                //     Navigator.of(context)
-                                //         .pop(); // Close the dialog
-                                //   },
-                                //   child: Text('Close'),
-                                // ),
                                 IconButton(
                                     onPressed: () {
                                       // print('object');
@@ -161,7 +159,6 @@ class _VenueDetailsScreenState extends State<VenueDetailsScreen> {
                           });
                     },
                     icon: Icon(Icons.message)),
-                TextButton(onPressed: () {}, child: Text('Book Now '))
               ],
             ),
             TextButton(
@@ -200,7 +197,7 @@ class _VenueDetailsScreenState extends State<VenueDetailsScreen> {
                                   // print('object');
                                   BlocProvider.of<RatingCubit>(context)
                                       .addRating(
-                                        firebase_enum: Firebase_enum.venues,
+                                          firebase_enum: Firebase_enum.venues,
                                           rating: _rating,
                                           serviceId: widget.venueEntity.id!);
 
@@ -221,5 +218,17 @@ class _VenueDetailsScreenState extends State<VenueDetailsScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _launchDialer(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri);
+    } else {
+      throw 'Could not launch $phoneNumber';
+    }
   }
 }

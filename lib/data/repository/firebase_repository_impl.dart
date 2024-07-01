@@ -35,6 +35,10 @@ class FirebaseRepositoryImpl implements FirebaseRepository {
   Future<void> SignOutUser() async {
     await firebaseDatasource.SignOutUser();
   }
+  @override
+  Future<void> ResetPassword(UserEntity user) async {
+    await firebaseDatasource.ResetPassword(user);
+  }
 
   @override
   Future<bool> SignInUser(UserEntity user) async =>

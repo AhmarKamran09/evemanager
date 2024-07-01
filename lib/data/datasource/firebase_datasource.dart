@@ -17,6 +17,7 @@ abstract class FirebaseDatasource {
   Future<String?> GetCurrentUid();
   Future<bool> SignInUser(UserEntity user);
   Future<void> SignUpUser(UserEntity user);
+  Future<void> ResetPassword(UserEntity user);
   Future<void> SignOutUser();
   Future<bool> IsSignInUser();
 

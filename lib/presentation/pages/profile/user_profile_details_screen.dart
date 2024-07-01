@@ -25,11 +25,6 @@ class _UserProfileDetailsScreenState extends State<UserProfileDetailsScreen> {
     String? uidvalue = ModalRoute.of(context)?.settings.arguments as String?;
     cnic?.text = "0";
     contact_number?.text = "0";
-    // i have to remove the inheritance of uid as it is not required the uid is get here itself in a function
-    bool readonly = false;
-// i have to call get user of user cubit so that  when we show this screen we want
-// to add different functionality for different roles
-// for example for hall role we want to add a button to add hall
 
     return BlocConsumer<UserProfileCubit, UserProfileState>(
         listener: (context, state) {
@@ -47,13 +42,13 @@ class _UserProfileDetailsScreenState extends State<UserProfileDetailsScreen> {
         cnic?.text = state.user.cnic.toString();
         address?.text = state.user.address ?? "";
 
-        return _body(readonly, context, uidvalue);
+        return _body(context, uidvalue);
       }
-      return _body(readonly, context, uidvalue);
+      return _body(context, uidvalue);
     });
   }
 
-  Scaffold _body(bool readonly, BuildContext context, String? uidvalue) {
+  Scaffold _body(BuildContext context, String? uidvalue) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -64,34 +59,18 @@ class _UserProfileDetailsScreenState extends State<UserProfileDetailsScreen> {
         child: ListView(
           children: [
             MyTextField(
-                readonly: readonly,
-                fieldvalue: name!,
-                label: "Name",
-                hint: "Enter Your Name"),
+                fieldvalue: name!, label: "Name", hint: "Enter Your Name"),
             MyTextField(
-                readonly: readonly,
                 fieldvalue: contact_number!,
                 label: "Contact Number",
                 hint: "Enter Your Contact Number"),
             MyTextField(
-                readonly: readonly,
-                fieldvalue: cnic!,
-                label: "CNIC",
-                hint: "Enter Your CNIC"),
+                fieldvalue: cnic!, label: "CNIC", hint: "Enter Your CNIC"),
             MyTextField(
-                readonly: readonly,
                 fieldvalue: address!,
                 label: "Address",
                 hint: "Enter Your Address"),
             SizedBox(height: 20),
-            Switch(
-              onChanged: (e) {
-                // setState(() {
-                //   readonly = e;
-                // });
-              },
-              value: readonly,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -117,22 +96,14 @@ class _UserProfileDetailsScreenState extends State<UserProfileDetailsScreen> {
   }
 
   Future<void> _update(BuildContext context, String? uidvalue) async {
-// apply conditions of checking that the int valyues are not empty,int inputs are
-// not having text characters,if all the etxt editing controllers have some value
-//meaning they aere not null
-
     await BlocProvider.of<UserProfileCubit>(context).UpdateUser(
         user: UserEntity(
       uid: uidvalue,
       name: name!.text,
       contact_number: contact_number!.text,
-      // contact_number!.text.isNotEmpty ? int.parse(contact_number!.text) : 0,
       cnic: cnic!.text,
-      // cnic!.text.isNotEmpty ? int.parse(cnic!.text) : 0,
       address: address!.text,
     ));
-      //  Navigator.pushReplacementNamed(context, PageNames.);
- 
   }
 
   Future<void> deleteaccount(BuildContext context, String? uidvalue) async {

@@ -10,6 +10,10 @@ class AdminVenueCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _body(context);
+  }
+
+  Card _body(BuildContext context) {
     return Card(
       elevation: 3.0,
       margin: EdgeInsets.symmetric(vertical: 8.0),
@@ -44,7 +48,7 @@ class AdminVenueCard extends StatelessWidget {
                     ),
                     Text('Capacity: ${venue.capacity ?? ""}'),
                     Text('Contact: ${venue.contact ?? ""}'),
-                    ( venue.pricingInfo == null)
+                    (venue.pricingInfo == null)
                         ? Text(
                             'Not published ',
                             style: TextStyle(color: Colors.red),

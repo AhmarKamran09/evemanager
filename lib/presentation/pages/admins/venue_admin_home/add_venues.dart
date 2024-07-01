@@ -22,12 +22,21 @@ class AddVenues extends StatefulWidget {
 class _AddVenuesState extends State<AddVenues> {
   List<File> selectedImages = [];
 
+  List<String> _availableFacilities = [
+    'Wifi',
+    'Parking',
+    'Catering',
+    'AC',
+    'Projector Lights',
+    'Stage',
+    // Add more facilities as needed
+  ];
   final TextEditingController name = TextEditingController();
   final TextEditingController address = TextEditingController();
   final TextEditingController capacity = TextEditingController();
   final TextEditingController contact = TextEditingController();
-  final TextEditingController facilities = TextEditingController();
   final TextEditingController description = TextEditingController();
+  List<String>? _facilities = [];
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<VenueCubit, VenueState>(listener: (context, state) {
@@ -41,17 +50,20 @@ class _AddVenuesState extends State<AddVenues> {
       }
     }, builder: (BuildContext context, VenueState state) {
       if (state is VenueLoading) {
-        return Stack(
-          children: [
-            _body(context, widget.uid),
-            Container(
-              color: Colors.black
-                  .withOpacity(0.5), // Semi-transparent black background
-              child: Center(
-                child: CircularProgressIndicator(),
+        return PopScope(
+          canPop: false,
+          child: Stack(
+            children: [
+              _body(context, widget.uid),
+              Container(
+                color: Colors.black
+                    .withOpacity(0.5), // Semi-transparent black background
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       } else
         return _body(context, widget.uid);
@@ -114,13 +126,34 @@ class _AddVenuesState extends State<AddVenues> {
               label: "contact",
               hint: "Enter Venue contact number"),
           MyTextField(
-              fieldvalue: facilities,
-              label: "Facilities",
-              hint: "Enter Venue Facilities"),
-          MyTextField(
             fieldvalue: description,
             label: "Description",
             hint: "Enter Venue dscription",
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: _availableFacilities.length,
+            itemBuilder: (context, index) {
+              final facility = _availableFacilities[index];
+              return CheckboxListTile(
+                title: Text(facility),
+                value: (_facilities?.contains(facility) ?? false),
+                onChanged: (bool? checked) {
+                  setState(() {
+                    if (checked != null) {
+                      if (_facilities == null) {
+                        _facilities = [];
+                      }
+                      if (checked) {
+                        _facilities!.add(facility);
+                      } else {
+                        _facilities!.remove(facility);
+                      }
+                    }
+                  });
+                },
+              );
+            },
           ),
           TextButton(
             onPressed: () {
@@ -147,7 +180,7 @@ class _AddVenuesState extends State<AddVenues> {
         address.text.isNotEmpty &&
         capacity.text.isNotEmpty &&
         contact.text.isNotEmpty &&
-        facilities.text.isNotEmpty &&
+        _facilities!.isNotEmpty &&
         selectedImages.isNotEmpty &&
         description.text.isNotEmpty) {
       await BlocProvider.of<VenueCubit>(context).AddVenue(VenueEntity(
@@ -157,7 +190,7 @@ class _AddVenuesState extends State<AddVenues> {
         address: address.text,
         capacity: int.parse(capacity.text),
         contact: contact.text,
-        facilities: [facilities.text],
+        facilities: _facilities,
         description: description.text,
       ));
     } else {

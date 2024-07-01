@@ -104,8 +104,8 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
       UserCredential userCredential =
           await firebaseAuth.createUserWithEmailAndPassword(
               email: user.email!, password: user.password!);
-      // await firebaseAuth.currentUser?.sendEmailVerification();
-      // DisplayToast("Verification Email Sent");
+      await firebaseAuth.currentUser?.sendEmailVerification();
+      DisplayToast("Verification Email Sent");
       String newuid = userCredential.user!.uid;
       firebaseFirestore
           .collection(FirebaseCollectionConst.user)
@@ -118,6 +118,14 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
             cnic: user.cnic,
             address: user.address,
           ).toJson());
+    } catch (e) {
+      DisplayToast(e.toString());
+    }
+  }
+
+  Future<void> ResetPassword(UserEntity user) async {
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: user.email!);
     } catch (e) {
       DisplayToast(e.toString());
     }
@@ -319,34 +327,47 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   @override
   Future<void> UpdateVenue(VenueEntity venueEntity) async {
     try {
-      Reference mainFolderRef =
-          storage.ref().child(FirebaseCollectionConst.venues);
-      Reference subfolderRef = mainFolderRef.child(venueEntity.id!);
-      ListResult listResult = await subfolderRef.listAll();
-      await Future.forEach(listResult.items, (Reference item) async {
-        await item.delete();
-      });
+      List<File> new_images_list = [];
       List<String> imagelinks = [];
+      if (venueEntity.images?.isNotEmpty ?? false) {
+        Reference mainFolderRef =
+            storage.ref().child(FirebaseCollectionConst.venues);
+        Reference subfolderRef = mainFolderRef.child(venueEntity.id!);
+        ListResult listResult = await subfolderRef.listAll();
+        await Future.forEach(listResult.items, (Reference item) async {
+          await item.delete();
+        });
 
-      for (int i = 0; i < venueEntity.images!.length; i++) {
-        File imageFile = venueEntity.images![i];
-        String imageName = DateTime.now().millisecondsSinceEpoch.toString();
-        Reference imageRef = subfolderRef.child('$imageName.jpg');
-        await imageRef.putFile(imageFile);
-        imagelinks.add(await imageRef.getDownloadURL());
+        for (int i = 0; i < venueEntity.images!.length; i++) {
+          File imageFile = venueEntity.images![i];
+          new_images_list.add(imageFile);
+          String imageName = DateTime.now().millisecondsSinceEpoch.toString();
+          Reference imageRef = subfolderRef.child('$imageName.jpg');
+          await imageRef.putFile(imageFile);
+          imagelinks.add(await imageRef.getDownloadURL());
+        }
+        if ((venueEntity.images != null)) {
+          try {
+            await firebaseFirestore
+                .collection(FirebaseCollectionConst.venues)
+                .doc(venueEntity.id!)
+                .update({
+              'imageslink': imagelinks,
+            });
+          } catch (e) {
+            DisplayToast('Error in update Venue (Pictures): $e');
+          }
+        }
       }
-
       await firebaseFirestore
           .collection(FirebaseCollectionConst.venues)
           .doc(venueEntity.id!)
           .update({
-        'name': venueEntity.name,
         'capacity': venueEntity.capacity,
         'contact': venueEntity.contact,
         'facilities': venueEntity.facilities,
         'pricingInfo': venueEntity.pricingInfo,
         'description': venueEntity.description,
-        'imageslink': imagelinks,
       });
     } catch (e) {
       DisplayToast('Error in Update Venue: $e');
@@ -1200,7 +1221,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         DisplayToast('Error in GetChats Client: $error');
       });
     } catch (error) {
-      print('Error fetching chats for client: $error');
       throw error;
     }
   }
@@ -1222,7 +1242,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         DisplayToast('Error in GetChats Admin: $error');
       });
     } catch (error) {
-      print('Error fetching chatsfor admin : $error');
       throw error;
     }
   }
@@ -1277,7 +1296,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
 
       return _messageStreamControllerforclient.stream.asBroadcastStream();
     } catch (error) {
-      print('Error fetching messages: $error');
       throw error;
       // You can handle the error according to your application's logic
     }
@@ -1337,9 +1355,7 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
               senderid: messageEntity.senderid,
             ).toJson(),
           );
-    } catch (error) {
-      print('Error sending message: $error');
-    }
+    } catch (error) {}
   }
 
 // Rating
@@ -1392,8 +1408,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         newraiting =
             (currentRating * currentTotalReviews + rating) / newtotalreviews;
       }
-      print(currentTotalReviews);
-      print(currentRating);
 
       await firebaseFirestore.collection(collection).doc(serviceId).update({
         'rating': newraiting,

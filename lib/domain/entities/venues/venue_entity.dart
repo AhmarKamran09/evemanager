@@ -35,13 +35,18 @@ class VenueEntity extends ServiceEntity {
   factory VenueEntity.factory(
       DocumentSnapshot snapshot, List<File>? imagesfromstorage) {
     var snap = snapshot.data() as Map<String, dynamic>;
+    List<String> facilitiesmodel = [];
+    for (int i = 0; i < snap['facilities'].length; i++) {
+      facilitiesmodel.add(snap['facilities'][i].toString());
+    }
 
     return VenueEntity(
       images: imagesfromstorage,
       name: snap['name'],
       capacity: snap['capacity'],
       contact: snap['contact'],
-      // facilities: snap['facilities'],
+      // facilities: snap['facilities'] as List<String>,
+      facilities: facilitiesmodel,
       pricingInfo: snap['pricingInfo'],
       description: snap['description'],
       id: snap['id'],

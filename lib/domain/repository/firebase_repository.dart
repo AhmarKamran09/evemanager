@@ -1,4 +1,3 @@
-
 import 'package:evemanager/constants.dart';
 import 'package:evemanager/domain/entities/catering/catering_entity.dart';
 import 'package:evemanager/domain/entities/decorations/decorations_entity.dart';
@@ -20,13 +19,14 @@ abstract class FirebaseRepository {
   Future<void> SignOutUser();
   Future<bool> IsSignInUser();
   Future<void> UpdateUser(UserEntity user);
+  Future<void> ResetPassword(UserEntity user);
   Future<void> DeleteUser(String uid);
   Future<UserEntity> GetUser(String uid);
   Future<String?> GetCurrentUid();
 
   // Venues
   Future<void> AddVenue(VenueEntity venueEntity);
- 
+
   Future<void> DeleteVenue(String id);
   Future<void> UpdateVenue(VenueEntity venueEntity);
 
@@ -89,6 +89,8 @@ abstract class FirebaseRepository {
   Stream<List<ChatEntity>> GetChatsForAdmin(String userid);
 
 // Rating
-Future<void> AddRating({required double rating,required String serviceId,required Firebase_enum firebase_enum});
-
+  Future<void> AddRating(
+      {required double rating,
+      required String serviceId,
+      required Firebase_enum firebase_enum});
 }

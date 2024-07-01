@@ -22,6 +22,11 @@ final class CredentialsSuccess extends CredentialsState {
   List<Object> get props => [];
 }
 
+final class CredentialsSuccessForResetPassword extends CredentialsState {
+  @override
+  List<Object> get props => [];
+}
+
 final class CredentialFailure extends CredentialsState {
   @override
   List<Object> get props => [];
