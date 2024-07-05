@@ -6,19 +6,19 @@ class ServiceModel {
   final String? name;
   final String? contact;
   final List<String>? facilities;
-  final Map<String, dynamic>? pricingInfo;
   final String? description;
   final int? totalreviews;
-  final double? rating;
+  final double? rating;  final String? city;
+
 
   ServiceModel({
+    this.city,
     this.totalreviews,
     this.rating,
     this.imageslink,
     this.name,
     this.contact,
     this.facilities,
-    this.pricingInfo,
     this.description,
     this.id,
     this.owner_id,

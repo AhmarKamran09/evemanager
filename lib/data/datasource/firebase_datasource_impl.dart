@@ -229,19 +229,19 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.venues)
           .doc(autoId)
           .set(VenueModel(
-            rating: 0,
-            totalreviews: 0,
-            imageslink: imagelinks,
-            id: autoId,
-            owner_id: venueEntity.owner_id,
-            address: venueEntity.address,
-            name: venueEntity.name,
-            capacity: venueEntity.capacity,
-            contact: venueEntity.contact,
-            facilities: venueEntity.facilities,
-            pricingInfo: venueEntity.pricingInfo,
-            description: venueEntity.description,
-          ).toJson());
+                  rating: 0,
+                  totalreviews: 0,
+                  imageslink: imagelinks,
+                  id: autoId,
+                  owner_id: venueEntity.owner_id,
+                  address: venueEntity.address,
+                  name: venueEntity.name,
+                  capacity: venueEntity.capacity,
+                  contact: venueEntity.contact,
+                  facilities: venueEntity.facilities,
+                  description: venueEntity.description,
+                  city: venueEntity.city)
+              .toJson());
     } catch (e) {
       DisplayToast('error in add venue ${e.toString()}');
     }
@@ -327,7 +327,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   @override
   Future<void> UpdateVenue(VenueEntity venueEntity) async {
     try {
-      List<File> new_images_list = [];
       List<String> imagelinks = [];
       if (venueEntity.images?.isNotEmpty ?? false) {
         Reference mainFolderRef =
@@ -340,7 +339,6 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
 
         for (int i = 0; i < venueEntity.images!.length; i++) {
           File imageFile = venueEntity.images![i];
-          new_images_list.add(imageFile);
           String imageName = DateTime.now().millisecondsSinceEpoch.toString();
           Reference imageRef = subfolderRef.child('$imageName.jpg');
           await imageRef.putFile(imageFile);
@@ -366,8 +364,9 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
         'capacity': venueEntity.capacity,
         'contact': venueEntity.contact,
         'facilities': venueEntity.facilities,
-        'pricingInfo': venueEntity.pricingInfo,
         'description': venueEntity.description,
+        'address': venueEntity.address,
+        'city': venueEntity.city
       });
     } catch (e) {
       DisplayToast('Error in Update Venue: $e');
@@ -400,18 +399,20 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.catering)
           .doc(autoId)
           .set(CateringModel(
-            rating: 0,
-            totalreviews: 0,
-            imageslink: imagelinks,
-            id: autoId,
-            owner_id: cateringEntity.owner_id,
-            address: cateringEntity.address,
-            name: cateringEntity.name,
-            contact: cateringEntity.contact,
-            facilities: cateringEntity.facilities,
-            pricingInfo: cateringEntity.pricingInfo,
-            description: cateringEntity.description,
-          ).toJson());
+                  rating: 0,
+                  totalreviews: 0,
+                  imageslink: imagelinks,
+                  id: autoId,
+                  owner_id: cateringEntity.owner_id,
+                  address: cateringEntity.address,
+                  name: cateringEntity.name,
+                  contact: cateringEntity.contact,
+                  facilities: cateringEntity.facilities,
+                  description: cateringEntity.description,
+                  // menu: cateringEntity.menu,
+                  // cuisinetype: cateringEntity.cuisinetype,
+                  city: cateringEntity.city)
+              .toJson());
     } catch (e) {
       DisplayToast('error in add Catering ${e.toString()}');
     }
@@ -497,17 +498,48 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   @override
   Future<void> UpdateCateringService(CateringEntity cateringEntity) async {
     try {
+      List<String> imagelinks = [];
+      if (cateringEntity.images?.isNotEmpty ?? false) {
+        Reference mainFolderRef =
+            storage.ref().child(FirebaseCollectionConst.catering);
+        Reference subfolderRef = mainFolderRef.child(cateringEntity.id!);
+        ListResult listResult = await subfolderRef.listAll();
+        await Future.forEach(listResult.items, (Reference item) async {
+          await item.delete();
+        });
+
+        for (int i = 0; i < cateringEntity.images!.length; i++) {
+          File imageFile = cateringEntity.images![i];
+          String imageName = DateTime.now().millisecondsSinceEpoch.toString();
+          Reference imageRef = subfolderRef.child('$imageName.jpg');
+          await imageRef.putFile(imageFile);
+          imagelinks.add(await imageRef.getDownloadURL());
+        }
+        if ((cateringEntity.images != null)) {
+          try {
+            await firebaseFirestore
+                .collection(FirebaseCollectionConst.catering)
+                .doc(cateringEntity.id!)
+                .update({
+              'imageslink': imagelinks,
+            });
+          } catch (e) {
+            DisplayToast('Error in update Caterring (Pictures): $e');
+          }
+        }
+      }
+
       await firebaseFirestore
           .collection(FirebaseCollectionConst.catering)
           .doc(cateringEntity.id!)
           .update({
-        'cuisinetype': cateringEntity.cuisinetype,
-        'menu': cateringEntity.menu,
-        'name': cateringEntity.name,
+        // 'cuisinetype': cateringEntity.cuisinetype,
+        // 'menu': cateringEntity.menu,
         'contact': cateringEntity.contact,
         'facilities': cateringEntity.facilities,
-        'pricingInfo': cateringEntity.pricingInfo,
         'description': cateringEntity.description,
+        'address': cateringEntity.address,
+        'city': cateringEntity.city
       });
     } catch (e) {
       DisplayToast('Error in Update Catering Service: $e');
@@ -541,17 +573,18 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.decorations)
           .doc(autoId)
           .set(DecorationModel(
-            // Assuming DecorationsModel is the corresponding model
-            // Adjust the fields accordingly
-            // type: decorationsEntity.type,
-            // brand: decorationsEntity.brand,
-            rating: 0,
-            totalreviews: 0,
-            imageslink: imagelinks,
-            id: autoId,
-            owner_id: decorationsEntity.owner_id,
-            // Add other fields as needed
-          ).toJson());
+                  rating: 0,
+                  totalreviews: 0,
+                  imageslink: imagelinks,
+                  name: decorationsEntity.name,
+                  address: decorationsEntity.address,
+                  contact: decorationsEntity.contact,
+                  facilities: decorationsEntity.facilities,
+                  description: decorationsEntity.description,
+                  id: autoId,
+                  owner_id: decorationsEntity.owner_id,
+                  city: decorationsEntity.city)
+              .toJson());
     } catch (e) {
       DisplayToast('error in add Decorations Service ${e.toString()}');
     }
@@ -639,13 +672,46 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   @override
   Future<void> UpdateDecorations(DecorationsEntity decorationsEntity) async {
     try {
+      List<String> imagelinks = [];
+      if (decorationsEntity.images?.isNotEmpty ?? false) {
+        Reference mainFolderRef =
+            storage.ref().child(FirebaseCollectionConst.decorations);
+        Reference subfolderRef = mainFolderRef.child(decorationsEntity.id!);
+        ListResult listResult = await subfolderRef.listAll();
+        await Future.forEach(listResult.items, (Reference item) async {
+          await item.delete();
+        });
+
+        for (int i = 0; i < decorationsEntity.images!.length; i++) {
+          File imageFile = decorationsEntity.images![i];
+          String imageName = DateTime.now().millisecondsSinceEpoch.toString();
+          Reference imageRef = subfolderRef.child('$imageName.jpg');
+          await imageRef.putFile(imageFile);
+          imagelinks.add(await imageRef.getDownloadURL());
+        }
+        if ((decorationsEntity.images != null)) {
+          try {
+            await firebaseFirestore
+                .collection(FirebaseCollectionConst.decorations)
+                .doc(decorationsEntity.id!)
+                .update({
+              'imageslink': imagelinks,
+            });
+          } catch (e) {
+            DisplayToast('Error in update Decorations (Pictures): $e');
+          }
+        }
+      }
+
       await firebaseFirestore
           .collection(FirebaseCollectionConst.decorations)
           .doc(decorationsEntity.id!)
           .update({
-        // 'type': decorationsEntity.type,
-        // 'brand': decorationsEntity.brand,
-        // Add other fields as needed
+        'contact': decorationsEntity.contact,
+        'facilities': decorationsEntity.facilities,
+        'description': decorationsEntity.description,
+        'address': decorationsEntity.address,
+        'city': decorationsEntity.city
       });
     } catch (e) {
       DisplayToast('Error in Update Decorations Service: $e');
@@ -679,17 +745,18 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.entertainment)
           .doc(autoId)
           .set(EntertainmentModel(
-            // Assuming EntertainmentModel is the corresponding model
-            // Adjust the fields accordingly
-            // type: entertainmentEntity.type,
-            // brand: entertainmentEntity.brand,
-            rating: 0,
-            totalreviews: 0,
-            imageslink: imagelinks,
-            id: autoId,
-            owner_id: entertainmentEntity.owner_id,
-            // Add other fields as needed
-          ).toJson());
+                  rating: 0,
+                  totalreviews: 0,
+                  imageslink: imagelinks,
+                  id: autoId,
+                  owner_id: entertainmentEntity.owner_id,
+                  name: entertainmentEntity.name,
+                  contact: entertainmentEntity.contact,
+                  facilities: entertainmentEntity.facilities,
+                  description: entertainmentEntity.description,
+                  address: entertainmentEntity.description,
+                  city: entertainmentEntity.city)
+              .toJson());
     } catch (e) {
       DisplayToast('error in add Entertainment Service ${e.toString()}');
     }
@@ -778,13 +845,46 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   Future<void> UpdateEntertainment(
       EntertainmentEntity entertainmentEntity) async {
     try {
+      List<String> imagelinks = [];
+      if (entertainmentEntity.images?.isNotEmpty ?? false) {
+        Reference mainFolderRef =
+            storage.ref().child(FirebaseCollectionConst.entertainment);
+        Reference subfolderRef = mainFolderRef.child(entertainmentEntity.id!);
+        ListResult listResult = await subfolderRef.listAll();
+        await Future.forEach(listResult.items, (Reference item) async {
+          await item.delete();
+        });
+
+        for (int i = 0; i < entertainmentEntity.images!.length; i++) {
+          File imageFile = entertainmentEntity.images![i];
+          String imageName = DateTime.now().millisecondsSinceEpoch.toString();
+          Reference imageRef = subfolderRef.child('$imageName.jpg');
+          await imageRef.putFile(imageFile);
+          imagelinks.add(await imageRef.getDownloadURL());
+        }
+        if ((entertainmentEntity.images != null)) {
+          try {
+            await firebaseFirestore
+                .collection(FirebaseCollectionConst.entertainment)
+                .doc(entertainmentEntity.id!)
+                .update({
+              'imageslink': imagelinks,
+            });
+          } catch (e) {
+            DisplayToast('Error in update Entertainment (Pictures): $e');
+          }
+        }
+      }
+
       await firebaseFirestore
           .collection(FirebaseCollectionConst.entertainment)
           .doc(entertainmentEntity.id!)
           .update({
-        // 'type': entertainmentEntity.type,
-        // 'brand': entertainmentEntity.brand,
-        // Add other fields as needed
+        'contact': entertainmentEntity.contact,
+        'facilities': entertainmentEntity.facilities,
+        'description': entertainmentEntity.description,
+        'address': entertainmentEntity.address,
+        'city': entertainmentEntity.city
       });
     } catch (e) {
       DisplayToast('Error in Update Entertainment Service: $e');
@@ -818,17 +918,18 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.photography)
           .doc(autoId)
           .set(PhotographyModel(
-            rating: 0,
-            totalreviews: 0,
-            // Assuming PhotographyModel is the corresponding model
-            // Adjust the fields accordingly
-            // type: photographyEntity.type,
-            // brand: photographyEntity.brand,
-            imageslink: imagelinks,
-            id: autoId,
-            owner_id: photographyEntity.owner_id,
-            // Add other fields as needed
-          ).toJson());
+                  rating: 0,
+                  totalreviews: 0,
+                  imageslink: imagelinks,
+                  id: autoId,
+                  owner_id: photographyEntity.owner_id,
+                  name: photographyEntity.name,
+                  contact: photographyEntity.contact,
+                  facilities: photographyEntity.facilities,
+                  description: photographyEntity.description,
+                  address: photographyEntity.address,
+                  city: photographyEntity.city)
+              .toJson());
     } catch (e) {
       DisplayToast('error in add Photography Service ${e.toString()}');
     }
@@ -916,13 +1017,46 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   @override
   Future<void> UpdatePhotography(PhotographyEntity photographyEntity) async {
     try {
+      List<String> imagelinks = [];
+      if (photographyEntity.images?.isNotEmpty ?? false) {
+        Reference mainFolderRef =
+            storage.ref().child(FirebaseCollectionConst.photography);
+        Reference subfolderRef = mainFolderRef.child(photographyEntity.id!);
+        ListResult listResult = await subfolderRef.listAll();
+        await Future.forEach(listResult.items, (Reference item) async {
+          await item.delete();
+        });
+
+        for (int i = 0; i < photographyEntity.images!.length; i++) {
+          File imageFile = photographyEntity.images![i];
+          String imageName = DateTime.now().millisecondsSinceEpoch.toString();
+          Reference imageRef = subfolderRef.child('$imageName.jpg');
+          await imageRef.putFile(imageFile);
+          imagelinks.add(await imageRef.getDownloadURL());
+        }
+        if ((photographyEntity.images != null)) {
+          try {
+            await firebaseFirestore
+                .collection(FirebaseCollectionConst.photography)
+                .doc(photographyEntity.id!)
+                .update({
+              'imageslink': imagelinks,
+            });
+          } catch (e) {
+            DisplayToast('Error in update Photography (Pictures): $e');
+          }
+        }
+      }
+
       await firebaseFirestore
           .collection(FirebaseCollectionConst.photography)
           .doc(photographyEntity.id!)
           .update({
-        // 'type': photographyEntity.type,
-        // 'brand': photographyEntity.brand,
-        // Add other fields as needed
+        'contact': photographyEntity.contact,
+        'facilities': photographyEntity.facilities,
+        'description': photographyEntity.description,
+        'address': photographyEntity.address,
+        'city': photographyEntity.city
       });
     } catch (e) {
       DisplayToast('Error in Update Photography Service: $e');
@@ -956,17 +1090,18 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.sweets)
           .doc(autoId)
           .set(SweetsModel(
-            rating: 0,
-            totalreviews: 0,
-            // Assuming SweetModel is the corresponding model
-            // Adjust the fields accordingly
-            // type: sweetEntity.type,
-            // brand: sweetEntity.brand,
-            imageslink: imagelinks,
-            id: autoId,
-            owner_id: sweetEntity.owner_id,
-            // Add other fields as needed
-          ).toJson());
+                  rating: 0,
+                  totalreviews: 0,
+                  imageslink: imagelinks,
+                  name: sweetEntity.name,
+                  contact: sweetEntity.contact,
+                  facilities: sweetEntity.facilities,
+                  description: sweetEntity.description,
+                  address: sweetEntity.address,
+                  id: autoId,
+                  owner_id: sweetEntity.owner_id,
+                  city: sweetEntity.city)
+              .toJson());
     } catch (e) {
       DisplayToast('error in add Sweet Service ${e.toString()}');
     }
@@ -1052,13 +1187,46 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   @override
   Future<void> UpdateSweets(SweetEntity sweetEntity) async {
     try {
+      List<String> imagelinks = [];
+      if (sweetEntity.images?.isNotEmpty ?? false) {
+        Reference mainFolderRef =
+            storage.ref().child(FirebaseCollectionConst.sweets);
+        Reference subfolderRef = mainFolderRef.child(sweetEntity.id!);
+        ListResult listResult = await subfolderRef.listAll();
+        await Future.forEach(listResult.items, (Reference item) async {
+          await item.delete();
+        });
+
+        for (int i = 0; i < sweetEntity.images!.length; i++) {
+          File imageFile = sweetEntity.images![i];
+          String imageName = DateTime.now().millisecondsSinceEpoch.toString();
+          Reference imageRef = subfolderRef.child('$imageName.jpg');
+          await imageRef.putFile(imageFile);
+          imagelinks.add(await imageRef.getDownloadURL());
+        }
+        if ((sweetEntity.images != null)) {
+          try {
+            await firebaseFirestore
+                .collection(FirebaseCollectionConst.sweets)
+                .doc(sweetEntity.id!)
+                .update({
+              'imageslink': imagelinks,
+            });
+          } catch (e) {
+            DisplayToast('Error in update Sweets (Pictures): $e');
+          }
+        }
+      }
+
       await firebaseFirestore
           .collection(FirebaseCollectionConst.sweets)
           .doc(sweetEntity.id!)
           .update({
-        // 'type': sweetEntity.type,
-        // 'brand': sweetEntity.brand,
-        // Add other fields as needed
+        'contact': sweetEntity.contact,
+        'facilities': sweetEntity.facilities,
+        'description': sweetEntity.description,
+        'address': sweetEntity.address,
+        'city': sweetEntity.city
       });
     } catch (e) {
       DisplayToast('Error in Update Sweet Service: $e');
@@ -1092,17 +1260,18 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
           .collection(FirebaseCollectionConst.videography)
           .doc(autoId)
           .set(VideographyModel(
-            rating: 0,
-            totalreviews: 0,
-            // Assuming VideographyModel is the corresponding model
-            // Adjust the fields accordingly
-            // type: videographyEntity.type,
-            // brand: videographyEntity.brand,
-            imageslink: imagelinks,
-            id: autoId,
-            owner_id: videographyEntity.owner_id,
-            // Add other fields as needed
-          ).toJson());
+                  rating: 0,
+                  totalreviews: 0,
+                  imageslink: imagelinks,
+                  id: autoId,
+                  owner_id: videographyEntity.owner_id,
+                  address: videographyEntity.address,
+                  name: videographyEntity.name,
+                  contact: videographyEntity.contact,
+                  facilities: videographyEntity.facilities,
+                  description: videographyEntity.description,
+                  city: videographyEntity.city)
+              .toJson());
     } catch (e) {
       DisplayToast('error in add Videography Service ${e.toString()}');
     }
@@ -1190,13 +1359,46 @@ class FirebaseDatasourceImpl implements FirebaseDatasource {
   @override
   Future<void> UpdateVideography(VideographyEntity videographyEntity) async {
     try {
+      List<String> imagelinks = [];
+      if (videographyEntity.images?.isNotEmpty ?? false) {
+        Reference mainFolderRef =
+            storage.ref().child(FirebaseCollectionConst.videography);
+        Reference subfolderRef = mainFolderRef.child(videographyEntity.id!);
+        ListResult listResult = await subfolderRef.listAll();
+        await Future.forEach(listResult.items, (Reference item) async {
+          await item.delete();
+        });
+
+        for (int i = 0; i < videographyEntity.images!.length; i++) {
+          File imageFile = videographyEntity.images![i];
+          String imageName = DateTime.now().millisecondsSinceEpoch.toString();
+          Reference imageRef = subfolderRef.child('$imageName.jpg');
+          await imageRef.putFile(imageFile);
+          imagelinks.add(await imageRef.getDownloadURL());
+        }
+        if ((videographyEntity.images != null)) {
+          try {
+            await firebaseFirestore
+                .collection(FirebaseCollectionConst.videography)
+                .doc(videographyEntity.id!)
+                .update({
+              'imageslink': imagelinks,
+            });
+          } catch (e) {
+            DisplayToast('Error in update Videography (Pictures): $e');
+          }
+        }
+      }
+
       await firebaseFirestore
           .collection(FirebaseCollectionConst.videography)
           .doc(videographyEntity.id!)
           .update({
-        // 'type': videographyEntity.type,
-        // 'brand': videographyEntity.brand,
-        // Add other fields as needed
+        'address': videographyEntity.address,
+        'contact': videographyEntity.contact,
+        'facilities': videographyEntity.facilities,
+        'description': videographyEntity.description,
+        'city': videographyEntity.city
       });
     } catch (e) {
       DisplayToast('Error in Update Videography Service: $e');

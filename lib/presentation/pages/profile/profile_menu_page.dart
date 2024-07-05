@@ -14,29 +14,26 @@ class ProfileMenuPage extends StatelessWidget {
         centerTitle: true,
         title: Text("My Profile"),
       ),
-      body: Expanded(
-        child: Column(
-          // padding: EdgeInsets.zero,
-          children: [
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text("My Profile"),
-              onTap: () {
-                Navigator.pushNamed(context, PageNames.UserProfileDetailsPage,
-                    arguments: uid);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text("Logout"),
-              onTap: () async {
-                Navigator.pop(context);
-                await BlocProvider.of<AuthCubit>(context).SignOut();
-                Navigator.pushReplacementNamed(context, PageNames.LogInScreen);
-              },
-            ),
-          ],
-        ),
+      body: Column(
+        children: [
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text("My Profile"),
+            onTap: () {
+              Navigator.pushNamed(context, PageNames.UserProfileDetailsPage,
+                  arguments: uid);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text("Logout"),
+            onTap: () async {
+              Navigator.pop(context);
+              await BlocProvider.of<AuthCubit>(context).SignOut();
+              Navigator.pushReplacementNamed(context, PageNames.LogInScreen);
+            },
+          ),
+        ],
       ),
     );
   }

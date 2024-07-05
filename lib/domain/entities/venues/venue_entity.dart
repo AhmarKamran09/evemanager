@@ -7,6 +7,7 @@ class VenueEntity extends ServiceEntity {
   final int? capacity;
 
   VenueEntity({
+    String? city,
     this.capacity,
     String? id,
     String? owner_id,
@@ -16,15 +17,14 @@ class VenueEntity extends ServiceEntity {
     List<File>? images,
     List<String>? facilities,
     String? description,
-    Map<String, dynamic>? pricingInfo,
     int? totalreviews,
     double? rating,
   }) : super(
+            city: city,
             images: images,
             name: name,
             contact: contact,
             facilities: facilities,
-            pricingInfo: pricingInfo,
             description: description,
             id: id,
             owner_id: owner_id,
@@ -41,13 +41,12 @@ class VenueEntity extends ServiceEntity {
     }
 
     return VenueEntity(
+      city: snap['city'],
       images: imagesfromstorage,
       name: snap['name'],
       capacity: snap['capacity'],
       contact: snap['contact'],
-      // facilities: snap['facilities'] as List<String>,
       facilities: facilitiesmodel,
-      pricingInfo: snap['pricingInfo'],
       description: snap['description'],
       id: snap['id'],
       owner_id: snap['owner_id'],
@@ -59,6 +58,7 @@ class VenueEntity extends ServiceEntity {
 
   @override
   List<Object?> get props => [
+        city,
         rating,
         totalreviews,
         capacity,
@@ -66,7 +66,6 @@ class VenueEntity extends ServiceEntity {
         name,
         contact,
         facilities,
-        pricingInfo,
         description,
         id,
         owner_id,

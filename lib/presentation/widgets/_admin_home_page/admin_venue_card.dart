@@ -48,12 +48,7 @@ class AdminVenueCard extends StatelessWidget {
                     ),
                     Text('Capacity: ${venue.capacity ?? ""}'),
                     Text('Contact: ${venue.contact ?? ""}'),
-                    (venue.pricingInfo == null)
-                        ? Text(
-                            'Not published ',
-                            style: TextStyle(color: Colors.red),
-                          )
-                        : SizedBox()
+                  
                   ],
                 ),
               ),

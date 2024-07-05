@@ -40,8 +40,6 @@ class VenueCubit extends Cubit<VenueState> {
   Future<void> GetVenueForOwner(String ownerid) async {
     try {
       emit(VenueLoading());
-      print('object');
-
       final streamResponse = await getVenueForOwnerUsecase.call(ownerid);
       streamResponse.listen((Venue) {
         emit(VenueSuccessForOwner(VenueEntities: Venue));

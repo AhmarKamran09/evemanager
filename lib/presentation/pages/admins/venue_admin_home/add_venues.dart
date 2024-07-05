@@ -29,10 +29,10 @@ class _AddVenuesState extends State<AddVenues> {
     'AC',
     'Projector Lights',
     'Stage',
-    // Add more facilities as needed
   ];
   final TextEditingController name = TextEditingController();
   final TextEditingController address = TextEditingController();
+  final TextEditingController city = TextEditingController();
   final TextEditingController capacity = TextEditingController();
   final TextEditingController contact = TextEditingController();
   final TextEditingController description = TextEditingController();
@@ -118,6 +118,11 @@ class _AddVenuesState extends State<AddVenues> {
               label: "Address",
               hint: "Enter Venue address"),
           MyTextField(
+            fieldvalue: city,
+            label: "City",
+            hint: "Enter Venue City",
+          ),
+          MyTextField(
               fieldvalue: capacity,
               label: "Capacity",
               hint: "Enter Venue capacity"),
@@ -178,6 +183,7 @@ class _AddVenuesState extends State<AddVenues> {
   void _addvenue(BuildContext context, String? uidvalue) async {
     if (name.text.isNotEmpty &&
         address.text.isNotEmpty &&
+        city.text.isNotEmpty &&
         capacity.text.isNotEmpty &&
         contact.text.isNotEmpty &&
         _facilities!.isNotEmpty &&
@@ -187,6 +193,7 @@ class _AddVenuesState extends State<AddVenues> {
         owner_id: uidvalue,
         images: selectedImages,
         name: name.text,
+        city: city.text,
         address: address.text,
         capacity: int.parse(capacity.text),
         contact: contact.text,

@@ -20,14 +20,13 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
   TextEditingController capacitycontroller = TextEditingController();
   TextEditingController contactcontroller = TextEditingController();
   TextEditingController descriptioncontroller = TextEditingController();
+  TextEditingController citycontroller = TextEditingController();
+  TextEditingController addresscontroller = TextEditingController();
 
   List<String>? _facilities = [];
 
   List<File> selectedImages = [];
 
-  Map<String, dynamic>? pricingInfo;
-
-  // List of available facilities
   List<String> _availableFacilities = [
     'Wifi',
     'Parking',
@@ -35,7 +34,6 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
     'AC',
     'Projector Lights',
     'Stage',
-    // Add more facilities as needed
   ];
   @override
   Widget build(BuildContext context) {
@@ -45,9 +43,11 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
       }
     }
 
-    capacitycontroller.text = widget.venueEntity.capacity!.toString();
-    contactcontroller.text = widget.venueEntity.contact!;
-    descriptioncontroller.text = widget.venueEntity.description!;
+    capacitycontroller.text = widget.venueEntity.capacity?.toString() ?? '';
+    contactcontroller.text = widget.venueEntity.contact ?? '';
+    descriptioncontroller.text = widget.venueEntity.description ?? '';
+    citycontroller.text = widget.venueEntity.city ?? '';
+    addresscontroller.text = widget.venueEntity.address ?? '';
 
     return BlocConsumer<VenueCubit, VenueState>(listener: (context, state) {
       if (state is VenueSuccess) {
@@ -120,25 +120,30 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
                     },
                   )),
             ),
-            Text(widget.venueEntity.name!),
+            Text(
+              widget.venueEntity.name!,
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
             SizedBox(
               height: 5,
             ),
             TextFormField(
               controller: descriptioncontroller,
-              maxLines: null, // Allow unlimited lines
               keyboardType: TextInputType.multiline, // Enable multiline input
               decoration: InputDecoration(
-                border: OutlineInputBorder(), // Box type decoration with border
+                labelText: 'Description',
+                border: OutlineInputBorder(),
               ),
             ),
             SizedBox(
               height: 5,
             ),
             TextFormField(
+              keyboardType: TextInputType.phone,
               controller: contactcontroller,
-              maxLines: 1, // Allow unlimited lines
+              maxLines: 1, 
               decoration: InputDecoration(
+                labelText: 'Contact',
                 border: OutlineInputBorder(), // Box type decoration with border
               ),
             ),
@@ -149,6 +154,32 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
               controller: capacitycontroller,
               maxLines: 1, // Allow unlimited lines
               decoration: InputDecoration(
+                labelText: 'Capacity',
+
+                border: OutlineInputBorder(), // Box type decoration with border
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            TextFormField(
+              controller: citycontroller,
+              maxLines: 1, // Allow unlimited lines
+              decoration: InputDecoration(
+                labelText: 'City',
+
+                border: OutlineInputBorder(), // Box type decoration with border
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            TextFormField(
+              controller: addresscontroller,
+              maxLines: 1, // Allow unlimited lines
+              decoration: InputDecoration(
+                labelText: 'Address',
+
                 border: OutlineInputBorder(), // Box type decoration with border
               ),
             ),
@@ -210,12 +241,13 @@ class _UpdateVenueScreenState extends State<UpdateVenueScreen> {
     }
 
     await BlocProvider.of<VenueCubit>(context).UpdateVenue(VenueEntity(
+      city: citycontroller.text,
+      address: addresscontroller.text,
       id: widget.venueEntity.id,
       description: descriptioncontroller.text,
       contact: contactcontroller.text,
       capacity: int.parse(capacitycontroller.text),
       facilities: _facilities,
-      pricingInfo: pricingInfo,
       images: selectedImages,
     ));
     _facilities = [];

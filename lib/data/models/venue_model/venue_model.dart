@@ -9,13 +9,13 @@ class VenueModel extends VenueEntity {
   final int? capacity;
   final String? contact;
   final List<String>? facilities;
-  final Map<String, dynamic>? pricingInfo;
-  final Map<String, Map<String, bool>>? availability;
   final String? description;
   final int? totalreviews;
   final double? rating;
+  final String? city;
 
   VenueModel({
+    this.city,
     this.rating,
     this.totalreviews,
     this.imageslink,
@@ -23,8 +23,6 @@ class VenueModel extends VenueEntity {
     this.capacity,
     this.contact,
     this.facilities,
-    this.pricingInfo,
-    this.availability,
     this.description,
     this.id,
     this.owner_id,
@@ -32,6 +30,7 @@ class VenueModel extends VenueEntity {
   }) : super();
 
   Map<String, dynamic> toJson() => {
+        'city': city,
         'rating': rating,
         'totalreviews': totalreviews,
         'imageslink': imageslink,
@@ -39,8 +38,6 @@ class VenueModel extends VenueEntity {
         'capacity': capacity,
         'contact': contact,
         'facilities': facilities,
-        'pricingInfo': pricingInfo,
-        'availability': availability,
         'description': description,
         'id': id,
         'owner_id': owner_id,
@@ -49,6 +46,7 @@ class VenueModel extends VenueEntity {
 
   @override
   List<Object?> get props => [
+        city,
         rating,
         totalreviews,
         imageslink,
@@ -56,8 +54,6 @@ class VenueModel extends VenueEntity {
         capacity,
         contact,
         facilities,
-        pricingInfo,
-        availability,
         description,
         id,
         owner_id,

@@ -42,12 +42,7 @@ class ClientCateringCard extends StatelessWidget {
                     ),
                   ),
                   Text('Contact: ${catering.contact}'),
-                  (catering.pricingInfo == null)
-                      ? Text(
-                          'Not published ',
-                          style: TextStyle(color: Colors.red),
-                        )
-                      : SizedBox()
+               
                 ],
               ),
             ),

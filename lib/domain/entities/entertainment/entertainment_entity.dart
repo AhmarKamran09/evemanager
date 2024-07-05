@@ -5,6 +5,7 @@ import 'package:evemanager/domain/entities/service/service_entity.dart';
 
 class EntertainmentEntity extends ServiceEntity {
   EntertainmentEntity({
+    String? city,
     String? id,
     String? owner_id,
     String? name,
@@ -13,15 +14,14 @@ class EntertainmentEntity extends ServiceEntity {
     List<File>? images,
     List<String>? facilities,
     String? description,
-    Map<String, dynamic>? pricingInfo,
     int? totalreviews,
     double? rating,
   }) : super(
+            city: city,
             images: images,
             name: name,
             contact: contact,
             facilities: facilities,
-            pricingInfo: pricingInfo,
             description: description,
             id: id,
             owner_id: owner_id,
@@ -32,13 +32,17 @@ class EntertainmentEntity extends ServiceEntity {
   factory EntertainmentEntity.factory(
       DocumentSnapshot snapshot, List<File>? imagesfromstorage) {
     var snap = snapshot.data() as Map<String, dynamic>;
+    List<String> facilitiesmodel = [];
+    for (int i = 0; i < snap['facilities'].length; i++) {
+      facilitiesmodel.add(snap['facilities'][i].toString());
+    }
 
     return EntertainmentEntity(
+      city: snap['city'],
       images: imagesfromstorage,
       name: snap['name'],
       contact: snap['contact'],
-      // facilities: snap['facilities'],
-      pricingInfo: snap['pricingInfo'],
+      facilities: facilitiesmodel,
       description: snap['description'],
       id: snap['id'],
       owner_id: snap['owner_id'],
@@ -56,7 +60,6 @@ class EntertainmentEntity extends ServiceEntity {
         name,
         contact,
         facilities,
-        pricingInfo,
         description,
         id,
         owner_id,

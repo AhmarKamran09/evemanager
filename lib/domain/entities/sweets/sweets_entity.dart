@@ -4,7 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evemanager/domain/entities/service/service_entity.dart';
 
 class SweetEntity extends ServiceEntity {
-  SweetEntity({
+  SweetEntity({    String? city,
+
     String? id,
     String? owner_id,
     String? name,
@@ -13,15 +14,14 @@ class SweetEntity extends ServiceEntity {
     List<File>? images,
     List<String>? facilities,
     String? description,
-    Map<String, dynamic>? pricingInfo,
     int? totalreviews,
     double? rating,
-  }) : super(
+  }) : super(            city: city,
+
           images: images,
           name: name,
           contact: contact,
           facilities: facilities,
-          pricingInfo: pricingInfo,
           description: description,
           id: id,
           owner_id: owner_id,
@@ -33,13 +33,17 @@ class SweetEntity extends ServiceEntity {
   factory SweetEntity.factory(
       DocumentSnapshot snapshot, List<File>? imagesfromstorage) {
     var snap = snapshot.data() as Map<String, dynamic>;
+    List<String> facilitiesmodel = [];
+    for (int i = 0; i < snap['facilities'].length; i++) {
+      facilitiesmodel.add(snap['facilities'][i].toString());
+    }
 
-    return SweetEntity(
+    return SweetEntity(      city: snap['city'],
+
       images: imagesfromstorage,
       name: snap['name'],
       contact: snap['contact'],
-      // facilities: snap['facilities'],
-      pricingInfo: snap['pricingInfo'],
+      facilities: facilitiesmodel,
       description: snap['description'],
       id: snap['id'],
       owner_id: snap['owner_id'],
@@ -57,10 +61,10 @@ class SweetEntity extends ServiceEntity {
         name,
         contact,
         facilities,
-        pricingInfo,
         description,
         id,
         owner_id,
-        address,
+        address,        city,
+
       ];
 }
